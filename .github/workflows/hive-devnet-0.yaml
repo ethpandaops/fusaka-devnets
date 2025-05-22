@@ -5,7 +5,7 @@ on:
     inputs:
       client:
         type: string
-        default: '"go-ethereum","reth","nethermind","ethereumjs","nimbus-el","besu","erigon"'
+        default: '"go-ethereum"'
         description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, ethereumjs, nimbus-el
       simulator:
         type: string
