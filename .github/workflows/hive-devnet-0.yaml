@@ -1,11 +1,13 @@
 name: Hive - Devnet 0
 on:
+  schedule:
+    - cron: '45 12 * * *'
   workflow_dispatch:
     # Note: We're limited to 10 inputs
     inputs:
       client:
         type: string
-        default: '"go-ethereum"'
+        default: '"go-ethereum","reth","nethermind","ethereumjs","nimbus-el","besu","erigon"'
         description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, ethereumjs, nimbus-el
       simulator:
         type: string
