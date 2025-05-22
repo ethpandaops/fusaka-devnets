@@ -1,0 +1,27 @@
+name: Terraform lint
+on:
+  pull_request:
+    paths:
+      - 'terraform/**'
+      - '.tool-versions'
+      - '.github/actions/**'
+      - '.github/workflows/lint-terraform.yaml'
+  push:
+    branches:
+      - master
+    paths:
+      - 'terraform/**'
+      - '.tool-versions'
+      - '.github/actions/**'
+      - '.github/workflows/lint-terraform.yaml'
+
+jobs:
+  terraform-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/setup
+      - name: Lint
+        working-directory: ./terraform
+        run: >
+          terraform fmt --recursive --check --list=true --diff
