@@ -1,19 +1,19 @@
 default_ethereum_client_images:
 ### Consensus layer clients
-  lighthouse: docker.ethquokkaops.io/dh/sigp/lighthouse:latest
-  lodestar: docker.ethquokkaops.io/dh/chainsafe/lodestar:latest
-  nimbus: docker.ethquokkaops.io/dh/statusim/nimbus-eth2:multiarch-latest
-  prysm: docker.ethquokkaops.io/gcr/prysmaticlabs/prysm/beacon-chain:latest
-  prysm_validator: docker.ethquokkaops.io/gcr/prysmaticlabs/prysm/validator:latest
-  teku: docker.ethquokkaops.io/dh/consensys/teku:latest
-  grandine: docker.ethquokkaops.io/dh/ethpandaops/grandine:develop
+  lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:unstable
+  lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:peerDAS
+  nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:gbv2
+  prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:peerdas-bpo
+  prysm_validator: docker.ethquokkaops.io/dh/ethpandaops/prysm-validator:peerdas-bpo
+  teku: docker.ethquokkaops.io/dh/ethpandaops/teku:das
+  grandine: docker.ethquokkaops.io/dh/ethpandaops/grandine:hangleang-peerdas-fulu
 ### Execution layer clients
-  besu: docker.ethquokkaops.io/dh/hyperledger/besu:latest
-  geth: docker.ethquokkaops.io/dh/ethereum/client-go:stable
+  besu: docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-0
+  geth: docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-0
   erigon: docker.ethquokkaops.io/dh/erigontech/erigon:main-latest
   ethereumjs: docker.ethquokkaops.io/dh/ethpandaops/ethereumjs:master
-  nethermind: docker.ethquokkaops.io/dh/nethermindeth/nethermind:master
-  reth: docker.ethquokkaops.io/dh/ethpandaops/reth:main
+  nethermind: docker.ethquokkaops.io/dh/ethpandaops/nethermind:devnet-0
+  reth: docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet0
 
 
 default_tooling_images:
@@ -27,7 +27,6 @@ default_tooling_images:
   forky: docker.ethquokkaops.io/dh/ethpandaops/forky:latest
   fauceth: docker.ethquokkaops.io/dh/skylenet/fauceth:fix_fee_estimation
   powfaucet: docker.ethquokkaops.io/dh/pk910/powfaucet:v2-stable
-  ethstats: docker.ethquokkaops.io/dh/skylenet/ethstats-server:poa-no-geoip
   homepage: docker.ethquokkaops.io/dh/ethpandaops/ethereum-testnet-homepage:latest
   checkpointz: docker.ethquokkaops.io/dh/ethpandaops/checkpointz:latest
   blockscout: docker.ethquokkaops.io/dh/blockscout/blockscout:latest
@@ -38,7 +37,7 @@ default_tooling_images:
   blobscan_indexer: docker.ethquokkaops.io/dh/blossomlabs/blobscan-indexer:latest
   dora: docker.ethquokkaops.io/dh/ethpandaops/dora:master-latest
   dugtrio: docker.ethquokkaops.io/dh/ethpandaops/dugtrio:latest
-  ethereum_genesis_generator: docker.ethquokkaops.io/dh/ethpandaops/ethereum-genesis-generator:3.7.0
+  ethereum_genesis_generator: docker.ethquokkaops.io/dh/ethpandaops/ethereum-genesis-generator:4.1.8
   tracoor: docker.ethquokkaops.io/dh/ethpandaops/tracoor:0.0.26-debian
   ncli: docker.ethquokkaops.io/dh/status-im/nimbus-eth2:unstable
   lcli: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:unstable-a94b12blo
@@ -48,7 +47,7 @@ default_tooling_images:
   prometheus: docker.ethquokkaops.io/dh/prom/prometheus:v2.40.7
   node_exporter: docker.ethquokkaops.io/dh/prom/node-exporter:v1.5.0
   cl_bootnode: docker.ethquokkaops.io/dh/protolambda/eth2-bootnode:cleanup
-  json_rpc_snooper: docker.ethquokkaops.io/dh/ethpandaops/json-rpc-snoop:1.1.0
+  json_rpc_snooper: docker.ethquokkaops.io/dh/ethpandaops/json-rpc-snoop:latest
   nginx_proxy: docker.ethquokkaops.io/dh/nginx:alpine
   nginx_proxy_gen: docker.ethquokkaops.io/dh/nginxproxy/docker-gen
   nginx_proxy_acme: docker.ethquokkaops.io/dh/nginxproxy/acme-companion

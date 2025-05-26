@@ -19,9 +19,6 @@ ethereum_network_deposit_contract_block: >-
 ethereum_node_rcp_hostname: "rpc.{{ server_fqdn }}"
 ethereum_node_beacon_hostname: "bn.{{ server_fqdn }}"
 
-ethstats_url: "ethstats.{{ ethereum_network_name }}.{{ domain }}"
-ethstats_secret: "{{ secret_ethstats }}"
-
 ### Checkpoint sync specific for Ansible & Kubernetes
 checkpoint_sync_node: bootnode-1
 ethereum_node_cl_checkpoint_sync_enabled: false
@@ -37,10 +34,10 @@ checkpoint_sync_url_kube: https://<path:/secrets/services/services.enc.yaml#ethe
 # role: ethpandaops.general.ethereum_genesis
 ethereum_genesis_generator_container_image: "{{ default_tooling_images.ethereum_genesis_generator }}"
 ethereum_genesis_generator_version: "{{ ethereum_genesis_generator_container_image.split(':')[-1] }}"
-ethereum_genesis_network_seed: "template-devnet-0"
+ethereum_genesis_network_seed: "fusaka-devnet-0"
 ethereum_genesis_chain_id: "70{{ 99999999 | random(start=10000000, seed=ethereum_genesis_network_seed) }}"
-ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('template-', '') }}"
-ethereum_genesis_timestamp: "{{ lookup('ansible.builtin.pipe', '{{ ethereum_genesis_timestamp_relative_cmd[ansible_system] }}') }}"
+ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('fusaka-', '') }}"
+ethereum_genesis_timestamp: "1748264340"
 ethereum_genesis_timedelay: 60
 ethereum_genesis_timestamp_relative_cmd:
   Linux: "date +%s -d '+45 minutes'"
@@ -53,19 +50,38 @@ ethereum_genesis_generator_config_files:
   values.env: |-
     export CHAIN_ID="{{ ethereum_genesis_chain_id }}"
     export EL_AND_CL_MNEMONIC="{{ ethereum_genesis_mnemonic }}"
-    export NUMBER_OF_VALIDATORS=200
+    export NUMBER_OF_VALIDATORS=384
     export GENESIS_FORK_VERSION="0x10{{ ethereum_genesis_fork_version_suffix }}"
     export ALTAIR_FORK_VERSION="0x20{{ ethereum_genesis_fork_version_suffix }}"
     export BELLATRIX_FORK_VERSION="0x30{{ ethereum_genesis_fork_version_suffix }}"
     export CAPELLA_FORK_VERSION="0x40{{ ethereum_genesis_fork_version_suffix }}"
     export DENEB_FORK_VERSION="0x50{{ ethereum_genesis_fork_version_suffix }}"
     export ELECTRA_FORK_VERSION="0x60{{ ethereum_genesis_fork_version_suffix }}"
-    export ELECTRA_FORK_EPOCH="999999"
-    export EIP7594_FORK_VERSION="0x70{{ ethereum_genesis_fork_version_suffix }}"
-    export EIP7594_FORK_EPOCH="999999"
+    export FULU_FORK_VERSION="0x70{{ ethereum_genesis_fork_version_suffix }}"
+    export FULU_FORK_EPOCH="256"
     export GENESIS_TIMESTAMP={{ ethereum_genesis_timestamp }}
     export GENESIS_DELAY={{ ethereum_genesis_timedelay }}
-    export WITHDRAWAL_TYPE=0x02
+    export WITHDRAWAL_TYPE=0x01
+    export BPO_1_EPOCH=512
+    export BPO_1_MAX_BLOBS=12
+    export BPO_1_TARGET_BLOBS=9
+    export BPO_1_BASE_FEE_UPDATE_FRACTION="5007716"
+    export BPO_2_EPOCH=768
+    export BPO_2_MAX_BLOBS=15
+    export BPO_2_TARGET_BLOBS=12
+    export BPO_2_BASE_FEE_UPDATE_FRACTION="5007716"
+    export BPO_3_EPOCH=1024
+    export BPO_3_MAX_BLOBS=18
+    export BPO_3_TARGET_BLOBS=15
+    export BPO_3_BASE_FEE_UPDATE_FRACTION="5007716"
+    export BPO_4_EPOCH=1280
+    export BPO_4_MAX_BLOBS=9
+    export BPO_4_TARGET_BLOBS=6
+    export BPO_4_BASE_FEE_UPDATE_FRACTION="5007716"
+    export BPO_5_EPOCH=1584
+    export BPO_5_MAX_BLOBS=20
+    export BPO_5_TARGET_BLOBS=15
+    export BPO_5_BASE_FEE_UPDATE_FRACTION="5007716"
 
 
 ethereum_genesis_validator_keys_output_dir: "{{ ansible_inventory_sources[0] | dirname }}/files/validator_keys"
