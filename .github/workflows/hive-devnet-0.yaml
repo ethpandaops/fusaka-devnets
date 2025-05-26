@@ -23,19 +23,19 @@ on:
         description: GitHub repository and tag for go-ethereum (repo@tag)
       besu_version:
         type: string
-        default: hyperledger/besu@main
+        default: hyperledger/besu@fusaka-devnet-0
         description: GitHub repository and tag for besu (repo@tag)
       reth_version:
         type: string
-        default: paradigmxyz/reth@main
+        default: paradigmxyz/reth@fusaka-devnet0
         description: GitHub repository and tag for reth (repo@tag)
       nethermind_version:
         type: string
-        default: NethermindEth/nethermind@release/1.31.0
+        default: NethermindEth/nethermind@devnet-0
         description: GitHub repository and tag for nethermind (repo@tag)
       erigon_version:
         type: string
-        default: erigontech/erigon@main
+        default: erigontech/erigon@fusaka-devnet-0
         description: GitHub repository and tag for erigon (repo@tag)
       ethereumjs_version:
         type: string
@@ -111,10 +111,10 @@ jobs:
         run: |
           # Default client versions
           GETH_DEFAULT="ethereum/go-ethereum@fusaka-devnet-0"
-          BESU_DEFAULT="hyperledger/besu@main"
-          RETH_DEFAULT="paradigmxyz/reth@main"
-          NETHERMIND_DEFAULT="NethermindEth/nethermind@release/1.31.0"
-          ERIGON_DEFAULT="erigontech/erigon@main"
+          BESU_DEFAULT="hyperledger/besu@fusaka-devnet-0"
+          RETH_DEFAULT="paradigmxyz/reth@fusaka-devnet0"
+          NETHERMIND_DEFAULT="NethermindEth/nethermind@devnet-0"
+          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-0"
           ETHEREUMJS_DEFAULT="ethereumjs/ethereumjs-monorepo@eip7840"
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@master"
           HIVE_DEFAULT="ethereum/hive@master"
@@ -177,7 +177,31 @@ jobs:
               github: ${{ steps.parse.outputs.geth_repo }}
               tag: ${{ steps.parse.outputs.geth_tag }}
               GOPROXY: ${{ env.GOPROXY }}
-
+          - client: besu
+            nametag: default
+            dockerfile: git
+            build_args:
+              github: ${{ steps.parse.outputs.besu_repo }}
+              tag: ${{ steps.parse.outputs.besu_tag }}
+          - client: reth
+            nametag: default
+            dockerfile: git
+            build_args:
+              github: ${{ steps.parse.outputs.reth_repo }}
+              tag: ${{ steps.parse.outputs.reth_tag }}
+          - client: nethermind
+            nametag: default
+            dockerfile: git
+            build_args:
+              github: ${{ steps.parse.outputs.nethermind_repo }}
+              tag: ${{ steps.parse.outputs.nethermind_tag }}
+          - client: erigon
+            nametag: default
+            dockerfile: git
+            build_args:
+              github: ${{ steps.parse.outputs.erigon_repo }}
+              tag: ${{ steps.parse.outputs.erigon_tag }}
+              GOPROXY: ${{ env.GOPROXY }}
           ENDCONFIG
           EOF
 
