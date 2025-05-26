@@ -73,7 +73,6 @@ teku-geth-001:
               - --logging=info
               - --Xlog-include-p2p-warnings-enabled
               - --metrics-block-timing-tracking-enabled
-              - --ignore-weak-subjectivity-period-enabled
               - --rest-api-docs-enabled
             prysm:
               - --grpc-gateway-corsdomain=*
