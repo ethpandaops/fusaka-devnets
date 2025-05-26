@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 variable "digitalocean_project_name" {
   type    = string
-  default = "Template"
+  default = "fusaka-devnets"
 }
 
 variable "digitalocean_ssh_key_name" {
@@ -49,8 +49,8 @@ locals {
         id         = "${vm_group.name}-${i + 1}"
         vms = {
           "${i + 1}" = {
-            tags   = "group_name:${vm_group.name},val_start:${vm_group.validator_start + ceil(i * (vm_group.validator_end - vm_group.validator_start) / vm_group.count)},val_end:${min(vm_group.validator_start + ceil((i + 1) * (vm_group.validator_end - vm_group.validator_start) / vm_group.count), vm_group.validator_end)}"
-            region = try(vm_group.region, element(var.digitalocean_regions, i % length(var.digitalocean_regions)))
+            tags   = "group_name:${vm_group.name},val_start:${vm_group.validator_start + (i * (vm_group.validator_end - vm_group.validator_start) / vm_group.count)},val_end:${min(vm_group.validator_start + ((i + 1) * (vm_group.validator_end - vm_group.validator_start) / vm_group.count), vm_group.validator_end)},supernode:${i % 2 == 0 ? "True" : "False"}"
+            region = try(vm_group.region, var.digitalocean_regions[i % length(var.digitalocean_regions)])
             size   = try(vm_group.size, local.digitalocean_default_size)
             ipv6   = try(vm_group.ipv6, true)
           }
@@ -62,7 +62,7 @@ locals {
 
 locals {
   digitalocean_default_region = "ams3"
-  digitalocean_default_size   = "c-2"
+  digitalocean_default_size   = "s-8vcpu-16gb"
   digitalocean_default_image  = "debian-12-x64"
   digitalocean_global_tags = [
     "Owner:Devops",
@@ -318,8 +318,9 @@ resource "local_file" "ansible_inventory" {
             ip              = "${server.ipv4_address}"
             ipv6            = try(server.ipv6_address, "none")
             group           = try(split(":", tolist(server.tags)[2])[1], "unknown")
-            validator_start = try(split(":", tolist(server.tags)[4])[1], 0)
-            validator_end   = try(split(":", tolist(server.tags)[3])[1], 0) # if the tag is not a number it will be 0 - e.g no validator keys
+            validator_start = try(split(":", tolist(server.tags)[5])[1], 0)
+            validator_end   = try(split(":", tolist(server.tags)[4])[1], 0) # if the tag is not a number it will be 0 - e.g no validator keys
+            supernode       = try(title(split(":", tolist(server.tags)[3])[1]), "True")
             tags            = "${server.tags}"
             hostname        = "${split(".", key)[0]}"
             cloud           = "digitalocean"
