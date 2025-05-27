@@ -52,9 +52,9 @@ variable "lighthouse_ethereumjs" {
 variable "lighthouse_erigon" {
   default = {
     name            = "lighthouse-erigon"
-    count           = 0
-    validator_start = 0
-    validator_end   = 0
+    count           = 2
+    validator_start = 384
+    validator_end   = 400
   }
 }
 
@@ -111,9 +111,9 @@ variable "prysm_ethereumjs" {
 variable "prysm_erigon" {
   default = {
     name            = "prysm-erigon"
-    count           = 0
-    validator_start = 0
-    validator_end   = 0
+    count           = 2
+    validator_start = 400
+    validator_end   = 416
   }
 }
 
@@ -170,9 +170,9 @@ variable "lodestar_ethereumjs" {
 variable "lodestar_erigon" {
   default = {
     name            = "lodestar-erigon"
-    count           = 0
-    validator_start = 0
-    validator_end   = 0
+    count           = 2
+    validator_start = 416
+    validator_end   = 432
   }
 }
 
@@ -229,9 +229,9 @@ variable "nimbus_ethereumjs" {
 variable "nimbus_erigon" {
   default = {
     name            = "nimbus-erigon"
-    count           = 0
-    validator_start = 0
-    validator_end   = 0
+    count           = 2
+    validator_start = 432
+    validator_end   = 448
   }
 }
 
@@ -288,9 +288,9 @@ variable "teku_ethereumjs" {
 variable "teku_erigon" {
   default = {
     name            = "teku-erigon"
-    count           = 0
-    validator_start = 0
-    validator_end   = 0
+    count           = 2
+    validator_start = 448
+    validator_end   = 464
   }
 }
 
@@ -346,9 +346,9 @@ variable "grandine_ethereumjs" {
 variable "grandine_erigon" {
   default = {
     name            = "grandine-erigon"
-    count           = 0
-    validator_start = 0
-    validator_end   = 0
+    count           = 2
+    validator_start = 464
+    validator_end   = 480
   }
 }
 
