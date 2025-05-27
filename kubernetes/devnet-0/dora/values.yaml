@@ -5,7 +5,7 @@ dora:
   image:
     repository: docker.ethquokkaops.io/dh/ethpandaops/dora
     tag: fulu-support
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   resources:
     requests:
       cpu: 500m
@@ -58,6 +58,12 @@ dora:
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-besu-2.fusaka-devnet-0.ethpandaops.io
     name: grandine-besu-2
     priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: grandine-erigon-1
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: grandine-erigon-2
+    priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-geth-1.fusaka-devnet-0.ethpandaops.io
     name: grandine-geth-1
     priority: -1
@@ -82,6 +88,14 @@ dora:
     archive: true
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-besu-2.fusaka-devnet-0.ethpandaops.io
     name: lighthouse-besu-2
+    priority: -1
+    archive: true
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: lighthouse-erigon-1
+    priority: -1
+    archive: true
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: lighthouse-erigon-2
     priority: -1
     archive: true
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -114,6 +128,12 @@ dora:
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-besu-2.fusaka-devnet-0.ethpandaops.io
     name: lodestar-besu-2
     priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: lodestar-erigon-1
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: lodestar-erigon-2
+    priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-geth-1.fusaka-devnet-0.ethpandaops.io
     name: lodestar-geth-1
     priority: -1
@@ -137,6 +157,12 @@ dora:
     priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-besu-2.fusaka-devnet-0.ethpandaops.io
     name: nimbus-besu-2
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: nimbus-erigon-1
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: nimbus-erigon-2
     priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-geth-1.fusaka-devnet-0.ethpandaops.io
     name: nimbus-geth-1
@@ -162,6 +188,12 @@ dora:
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-besu-2.fusaka-devnet-0.ethpandaops.io
     name: prysm-besu-2
     priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: prysm-erigon-1
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: prysm-erigon-2
+    priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-geth-1.fusaka-devnet-0.ethpandaops.io
     name: prysm-geth-1
     priority: -1
@@ -185,6 +217,12 @@ dora:
     priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-besu-2.fusaka-devnet-0.ethpandaops.io
     name: teku-besu-2
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: teku-erigon-1
+    priority: -1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: teku-erigon-2
     priority: -1
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-geth-1.fusaka-devnet-0.ethpandaops.io
     name: teku-geth-1
@@ -222,6 +260,14 @@ dora:
     name: grandine-besu-2
     priority: -1
     archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: grandine-erigon-1
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: grandine-erigon-2
+    priority: -1
+    archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-geth-1.fusaka-devnet-0.ethpandaops.io
     name: grandine-geth-1
     priority: -1
@@ -252,6 +298,14 @@ dora:
     archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-besu-2.fusaka-devnet-0.ethpandaops.io
     name: lighthouse-besu-2
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: lighthouse-erigon-1
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: lighthouse-erigon-2
     priority: -1
     archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -286,6 +340,14 @@ dora:
     name: lodestar-besu-2
     priority: -1
     archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: lodestar-erigon-1
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: lodestar-erigon-2
+    priority: -1
+    archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-geth-1.fusaka-devnet-0.ethpandaops.io
     name: lodestar-geth-1
     priority: -1
@@ -316,6 +378,14 @@ dora:
     archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-besu-2.fusaka-devnet-0.ethpandaops.io
     name: nimbus-besu-2
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: nimbus-erigon-1
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: nimbus-erigon-2
     priority: -1
     archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -350,6 +420,14 @@ dora:
     name: prysm-besu-2
     priority: -1
     archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: prysm-erigon-1
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: prysm-erigon-2
+    priority: -1
+    archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-geth-1.fusaka-devnet-0.ethpandaops.io
     name: prysm-geth-1
     priority: -1
@@ -380,6 +458,14 @@ dora:
     archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-besu-2.fusaka-devnet-0.ethpandaops.io
     name: teku-besu-2
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-erigon-1.fusaka-devnet-0.ethpandaops.io
+    name: teku-erigon-1
+    priority: -1
+    archive: false
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-erigon-2.fusaka-devnet-0.ethpandaops.io
+    name: teku-erigon-2
     priority: -1
     archive: false
   - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-geth-1.fusaka-devnet-0.ethpandaops.io

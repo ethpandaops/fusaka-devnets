@@ -50,6 +50,12 @@ assertoor:
     - name:  grandine-besu-2
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-besu-2.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-besu-2.fusaka-devnet-0.ethpandaops.io
+    - name:  grandine-erigon-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-erigon-1.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-erigon-1.fusaka-devnet-0.ethpandaops.io
+    - name:  grandine-erigon-2
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-erigon-2.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-erigon-2.fusaka-devnet-0.ethpandaops.io
     - name:  grandine-geth-1
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-geth-1.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -74,6 +80,12 @@ assertoor:
     - name:  lighthouse-besu-2
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-besu-2.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-besu-2.fusaka-devnet-0.ethpandaops.io
+    - name:  lighthouse-erigon-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-erigon-1.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-erigon-1.fusaka-devnet-0.ethpandaops.io
+    - name:  lighthouse-erigon-2
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-erigon-2.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-erigon-2.fusaka-devnet-0.ethpandaops.io
     - name:  lighthouse-geth-1
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-geth-1.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -98,6 +110,12 @@ assertoor:
     - name:  lodestar-besu-2
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-besu-2.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-besu-2.fusaka-devnet-0.ethpandaops.io
+    - name:  lodestar-erigon-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-erigon-1.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-erigon-1.fusaka-devnet-0.ethpandaops.io
+    - name:  lodestar-erigon-2
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-erigon-2.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-erigon-2.fusaka-devnet-0.ethpandaops.io
     - name:  lodestar-geth-1
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-geth-1.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -122,6 +140,12 @@ assertoor:
     - name:  nimbus-besu-2
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-besu-2.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-besu-2.fusaka-devnet-0.ethpandaops.io
+    - name:  nimbus-erigon-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-1.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-erigon-1.fusaka-devnet-0.ethpandaops.io
+    - name:  nimbus-erigon-2
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-2.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-erigon-2.fusaka-devnet-0.ethpandaops.io
     - name:  nimbus-geth-1
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-geth-1.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -146,6 +170,12 @@ assertoor:
     - name:  prysm-besu-2
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-besu-2.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-besu-2.fusaka-devnet-0.ethpandaops.io
+    - name:  prysm-erigon-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-erigon-1.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-erigon-1.fusaka-devnet-0.ethpandaops.io
+    - name:  prysm-erigon-2
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-erigon-2.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-erigon-2.fusaka-devnet-0.ethpandaops.io
     - name:  prysm-geth-1
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-geth-1.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -170,6 +200,12 @@ assertoor:
     - name:  teku-besu-2
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-besu-2.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-besu-2.fusaka-devnet-0.ethpandaops.io
+    - name:  teku-erigon-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-erigon-1.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-erigon-1.fusaka-devnet-0.ethpandaops.io
+    - name:  teku-erigon-2
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-erigon-2.fusaka-devnet-0.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-erigon-2.fusaka-devnet-0.ethpandaops.io
     - name:  teku-geth-1
       executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-geth-1.fusaka-devnet-0.ethpandaops.io
       consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -196,6 +232,8 @@ assertoor:
       - bootnode-1
       - grandine-besu-1
       - grandine-besu-2
+      - grandine-erigon-1
+      - grandine-erigon-2
       - grandine-geth-1
       - grandine-geth-2
       - grandine-nethermind-1
@@ -204,6 +242,8 @@ assertoor:
       - grandine-reth-2
       - lighthouse-besu-1
       - lighthouse-besu-2
+      - lighthouse-erigon-1
+      - lighthouse-erigon-2
       - lighthouse-geth-1
       - lighthouse-geth-2
       - lighthouse-nethermind-1
@@ -212,6 +252,8 @@ assertoor:
       - lighthouse-reth-2
       - lodestar-besu-1
       - lodestar-besu-2
+      - lodestar-erigon-1
+      - lodestar-erigon-2
       - lodestar-geth-1
       - lodestar-geth-2
       - lodestar-nethermind-1
@@ -220,6 +262,8 @@ assertoor:
       - lodestar-reth-2
       - nimbus-besu-1
       - nimbus-besu-2
+      - nimbus-erigon-1
+      - nimbus-erigon-2
       - nimbus-geth-1
       - nimbus-geth-2
       - nimbus-nethermind-1
@@ -228,6 +272,8 @@ assertoor:
       - nimbus-reth-2
       - prysm-besu-1
       - prysm-besu-2
+      - prysm-erigon-1
+      - prysm-erigon-2
       - prysm-geth-1
       - prysm-geth-2
       - prysm-nethermind-1
@@ -236,6 +282,8 @@ assertoor:
       - prysm-reth-2
       - teku-besu-1
       - teku-besu-2
+      - teku-erigon-1
+      - teku-erigon-2
       - teku-geth-1
       - teku-geth-2
       - teku-nethermind-1
@@ -245,6 +293,8 @@ assertoor:
     validatorPairNames:
       - grandine-besu-1
       - grandine-besu-2
+      - grandine-erigon-1
+      - grandine-erigon-2
       - grandine-geth-1
       - grandine-geth-2
       - grandine-nethermind-1
@@ -253,6 +303,8 @@ assertoor:
       - grandine-reth-2
       - lighthouse-besu-1
       - lighthouse-besu-2
+      - lighthouse-erigon-1
+      - lighthouse-erigon-2
       - lighthouse-geth-2
       - lighthouse-nethermind-1
       - lighthouse-nethermind-2
@@ -260,6 +312,8 @@ assertoor:
       - lighthouse-reth-2
       - lodestar-besu-1
       - lodestar-besu-2
+      - lodestar-erigon-1
+      - lodestar-erigon-2
       - lodestar-geth-1
       - lodestar-geth-2
       - lodestar-nethermind-1
@@ -268,6 +322,8 @@ assertoor:
       - lodestar-reth-2
       - nimbus-besu-1
       - nimbus-besu-2
+      - nimbus-erigon-1
+      - nimbus-erigon-2
       - nimbus-geth-1
       - nimbus-geth-2
       - nimbus-nethermind-1
@@ -276,6 +332,8 @@ assertoor:
       - nimbus-reth-2
       - prysm-besu-1
       - prysm-besu-2
+      - prysm-erigon-1
+      - prysm-erigon-2
       - prysm-geth-1
       - prysm-geth-2
       - prysm-nethermind-1
@@ -284,6 +342,8 @@ assertoor:
       - prysm-reth-2
       - teku-besu-1
       - teku-besu-2
+      - teku-erigon-1
+      - teku-erigon-2
       - teku-geth-1
       - teku-geth-2
       - teku-nethermind-1

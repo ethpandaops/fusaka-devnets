@@ -54,6 +54,9 @@ checkpointz:
         - name: grandine-besu-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-besu-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
+        - name: grandine-erigon-1
+          address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-erigon-1.fusaka-devnet-0.ethpandaops.io
+          dataProvider: true
         - name: grandine-geth-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.grandine-geth-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
@@ -65,6 +68,9 @@ checkpointz:
           dataProvider: true
         - name: lighthouse-besu-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-besu-1.fusaka-devnet-0.ethpandaops.io
+          dataProvider: true
+        - name: lighthouse-erigon-1
+          address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-erigon-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
         - name: lighthouse-geth-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lighthouse-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -78,6 +84,9 @@ checkpointz:
         - name: lodestar-besu-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-besu-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
+        - name: lodestar-erigon-1
+          address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-erigon-1.fusaka-devnet-0.ethpandaops.io
+          dataProvider: true
         - name: lodestar-geth-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.lodestar-geth-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
@@ -89,6 +98,9 @@ checkpointz:
           dataProvider: true
         - name: nimbus-besu-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-besu-1.fusaka-devnet-0.ethpandaops.io
+          dataProvider: true
+        - name: nimbus-erigon-1
+          address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-erigon-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
         - name: nimbus-geth-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.nimbus-geth-1.fusaka-devnet-0.ethpandaops.io
@@ -102,6 +114,9 @@ checkpointz:
         - name: prysm-besu-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-besu-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
+        - name: prysm-erigon-1
+          address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-erigon-1.fusaka-devnet-0.ethpandaops.io
+          dataProvider: true
         - name: prysm-geth-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.prysm-geth-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
@@ -113,6 +128,9 @@ checkpointz:
           dataProvider: true
         - name: teku-besu-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-besu-1.fusaka-devnet-0.ethpandaops.io
+          dataProvider: true
+        - name: teku-erigon-1
+          address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-erigon-1.fusaka-devnet-0.ethpandaops.io
           dataProvider: true
         - name: teku-geth-1
           address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn.teku-geth-1.fusaka-devnet-0.ethpandaops.io
