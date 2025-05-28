@@ -2,11 +2,11 @@ default_ethereum_client_images:
 ### Consensus layer clients
   lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:eip-7892
   lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:peerDAS
-  nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:bpo-parsing-3fed785
+  nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:bpo-parsing-9ae8e0d
   prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:peerdas-bpo
   prysm_validator: docker.ethquokkaops.io/dh/ethpandaops/prysm-validator:peerdas-bpo
   teku: docker.ethquokkaops.io/dh/ethpandaops/teku:das
-  grandine: docker.ethquokkaops.io/dh/ethpandaops/grandine:hangleang-peerdas-fulu
+  grandine: docker.ethquokkaops.io/dh/ethpandaops/grandine:peerdas-fulu-a0df259
 ### Execution layer clients
   besu: docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-0
   geth: docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-0
@@ -43,7 +43,7 @@ default_tooling_images:
   lcli: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:unstable-a94b12blo
   zcli: electra
   assertoor: docker.ethquokkaops.io/dh/ethpandaops/assertoor:master-latest
-  erpc: docker.ethquokkaops.io/gh/erpc/erpc:main
+  erpc: docker.ethquokkaops.io/gh/erpc/erpc:0.0.49
   prometheus: docker.ethquokkaops.io/dh/prom/prometheus:v2.40.7
   node_exporter: docker.ethquokkaops.io/dh/prom/node-exporter:v1.5.0
   cl_bootnode: docker.ethquokkaops.io/dh/protolambda/eth2-bootnode:cleanup
