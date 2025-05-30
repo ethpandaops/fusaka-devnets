@@ -27,7 +27,7 @@ on:
         description: GitHub repository and tag for besu (repo@tag)
       reth_version:
         type: string
-        default: paradigmxyz/reth@fusaka-devnet0
+        default: paradigmxyz/reth@main
         description: GitHub repository and tag for reth (repo@tag)
       nethermind_version:
         type: string
