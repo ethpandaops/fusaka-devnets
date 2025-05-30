@@ -8,7 +8,7 @@ default_ethereum_client_images:
   teku: docker.ethquokkaops.io/dh/ethpandaops/teku:master-7856340
   grandine: docker.ethquokkaops.io/dh/ethpandaops/grandine:peerdas-fulu-a0df259
 ### Execution layer clients
-  besu: docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-0
+  besu: docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-0-ed8ec22
   geth: docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-0
   erigon: docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-0-ed36f15
   ethereumjs: docker.ethquokkaops.io/dh/ethpandaops/ethereumjs:master
