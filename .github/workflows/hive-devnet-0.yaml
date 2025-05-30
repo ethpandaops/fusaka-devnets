@@ -11,7 +11,7 @@ on:
         description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, ethereumjs, nimbus-el
       simulator:
         type: string
-        default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp","ethereum/eest/execute-blobs'
+        default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp","ethereum/eest/execute-blobs"'
         description: Comma-separated list of simulators to test .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rl, ethereum/eest/execute-blobs
       hive_version:
         type: string
