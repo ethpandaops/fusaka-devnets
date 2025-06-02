@@ -31,6 +31,8 @@ dora:
       value: "true"
     - name: FRONTEND_SHOW_SENSITIVE_PEER_INFOS
       value: "true"
+    - name: FRONTEND_SHOW_PEER_DAS_INFOS
+      value: "true"
     - name: FRONTEND_ETH_EXPLORER_LINK
       value: "https://explorer.fusaka-devnet-0.ethpandaops.io"
     - name: FRONTEND_PUBLIC_RPC_URL
