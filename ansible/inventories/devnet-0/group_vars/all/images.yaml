@@ -1,7 +1,7 @@
 default_ethereum_client_images:
 ### Consensus layer clients
   lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:eip-7892
-  lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:peerDAS
+  lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:peerDAS-d70dab2
   nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:bpo-parsing-c62f33f
   prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:peerdas-bpo
   prysm_validator: docker.ethquokkaops.io/dh/ethpandaops/prysm-validator:peerdas-bpo
