@@ -31,11 +31,11 @@ on:
         description: GitHub repository and tag for reth (repo@tag)
       nethermind_version:
         type: string
-        default: NethermindEth/nethermind@fusaka
+        default: NethermindEth/nethermind@master
         description: GitHub repository and tag for nethermind (repo@tag)
       erigon_version:
         type: string
-        default: erigontech/erigon@fusaka-devnet-0
+        default: erigontech/erigon@main
         description: GitHub repository and tag for erigon (repo@tag)
       ethereumjs_version:
         type: string
@@ -116,8 +116,8 @@ jobs:
           GETH_DEFAULT="ethereum/go-ethereum@master"
           BESU_DEFAULT="hyperledger/besu@fusaka-devnet-1"
           RETH_DEFAULT="paradigmxyz/reth@fusaka/devnet1"
-          NETHERMIND_DEFAULT="NethermindEth/nethermind@fusaka"
-          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-0"
+          NETHERMIND_DEFAULT="NethermindEth/nethermind@master"
+          ERIGON_DEFAULT="erigontech/erigon@main"
           ETHEREUMJS_DEFAULT="ethereumjs/ethereumjs-monorepo@master"
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-1"
           HIVE_DEFAULT="ethereum/hive@master"
