@@ -1,4 +1,4 @@
-name: Hive - Devnet 0
+name: Hive - Devnet 1
 on:
   schedule:
     - cron: '45 12 * * *'
@@ -19,31 +19,31 @@ on:
         description: GitHub repository and tag for hive (repo@tag)
       geth_version:
         type: string
-        default: ethereum/go-ethereum@fusaka-devnet-0
+        default: ethereum/go-ethereum@master
         description: GitHub repository and tag for go-ethereum (repo@tag)
       besu_version:
         type: string
-        default: hyperledger/besu@fusaka-devnet-0
+        default: hyperledger/besu@fusaka-devnet-1
         description: GitHub repository and tag for besu (repo@tag)
       reth_version:
         type: string
-        default: paradigmxyz/reth@fusaka/devnet0
+        default: paradigmxyz/reth@fusaka/devnet1
         description: GitHub repository and tag for reth (repo@tag)
       nethermind_version:
         type: string
-        default: NethermindEth/nethermind@devnet-0
+        default: NethermindEth/nethermind@master
         description: GitHub repository and tag for nethermind (repo@tag)
       erigon_version:
         type: string
-        default: erigontech/erigon@fusaka-devnet-0
+        default: erigontech/erigon@main
         description: GitHub repository and tag for erigon (repo@tag)
       ethereumjs_version:
         type: string
-        default: ethereumjs/ethereumjs-monorepo@eip7840
+        default: ethereumjs/ethereumjs-monorepo@master
         description: GitHub repository and tag for ethereumjs (repo@tag)
       nimbusel_version:
         type: string
-        default: status-im/nimbus-eth1@master
+        default: status-im/nimbus-eth1@fusaka-devnet-1
         description: GitHub repository and tag for nimbus-el (repo@tag)
 
 env:
@@ -51,10 +51,10 @@ env:
   GOPROXY: "${{ vars.GOPROXY }}"
   # Hive action environment variables
   S3_BUCKET: hive-results
-  S3_PATH: fusaka-devnet-0
-  S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-0
+  S3_PATH: fusaka-devnet-1
+  S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-1
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-0%40v1.0.0/fixtures_fusaka-devnet-0.tar.gz
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-1%40v1.0.0/fixtures_fusaka-devnet-1.tar.gz
   EEST_BUILD_ARG_BRANCH: temp-eest-execute-blobs # Temporary until blob tests are in a release (not a moving branch)
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
@@ -113,13 +113,13 @@ jobs:
       - id: parse
         run: |
           # Default client versions
-          GETH_DEFAULT="ethereum/go-ethereum@fusaka-devnet-0"
-          BESU_DEFAULT="hyperledger/besu@fusaka-devnet-0"
-          RETH_DEFAULT="paradigmxyz/reth@fusaka-devnet0"
-          NETHERMIND_DEFAULT="NethermindEth/nethermind@devnet-0"
-          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-0"
-          ETHEREUMJS_DEFAULT="ethereumjs/ethereumjs-monorepo@eip7840"
-          NIMBUSEL_DEFAULT="status-im/nimbus-eth1@master"
+          GETH_DEFAULT="ethereum/go-ethereum@master"
+          BESU_DEFAULT="hyperledger/besu@fusaka-devnet-1"
+          RETH_DEFAULT="paradigmxyz/reth@fusaka/devnet1"
+          NETHERMIND_DEFAULT="NethermindEth/nethermind@master"
+          ERIGON_DEFAULT="erigontech/erigon@main"
+          ETHEREUMJS_DEFAULT="ethereumjs/ethereumjs-monorepo@master"
+          NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-1"
           HIVE_DEFAULT="ethereum/hive@master"
 
           # Parse geth
