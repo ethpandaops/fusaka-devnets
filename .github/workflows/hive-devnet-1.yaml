@@ -35,7 +35,7 @@ on:
         description: GitHub repository and tag for nethermind (repo@tag)
       erigon_version:
         type: string
-        default: erigontech/erigon@main
+        default: erigontech/erigon@fusaka-devnet-1
         description: GitHub repository and tag for erigon (repo@tag)
       ethereumjs_version:
         type: string
@@ -55,7 +55,7 @@ env:
   S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-1
   INSTALL_RCLONE_VERSION: v1.68.2
   EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-1%40v1.0.0/fixtures_fusaka-devnet-1.tar.gz
-  EEST_BUILD_ARG_BRANCH: temp-eest-execute-blobs # Temporary until blob tests are in a release (not a moving branch)
+  EEST_BUILD_ARG_BRANCH: devnets/osaka/1
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
@@ -117,7 +117,7 @@ jobs:
           BESU_DEFAULT="hyperledger/besu@fusaka-devnet-1"
           RETH_DEFAULT="paradigmxyz/reth@fusaka/devnet1"
           NETHERMIND_DEFAULT="NethermindEth/nethermind@master"
-          ERIGON_DEFAULT="erigontech/erigon@main"
+          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-1"
           ETHEREUMJS_DEFAULT="ethereumjs/ethereumjs-monorepo@master"
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-1"
           HIVE_DEFAULT="ethereum/hive@master"
