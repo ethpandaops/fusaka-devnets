@@ -24,7 +24,7 @@ nimbusel_container_command_extra_args:
   - --bootstrap-node={{ ethereum_el_bootnodes | join(',') }}
   - --rpc-api=eth,debug
   - --ws-api=eth,debug
-
+  - --log-level=debug
 prometheus_config: |
   global:
     scrape_interval: 30s

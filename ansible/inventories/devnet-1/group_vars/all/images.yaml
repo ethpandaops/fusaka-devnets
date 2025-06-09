@@ -1,7 +1,7 @@
 default_ethereum_client_images:
 ### Consensus layer clients
   lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:unstable
-  lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:nc-test-peerdas-7917
+  lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:nc-test-peerdas-7917-f34a4af
   nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:column-syncer-767aca4
   prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:fusaka-devnet-1
   prysm_validator: docker.ethquokkaops.io/dh/ethpandaops/prysm-validator:fusaka-devnet-1
@@ -12,7 +12,7 @@ default_ethereum_client_images:
   geth: docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-1
   erigon: docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-1
   ethereumjs: docker.ethquokkaops.io/dh/ethpandaops/ethereumjs:master
-  nethermind: docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka
+  nethermind: docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-c98b792
   reth: docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet1
   nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-1
 
@@ -21,6 +21,7 @@ default_tooling_images:
   mev_boost_relay: docker.ethquokkaops.io/dh/ethpandaops/mev-boost-relay:latest
   xatu_sentry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.4-fulu
   xatu_cannon: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.4-fulu
+  xatu_mimicry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.4-fulu
   ethereum_metrics_exporter: docker.ethquokkaops.io/dh/ethpandaops/ethereum-metrics-exporter:latest
   tx_fuzz: docker.ethquokkaops.io/dh/ethpandaops/tx-fuzz:latest
   forkmon: docker.ethquokkaops.io/dh/skylenet/nodemonitor:darkmode
