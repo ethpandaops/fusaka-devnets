@@ -10,7 +10,7 @@ default_ethereum_client_images:
 ### Execution layer clients
   besu: docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-0-ed8ec22
   geth: docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-0
-  erigon: docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-0-ed36f15
+  erigon: docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-0-42ec7be
   ethereumjs: docker.ethquokkaops.io/dh/ethpandaops/ethereumjs:master
   nethermind: docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-32db3ae
   reth: docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet0
