@@ -19,9 +19,10 @@ default_ethereum_client_images:
 default_tooling_images:
   mev_boost: docker.ethquokkaops.io/dh/ethpandaops/mev-boost:latest
   mev_boost_relay: docker.ethquokkaops.io/dh/ethpandaops/mev-boost-relay:latest
-  xatu_sentry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.4-fulu
-  xatu_cannon: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.4-fulu
-  xatu_mimicry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.4-fulu
+  xatu_sentry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu
+  xatu_cannon: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu
+  xatu_mimicry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu
+  xatu_cl_mimicry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu
   ethereum_metrics_exporter: docker.ethquokkaops.io/dh/ethpandaops/ethereum-metrics-exporter:latest
   tx_fuzz: docker.ethquokkaops.io/dh/ethpandaops/tx-fuzz:latest
   forkmon: docker.ethquokkaops.io/dh/skylenet/nodemonitor:darkmode
