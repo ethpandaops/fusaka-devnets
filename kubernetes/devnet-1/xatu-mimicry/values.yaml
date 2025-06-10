@@ -3,7 +3,7 @@ xatu-mimicry:
   fullnameOverride: xatu-mimicry
   image:
     repository: docker.ethquokkaops.io/dh/ethpandaops/xatu
-    tag: 0.0.4-fulu
+    tag: 0.0.5-fulu
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -19,6 +19,8 @@ xatu-mimicry:
     name: "fusaka-devnet-1-xatu-mimicry"
     captureDelay: 3m
     ntpServer: time.google.com
+    ethereum:
+      overrideNetworkName: "fusaka-devnet-1"
     coordinator:
       type: static
       config:
