@@ -2,7 +2,7 @@ default_ethereum_client_images:
 ### Consensus layer clients
   lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:unstable
   lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:nc-test-peerdas-7917-f34a4af
-  nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:column-syncer-767aca4
+  nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:column-syncer-f471f9b
   prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:fusaka-devnet-1
   prysm_validator: docker.ethquokkaops.io/dh/ethpandaops/prysm-validator:fusaka-devnet-1
   teku: docker.ethquokkaops.io/dh/ethpandaops/teku:master
@@ -14,7 +14,7 @@ default_ethereum_client_images:
   ethereumjs: docker.ethquokkaops.io/dh/ethpandaops/ethereumjs:master
   nethermind: docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-c98b792
   reth: docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet1
-  nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-1
+  nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-1-ca1c783
 
 default_tooling_images:
   mev_boost: docker.ethquokkaops.io/dh/ethpandaops/mev-boost:latest
