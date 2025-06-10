@@ -255,6 +255,10 @@ jobs:
           '))}}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
+        with:
+          username: ethpandaops
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@34b5a7bd351cad8308f41a6f4d40fa5aa7a2f713 # v0.2.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/hive-github-action@34b5a7bd351cad8308f41a6f4d40fa5aa7a2f713 # v0.2.0
