@@ -8,11 +8,11 @@ spamoor:
     pullPolicy: Always
   resources:
     requests:
-      cpu: 250m
-      memory: 500Mi
+      cpu: 500m
+      memory: 2Gi
     limits:
       cpu: 2000m
-      memory: 2Gi
+      memory: 6Gi
   ingress:
     enabled: true
     className: ingress-nginx-public
