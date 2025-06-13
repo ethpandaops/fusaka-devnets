@@ -4,7 +4,7 @@ spamoor:
   fullnameOverride: spamoor
   image:
     repository: docker.ethquokkaops.io/dh/ethpandaops/spamoor
-    tag: latest
+    tag: master-latest
     pullPolicy: Always
   resources:
     requests:
