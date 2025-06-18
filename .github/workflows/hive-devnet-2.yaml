@@ -1,4 +1,4 @@
-name: Hive - Devnet 1
+name: Hive - Devnet 2
 on:
   schedule:
     - cron: '45 12 * * *'
@@ -7,43 +7,39 @@ on:
     inputs:
       client:
         type: string
-        default: '"go-ethereum","reth","nethermind","ethereumjs","nimbus-el","besu","erigon"'
-        description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, ethereumjs, nimbus-el
+        default: '"go-ethereum","reth","nethermind","nimbus-el","besu","erigon"'
+        description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, nimbus-el
       simulator:
         type: string
-        default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp","ethereum/eest/execute-blobs"'
-        description: Comma-separated list of simulators to test .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rl, ethereum/eest/execute-blobs
+        default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp"'
+        description: Comma-separated list of simulators to test .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
       hive_version:
         type: string
         default: ethereum/hive@master
         description: GitHub repository and tag for hive (repo@tag)
       geth_version:
         type: string
-        default: ethereum/go-ethereum@fusaka-devnet-2
+        default: ethereum/go-ethereum@berlinterop-devnet-2
         description: GitHub repository and tag for go-ethereum (repo@tag)
       besu_version:
         type: string
-        default: hyperledger/besu@fusaka-devnet-2
+        default: hyperledger/besu@berlinterop-devnet-2
         description: GitHub repository and tag for besu (repo@tag)
       reth_version:
         type: string
-        default: paradigmxyz/reth@fusaka-devnet2
+        default: paradigmxyz/reth@berlinterop-devnet-2
         description: GitHub repository and tag for reth (repo@tag)
       nethermind_version:
         type: string
-        default: NethermindEth/nethermind@fusaka-devnet-2
+        default: NethermindEth/nethermind@berlinterop-devnet-2
         description: GitHub repository and tag for nethermind (repo@tag)
       erigon_version:
         type: string
-        default: erigontech/erigon@fusaka-devnet-2
+        default: erigontech/erigon@berlinterop-devnet-2
         description: GitHub repository and tag for erigon (repo@tag)
-      ethereumjs_version:
-        type: string
-        default: ethereumjs/ethereumjs-monorepo@master
-        description: GitHub repository and tag for ethereumjs (repo@tag)
       nimbusel_version:
         type: string
-        default: status-im/nimbus-eth1@fusaka-devnet-2
+        default: status-im/nimbus-eth1@berlinterop-devnet-2
         description: GitHub repository and tag for nimbus-el (repo@tag)
 
 env:
@@ -54,8 +50,8 @@ env:
   S3_PATH: fusaka-devnet-2
   S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-2
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-2%40v1.0.0/fixtures_fusaka-devnet-2.tar.gz
-  EEST_BUILD_ARG_BRANCH: devnets/fusaka/2
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-2%40v1.1.0/fixtures_fusaka-devnet-2.tar.gz
+  EEST_BUILD_ARG_BRANCH: fusaka-devnet-2
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
@@ -101,9 +97,6 @@ jobs:
       erigon_image: ${{ steps.parse.outputs.erigon_image }}
       erigon_tag: ${{ steps.parse.outputs.erigon_tag }}
       erigon_docker_image_tag: ${{ steps.parse.outputs.erigon_docker_image_tag }}
-      ethereumjs_repo: ${{ steps.parse.outputs.ethereumjs_repo }}
-      ethereumjs_tag: ${{ steps.parse.outputs.ethereumjs_tag }}
-      ethereumjs_docker_image_tag: ${{ steps.parse.outputs.ethereumjs_docker_image_tag }}
       nimbusel_repo: ${{ steps.parse.outputs.nimbusel_repo }}
       nimbusel_tag: ${{ steps.parse.outputs.nimbusel_tag }}
       nimbusel_docker_image_tag: ${{ steps.parse.outputs.nimbusel_docker_image_tag }}
@@ -113,13 +106,12 @@ jobs:
       - id: parse
         run: |
           # Default client versions
-          GETH_DEFAULT="ethereum/go-ethereum@fusaka-devnet-2"
-          BESU_DEFAULT="hyperledger/besu@fusaka-devnet-2"
-          RETH_DEFAULT="paradigmxyz/reth@fusaka-devnet-2"
-          NETHERMIND_DEFAULT="NethermindEth/nethermind@fusaka-devnet-2"
-          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-2"
-          ETHEREUMJS_DEFAULT="ethereumjs/ethereumjs-monorepo@master"
-          NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-2"
+          GETH_DEFAULT="ethereum/go-ethereum@berlinterop-devnet-2"
+          BESU_DEFAULT="hyperledger/besu@berlinterop-devnet-2"
+          RETH_DEFAULT="paradigmxyz/reth@berlinterop-devnet-2"
+          NETHERMIND_DEFAULT="NethermindEth/nethermind@berlinterop-devnet-2"
+          ERIGON_DEFAULT="erigontech/erigon@berlinterop-devnet-2"
+          NIMBUSEL_DEFAULT="status-im/nimbus-eth1@berlinterop-devnet-2"
           HIVE_DEFAULT="ethereum/hive@master"
 
           # Parse geth
@@ -147,11 +139,6 @@ jobs:
           echo "erigon_tag=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
           echo "erigon_docker_image_tag=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
 
-          # Parse ethereumjs
-          echo "ethereumjs_repo=$(echo ${ETHEREUMJS_VERSION:-$ETHEREUMJS_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "ethereumjs_tag=$(echo ${ETHEREUMJS_VERSION:-$ETHEREUMJS_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "ethereumjs_docker_image_tag=$(echo ${ETHEREUMJS_VERSION:-$ETHEREUMJS_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
           # Parse nimbusel
           echo "nimbusel_repo=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
           echo "nimbusel_tag=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
@@ -166,7 +153,6 @@ jobs:
           RETH_VERSION: ${{ inputs.reth_version }}
           NETHERMIND_VERSION: ${{ inputs.nethermind_version }}
           ERIGON_VERSION: ${{ inputs.erigon_version }}
-          ETHEREUMJS_VERSION: ${{ inputs.ethereumjs_version }}
           NIMBUSEL_VERSION: ${{ inputs.nimbusel_version }}
           HIVE_VERSION: ${{ inputs.hive_version }}
       - id: client_config
@@ -205,12 +191,6 @@ jobs:
               github: ${{ steps.parse.outputs.erigon_repo }}
               tag: ${{ steps.parse.outputs.erigon_tag }}
               GOPROXY: ${{ env.GOPROXY }}
-          - client: ethereumjs
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.ethereumjs_repo }}
-              tag: ${{ steps.parse.outputs.ethereumjs_tag }}
           - client: nimbus-el
             nametag: default
             dockerfile: git
@@ -240,7 +220,6 @@ jobs:
             fromJSON(format('[{0}]', inputs.client || '
               "besu",
               "erigon",
-              "ethereumjs",
               "go-ethereum",
               "nethermind",
               "nimbus-el",
@@ -250,16 +229,11 @@ jobs:
           ${{
             fromJSON(format('[{0}]', inputs.simulator || '
             "ethereum/eest/consume-engine",
-            "ethereum/eest/consume-rlp",
-            "ethereum/eest/execute-blobs"
+            "ethereum/eest/consume-rlp"
           '))}}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
-        with:
-          username: ethpandaops
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@299a5ffad55b067d7dd26ab9fe40ff999cbb5029 # v0.3.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@34b5a7bd351cad8308f41a6f4d40fa5aa7a2f713 # v0.2.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/hive-github-action@299a5ffad55b067d7dd26ab9fe40ff999cbb5029 # v0.3.0
         with:
@@ -273,7 +247,6 @@ jobs:
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-engine' && env.EEST_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-rlp' && env.EEST_RLP_FLAGS || '' }}
-            ${{ matrix.simulator == 'ethereum/eest/execute-blobs' && env.EEST_EXECUTE_FLAGS || '' }}
           s3_upload: true
           s3_bucket: ${{ env.S3_BUCKET }}
           s3_path: ${{ env.S3_PATH }}
