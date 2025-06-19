@@ -1,4 +1,4 @@
-name: Hive - Devnet Berlinterop
+name: Hive - Devnet 2
 on:
   schedule:
     - cron: '45 12 * * *'
@@ -15,7 +15,7 @@ on:
         description: Comma-separated list of simulators to test .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
       hive_version:
         type: string
-        default: spencer-tb/hive@clients/nethermind/mapper-fusaka
+        default: ethereum/hive@master
         description: GitHub repository and tag for hive (repo@tag)
       geth_version:
         type: string
@@ -47,11 +47,11 @@ env:
   GOPROXY: "${{ vars.GOPROXY }}"
   # Hive action environment variables
   S3_BUCKET: hive-results
-  S3_PATH: berlinterop-devnet-2
-  S3_PUBLIC_URL: https://hive.ethpandaops.io/berlinterop-devnet-2
+  S3_PATH: fusaka-devnet-2
+  S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-2
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-interop%40v1.1.0/fixtures_fusaka-devnet-interop.tar.gz
-  EEST_BUILD_ARG_BRANCH: berlinterop-devnet-2
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-2%40v1.1.0/fixtures_fusaka-devnet-2.tar.gz
+  EEST_BUILD_ARG_BRANCH: fusaka-devnet-2
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
@@ -112,7 +112,7 @@ jobs:
           NETHERMIND_DEFAULT="NethermindEth/nethermind@berlinterop-devnet-2"
           ERIGON_DEFAULT="erigontech/erigon@berlinterop-devnet-2"
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@berlinterop-devnet-2"
-          HIVE_DEFAULT="spencer-tb/hive@clients/nethermind/mapper-fusaka"
+          HIVE_DEFAULT="ethereum/hive@master"
 
           # Parse geth
           echo "geth_repo=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
@@ -235,7 +235,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@34b5a7bd351cad8308f41a6f4d40fa5aa7a2f713 # v0.2.0
         if: runner.environment != 'github-hosted'
-      - uses: ethpandaops/hive-github-action@34b5a7bd351cad8308f41a6f4d40fa5aa7a2f713 # v0.2.0
+      - uses: ethpandaops/hive-github-action@299a5ffad55b067d7dd26ab9fe40ff999cbb5029 # v0.3.0
         with:
           hive_repository: ${{ needs.prepare.outputs.hive_repo }}
           hive_version: ${{ needs.prepare.outputs.hive_tag }}
