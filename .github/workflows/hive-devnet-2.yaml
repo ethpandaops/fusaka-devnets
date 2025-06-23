@@ -110,7 +110,7 @@ jobs:
           BESU_DEFAULT="hyperledger/besu@fusaka-devnet-2"
           RETH_DEFAULT="paradigmxyz/reth@fusaka/devnet2"
           NETHERMIND_DEFAULT="NethermindEth/nethermind@fusaka-devnet-2"
-          ERIGON_DEFAULT="erigontech/erigon@berlinterop-devnet-2"
+          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-2"
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-2"
           HIVE_DEFAULT="ethereum/hive@master"
 
