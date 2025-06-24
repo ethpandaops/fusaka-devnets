@@ -27,7 +27,7 @@ on:
         description: GitHub repository and tag for besu (repo@tag)
       reth_version:
         type: string
-        default: paradigmxyz/reth@fusaka/devnet2
+        default: paradigmxyz/reth@fusaka-devnet-2
         description: GitHub repository and tag for reth (repo@tag)
       nethermind_version:
         type: string
@@ -51,7 +51,7 @@ env:
   S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-2
   INSTALL_RCLONE_VERSION: v1.68.2
   EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-2%40v1.2.0/fixtures_fusaka-devnet-2.tar.gz
-  EEST_BUILD_ARG_BRANCH: fusaka-devnet-2@v1.2.0
+  EEST_BUILD_ARG_BRANCH: fusaka-devnet-2
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
@@ -108,7 +108,7 @@ jobs:
           # Default client versions
           GETH_DEFAULT="ethereum/go-ethereum@fusaka-devnet-2"
           BESU_DEFAULT="hyperledger/besu@fusaka-devnet-2"
-          RETH_DEFAULT="paradigmxyz/reth@fusaka/devnet2"
+          RETH_DEFAULT="paradigmxyz/reth@fusaka-devnet-2"
           NETHERMIND_DEFAULT="NethermindEth/nethermind@fusaka-devnet-2"
           ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-2"
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-2"
