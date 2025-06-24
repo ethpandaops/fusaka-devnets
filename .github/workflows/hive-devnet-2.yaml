@@ -35,7 +35,7 @@ on:
         description: GitHub repository and tag for nethermind (repo@tag)
       erigon_version:
         type: string
-        default: erigontech/berlinterop@fusaka-devnet-2
+        default: erigontech/erigon@fusaka-devnet-2
         description: GitHub repository and tag for erigon (repo@tag)
       nimbusel_version:
         type: string
