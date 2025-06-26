@@ -140,7 +140,13 @@ ethereum_node_el_ports_ws_rpc: 8546
 ethereum_node_el_ports_engine: 8551
 ethereum_node_el_ports_metrics: 6060
 ethereum_node_skip_cleanup: true
-
+ethereum_node_docker_watchtower_enabled: true
+ethereum_node_docker_watchtower_containers_list:
+  - execution
+  - beacon
+  - validator
+docker_watchtower_container_additional_args:
+  - --interval=120
 ethereum_node_json_rpc_snooper_engine_enabled: true
 ethereum_node_json_rpc_snooper_engine_port: 8561
 ethereum_node_json_rpc_snooper_engine_name: "snooper-engine"
