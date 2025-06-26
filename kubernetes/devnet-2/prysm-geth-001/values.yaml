@@ -98,7 +98,7 @@ prysm-geth-001:
               - --light-client-data-serve=false
               - --sync-light-client=false
               - --light-client-data-serve=false
-              - --light-client-data-import-mode=false
+              - --light-client-data-import-mode=none
               - --bootstrap-node=enr:-Iq4QCxbKw-XHdkvUcbd5-bJ8vEtyJr5jD3sg3XCwnkWXWwOEcuWWTrev8TnIcSsatTVd2LseQy1wH8u97vPGlxismiGAZerck1AgmlkgnY0gmlwhKdHDm2Jc2VjcDI1NmsxoQJJ3h8aUO3GJHv-bdvHtsQZ2OEisutelYfGjXO4lSg8BYN1ZHCCIzI
               - --bootstrap-node=enr:-MG4QGk5z8hpTrGM3uosvLuGmdL381IMXvmeBJBRxJUreV_cemmE-cJ6ftJRggPjM_tX6uhSEsO3mbqYpaSVTx4aYdYHh2F0dG5ldHOIAAAAAIABAACDY2djgYCEZXRoMpCBABMacJN1RAABAAAAAAAAgmlkgnY0gmlwhKdHDm2DbmZkhDafifeJc2VjcDI1NmsxoQN2BhqrvYI0XsXGaCnPcgLDwrwIL_szGrhtPGtb9_-AeYN0Y3CCIyiDdWRwgiMo
 
