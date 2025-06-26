@@ -100,6 +100,13 @@
           VIRTUAL_DEST: "/"
           LETSENCRYPT_HOST: "bootnode-1.{{ network_subdomain }}"
 
+- hosts: tx_fuzz_txs
+  become: true
+  roles:
+    - role: ethpandaops.general.tx_fuzz
+      tags: [tx_fuzz, tx_fuzz_txs]
+
+
 - hosts: bootnode
   become: true
   roles:
