@@ -1,6 +1,6 @@
 #!/bin/zsh
 node="bootnode-1"
-network="devnet-0"
+network="devnet-2"
 domain="ethpandaops.io"
 prefix="fusaka"
 sops_name=$(sops --decrypt ../ansible/inventories/$network/group_vars/all/all.sops.yaml | yq -r '.secret_nginx_shared_basic_auth.name')
@@ -361,7 +361,7 @@ for arg in "${command[@]}"; do
         deposit_contract_address=$(curl -s $bn_endpoint/eth/v1/config/spec | jq -r '.data.DEPOSIT_CONTRACT_ADDRESS')
         eth2-val-tools deposit-data --source-min=${command[2]} --source-max=${command[3]} --amount=32000000000 --fork-version=$fork_version --withdrawals-mnemonic="$sops_mnemonic" --validators-mnemonic="$sops_mnemonic" > deposits_$prefix-$network-${command[2]}_${command[3]}.txt
         # ask if you want to deposit to the network
-        echo "Are you sure you want to make a deposit to the network for validators ${command[2]} to ${command[3]}? (y/n)"
+        echo "Are you sure you want to make a deposit to the network (${prefix}-${network}) for validators ${command[2]} to ${command[3]}? (y/n)"
         read -r response
         if [[ $response == "y" ]]; then
           while read x; do

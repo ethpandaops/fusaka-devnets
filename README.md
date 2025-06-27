@@ -16,6 +16,7 @@ Status   | Network    | Links   | Ansible                                       
 ------   | --------   | ----     |  -----                                                       | -------   | ------
 Offline | Fusaka-devnet-0 | [devnet-0](https://template.devnet.io/)   | [Network config](network-configs/devnet-0) / [Inventory](https://bootnode-1.devnet-0.ethpandaops.io/meta/api/v1/inventory.json) / [Validator ranges](https://bootnode-1.devnet-0.ethpandaops.io/meta/api/v1/validator-ranges.json)    | [🔗](ansible/inventories/devnet-0) | [🔗](terraform/devnet-0) | [🔗](kubernetes/devnet-0)
 Offline | Fusaka-devnet-1 | [devnet-1](https://template.devnet.io/)   | [Network config](network-configs/devnet-1) / [Inventory](https://bootnode-1.devnet-1.ethpandaops.io/meta/api/v1/inventory.json) / [Validator ranges](https://bootnode-1.devnet-1.ethpandaops.io/meta/api/v1/validator-ranges.json)    | [🔗](ansible/inventories/devnet-1) | [🔗](terraform/devnet-1) | [🔗](kubernetes/devnet-1)
+Online | Fusaka-devnet-2 | [devnet-2](https://template.devnet.io/)   | [Network config](network-configs/devnet-2) / [Inventory](https://bootnode-1.devnet-2.ethpandaops.io/meta/api/v1/inventory.json) / [Validator ranges](../inventories/devnet-2/validator_ranges.json)    | [🔗](ansible/inventories/devnet-2) | [🔗](terraform/devnet-2) | [🔗](kubernetes/devnet-2)
 
 # Development
 ## Version management for tools
