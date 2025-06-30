@@ -202,6 +202,13 @@ resource "digitalocean_firewall" "main" {
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
+  // Engine rpc-snooper api
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "8961"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
   // Allow all outbound traffic
   outbound_rule {
     protocol              = "tcp"
