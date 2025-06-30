@@ -24,6 +24,7 @@ dora:
 
   name: fusaka-devnet-2
   configPath: "https://config.fusaka-devnet-2.ethpandaops.io/cl/config.yaml"
+  validatorNamesInventory: "http://127.0.0.1"
   proxyCount: 2
   extraEnv:
     - name: FRONTEND_PPROF
