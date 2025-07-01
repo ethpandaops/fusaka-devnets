@@ -56,6 +56,7 @@ env:
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
     --sim.parallelism=4
+    --docker.auth
     --docker.buildoutput
   # Flags used for the ethereum/eest/consume-engine simulator
   EEST_ENGINE_FLAGS: >-
