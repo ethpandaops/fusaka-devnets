@@ -100,6 +100,12 @@
           VIRTUAL_DEST: "/"
           LETSENCRYPT_HOST: "bootnode-1.{{ network_subdomain }}"
 
+- hosts: mev_relay
+  become: true
+  roles:
+    - role: ethpandaops.general.mev_relay
+      tags: [mev_relay]
+
 - hosts: tx_fuzz_txs
   become: true
   roles:
@@ -112,6 +118,9 @@
   roles:
     - role: ethpandaops.general.ethereum_inventory_web
       tags: [eth_inventory_web, ethereum_inventory_web]
+
+
+
 
 - hosts: dora
   become: true

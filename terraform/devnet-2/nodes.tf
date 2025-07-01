@@ -9,6 +9,15 @@ variable "bootnode" {
   }
 }
 
+variable "mev_relay" {
+  default = {
+    name            = "mev-relay"
+    count           = 1
+    validator_start = 0
+    validator_end   = 0
+  }
+}
+
 # Lighthouse
 variable "lighthouse_geth" {
   default = {

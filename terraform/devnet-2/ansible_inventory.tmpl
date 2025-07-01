@@ -10,6 +10,13 @@ ethereum_network_name=${ethereum_network_name}
 ${host.hostname} ansible_host=${host.ip} ipv6=${host.ipv6} cloud=${host.cloud} cloud_region=${host.region} ethereum_node_cl_supernode_enabled=${host.supernode} %{ if max(host.validator_start, host.validator_end) != 0 }validator_start=${host.validator_start} validator_end=${host.validator_end}%{ endif }
 %{ endif ~}
 %{ endfor ~}
+%{ if gid == "lighthouse-reth" ~}
+%{ for key, host in hosts ~}
+%{ if host.group == "mev-relay" ~}
+${host.hostname}
+%{ endif ~}
+%{ endfor ~}
+%{ endif ~}
 
 %{ endfor ~}
 
@@ -40,15 +47,18 @@ ${replace(gid, "-", "_")}
 # Global groups
 
 [consensus_node:children]
-%{ for x,y in merge( { for gid, group in groups : split("-", gid)[0] => true... if split("-", gid)[0] != "bootnode" } )   ~}
+%{ for x,y in merge( { for gid, group in groups : split("-", gid)[0] => true... if split("-", gid)[0] != "bootnode" && split("-", gid)[0] != "mev" } )   ~}
 ${x}
 %{ endfor ~}
 
 [execution_node:children]
-%{ for x,y in merge( { for gid, group in groups : split("-", gid)[1] => true... if split("-", gid)[0] != "bootnode" } )   ~}
+%{ for x,y in merge( { for gid, group in groups : split("-", gid)[1] => true... if split("-", gid)[0] != "bootnode" && split("-", gid)[0] != "mev" } )   ~}
 ${x}
 %{ endfor ~}
 
 [ethereum_node:children]
 consensus_node
 execution_node
+
+[mev_boost:children]
+consensus_node

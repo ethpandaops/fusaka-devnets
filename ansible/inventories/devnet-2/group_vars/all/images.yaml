@@ -16,9 +16,12 @@ default_ethereum_client_images:
   reth: docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2
   nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-2
 
+# mev boost
+  mev_boost: docker.ethquokkaops.io/dh/ethpandaops/mev-boost:jtraglia-fulu-eef602e
+
 default_tooling_images:
-  mev_boost: docker.ethquokkaops.io/dh/ethpandaops/mev-boost:latest
-  mev_boost_relay: docker.ethquokkaops.io/dh/ethpandaops/mev-boost-relay:latest
+  mev_builder: docker.ethquokkaops.io/dh/ethpandaops/reth-rbuilder:fusaka-devnet2-0253640
+  mev_relay: docker.ethquokkaops.io/dh/ethpandaops/mev-boost-relay:bharath-123-fulu-33f6f0b
   xatu_sentry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu
   xatu_cannon: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu
   xatu_mimicry: docker.ethquokkaops.io/dh/ethpandaops/xatu:0.0.5-fulu

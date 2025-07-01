@@ -37,6 +37,7 @@ ethereum_genesis_generator_container_image: "{{ default_tooling_images.ethereum_
 ethereum_genesis_generator_version: "{{ ethereum_genesis_generator_container_image.split(':')[-1] }}"
 ethereum_genesis_network_seed: "fusaka-devnet-2"
 ethereum_genesis_chain_id: "70{{ 99999999 | random(start=10000000, seed=ethereum_genesis_network_seed) }}"
+ethereum_genesis_fork_version_suffix: "{{ 999999 | random(start=100000, seed=ethereum_genesis_network_seed) }}"
 ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('fusaka-', '') }}"
 ethereum_genesis_timestamp: "1750931940"
 ethereum_genesis_timedelay: 60
@@ -148,15 +149,8 @@ ethereum_node_docker_watchtower_containers_list:
 docker_watchtower_container_additional_args:
   - --interval=120
 ethereum_node_json_rpc_snooper_engine_enabled: true
-ethereum_node_json_rpc_snooper_engine_name: "snooper-engine"
 ethereum_node_json_rpc_snooper_engine_port: 8561
-ethereum_node_json_rpc_snooper_engine_public_port: 8961
-ethereum_node_json_rpc_snooper_engine_container_env:
-  SNOOPER_API_PORT: "{{ ethereum_node_json_rpc_snooper_engine_public_port | quote }}"
-  SNOOPER_API_AUTH: "{{ secret_nginx_shared_basic_auth.name }}:{{ secret_nginx_shared_basic_auth.password }}"
-
-# role: ethpandaops.general.generate_kubernetes_config
-gen_kubernetes_config_dora_execution_snooper_port: 8961
+ethereum_node_json_rpc_snooper_engine_name: "snooper-engine"
 
 # role: ethpandaops.general.xatu_sentry
 xatu_sentry_container_image: "{{ default_tooling_images.xatu_sentry }}"
