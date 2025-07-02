@@ -122,89 +122,55 @@ jobs:
     steps:
       - id: parse
         run: |
-          # Parse client versions
-          # Default client versions
-          GETH_DEFAULT="ethereum/go-ethereum@fusaka-devnet-2"
-          BESU_DEFAULT="hyperledger/besu@fusaka-devnet-2"
-          RETH_DEFAULT="paradigmxyz/reth@fusaka-devnet-2"
-          NETHERMIND_DEFAULT="NethermindEth/nethermind@fusaka-devnet-2"
-          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-2"
-          NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-2"
-          HIVE_DEFAULT="ethereum/hive@master"
+          # Define client configurations
+          declare -A CLIENT_DEFAULTS=(
+            ["geth"]="ethereum/go-ethereum@fusaka-devnet-2"
+            ["besu"]="hyperledger/besu@fusaka-devnet-2"
+            ["reth"]="paradigmxyz/reth@fusaka-devnet-2"
+            ["nethermind"]="NethermindEth/nethermind@fusaka-devnet-2"
+            ["erigon"]="erigontech/erigon@fusaka-devnet-2"
+            ["nimbusel"]="status-im/nimbus-eth1@fusaka-devnet-2"
+          )
 
-          # Parse client versions from JSON or use defaults
+          declare -A CLIENT_IMAGE_DEFAULTS=(
+            ["geth"]="docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-2"
+            ["besu"]="docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-2"
+            ["reth"]="docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2"
+            ["nethermind"]="docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2"
+            ["erigon"]="docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2"
+            ["nimbusel"]="docker.ethquokkaops.io/dh/status-im/nimbus-eth1:fusaka-devnet-2"
+          )
+
           CLIENT_VERSIONS='${{ inputs.client_versions }}'
-          if [ -n "$CLIENT_VERSIONS" ]; then
-            GETH_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.geth // "'"$GETH_DEFAULT"'"')
-            BESU_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.besu // "'"$BESU_DEFAULT"'"')
-            RETH_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.reth // "'"$RETH_DEFAULT"'"')
-            NETHERMIND_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.nethermind // "'"$NETHERMIND_DEFAULT"'"')
-            ERIGON_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.erigon // "'"$ERIGON_DEFAULT"'"')
-            NIMBUSEL_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.nimbusel // "'"$NIMBUSEL_DEFAULT"'"')
-          else
-            GETH_VERSION="$GETH_DEFAULT"
-            BESU_VERSION="$BESU_DEFAULT"
-            RETH_VERSION="$RETH_DEFAULT"
-            NETHERMIND_VERSION="$NETHERMIND_DEFAULT"
-            ERIGON_VERSION="$ERIGON_DEFAULT"
-            NIMBUSEL_VERSION="$NIMBUSEL_DEFAULT"
-          fi
-
-          # Parse clients repos and tags
-          echo "geth_repo=$(echo ${GETH_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "geth_tag=$(echo ${GETH_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "besu_repo=$(echo ${BESU_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "besu_tag=$(echo ${BESU_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "reth_repo=$(echo ${RETH_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "reth_tag=$(echo ${RETH_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "nethermind_repo=$(echo ${NETHERMIND_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "nethermind_tag=$(echo ${NETHERMIND_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "erigon_repo=$(echo ${ERIGON_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "erigon_tag=$(echo ${ERIGON_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "nimbusel_repo=$(echo ${NIMBUSEL_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "nimbusel_tag=$(echo ${NIMBUSEL_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-
-          # Default client docker images
-          GETH_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-2"
-          BESU_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-2"
-          RETH_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2"
-          NETHERMIND_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2"
-          ERIGON_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2"
-          NIMBUSEL_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/status-im/nimbus-eth1:fusaka-devnet-2"
-
-          # Parse client images from JSON or use defaults
           CLIENT_IMAGES='${{ inputs.client_images }}'
-          if [ -n "$CLIENT_IMAGES" ]; then
-            GETH_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.geth // "'"$GETH_IMAGE_DEFAULT"'"')
-            BESU_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.besu // "'"$BESU_IMAGE_DEFAULT"'"')
-            RETH_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.reth // "'"$RETH_IMAGE_DEFAULT"'"')
-            NETHERMIND_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.nethermind // "'"$NETHERMIND_IMAGE_DEFAULT"'"')
-            ERIGON_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.erigon // "'"$ERIGON_IMAGE_DEFAULT"'"')
-            NIMBUSEL_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.nimbusel // "'"$NIMBUSEL_IMAGE_DEFAULT"'"')
-          else
-            GETH_IMAGE="$GETH_IMAGE_DEFAULT"
-            BESU_IMAGE="$BESU_IMAGE_DEFAULT"
-            RETH_IMAGE="$RETH_IMAGE_DEFAULT"
-            NETHERMIND_IMAGE="$NETHERMIND_IMAGE_DEFAULT"
-            ERIGON_IMAGE="$ERIGON_IMAGE_DEFAULT"
-            NIMBUSEL_IMAGE="$NIMBUSEL_IMAGE_DEFAULT"
-          fi
 
-          # Parse client docker images into registry and tag
-          echo "geth_docker_registry=$(echo ${GETH_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
-          echo "geth_docker_tag=$(echo ${GETH_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
-          echo "besu_docker_registry=$(echo ${BESU_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
-          echo "besu_docker_tag=$(echo ${BESU_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
-          echo "reth_docker_registry=$(echo ${RETH_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
-          echo "reth_docker_tag=$(echo ${RETH_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
-          echo "nethermind_docker_registry=$(echo ${NETHERMIND_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
-          echo "nethermind_docker_tag=$(echo ${NETHERMIND_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
-          echo "erigon_docker_registry=$(echo ${ERIGON_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
-          echo "erigon_docker_tag=$(echo ${ERIGON_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
-          echo "nimbusel_docker_registry=$(echo ${NIMBUSEL_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
-          echo "nimbusel_docker_tag=$(echo ${NIMBUSEL_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          # Process each client
+          for client in "${!CLIENT_DEFAULTS[@]}"; do
+            # Parse client version
+            if [ -n "$CLIENT_VERSIONS" ]; then
+              client_version=$(echo "$CLIENT_VERSIONS" | jq -r ".${client} // \"${CLIENT_DEFAULTS[$client]}\"")
+            else
+              client_version="${CLIENT_DEFAULTS[$client]}"
+            fi
+
+            # Extract repo and tag from version
+            echo "${client}_repo=$(echo ${client_version} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+            echo "${client}_tag=$(echo ${client_version} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+
+            # Parse client docker image
+            if [ -n "$CLIENT_IMAGES" ]; then
+              client_image=$(echo "$CLIENT_IMAGES" | jq -r ".${client} // \"${CLIENT_IMAGE_DEFAULTS[$client]}\"")
+            else
+              client_image="${CLIENT_IMAGE_DEFAULTS[$client]}"
+            fi
+
+            # Extract registry and tag from docker image
+            echo "${client}_docker_registry=$(echo ${client_image} | cut -d: -f1)" >> $GITHUB_OUTPUT
+            echo "${client}_docker_tag=$(echo ${client_image} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          done
 
           # Parse hive repo and tag
+          HIVE_DEFAULT="ethereum/hive@master"
           echo "hive_repo=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
           echo "hive_tag=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
 
