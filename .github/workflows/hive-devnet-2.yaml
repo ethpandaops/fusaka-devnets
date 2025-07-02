@@ -47,7 +47,7 @@ on:
               "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2",
               "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2",
               "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2",
-              "nimbusel": "docker.ethquokkaops.io/dh/status-im/nimbus-eth1:fusaka-devnet-2"
+              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-2"
             }
           description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
@@ -260,6 +260,7 @@ jobs:
           EOF
       - id: client_config
         run: |
+          # Generate client config based on client_source
           cat << 'EOF' >> $GITHUB_OUTPUT
           config<<ENDCONFIG
           ${{ inputs.client_source == 'docker' && steps.client_config_docker.outputs.config || steps.client_config_git.outputs.config }}
