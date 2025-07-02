@@ -138,7 +138,7 @@ jobs:
             ["reth"]="docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2"
             ["nethermind"]="docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2"
             ["erigon"]="docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2"
-            ["nimbusel"]="docker.ethquokkaops.io/dh/status-im/nimbus-eth1:fusaka-devnet-2"
+            ["nimbusel"]="docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-2"
           )
 
           CLIENT_VERSIONS='${{ inputs.client_versions }}'
