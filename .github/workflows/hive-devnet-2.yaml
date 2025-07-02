@@ -17,30 +17,39 @@ on:
         type: string
         default: ethereum/hive@master
         description: GitHub repository and tag for hive (repo@tag)
-      geth_version:
+      client_source:
+        type: choice
+        description: >-
+          How client images should be sourced.
+          1. git will use the github repo and tag (See client_versions).
+          2. docker will use the docker registry and tag (See client_images).
+        options:
+          - git
+          - docker
+      client_versions:
         type: string
-        default: ethereum/go-ethereum@fusaka-devnet-2
-        description: GitHub repository and tag for go-ethereum (repo@tag)
-      besu_version:
-        type: string
-        default: hyperledger/besu@fusaka-devnet-2
-        description: GitHub repository and tag for besu (repo@tag)
-      reth_version:
-        type: string
-        default: paradigmxyz/reth@fusaka-devnet-2
-        description: GitHub repository and tag for reth (repo@tag)
-      nethermind_version:
-        type: string
-        default: NethermindEth/nethermind@fusaka-devnet-2
-        description: GitHub repository and tag for nethermind (repo@tag)
-      erigon_version:
-        type: string
-        default: erigontech/erigon@fusaka-devnet-2
-        description: GitHub repository and tag for erigon (repo@tag)
-      nimbusel_version:
-        type: string
-        default: status-im/nimbus-eth1@fusaka-devnet-2
-        description: GitHub repository and tag for nimbus-el (repo@tag)
+        default: |
+          {
+            "geth": "ethereum/go-ethereum@fusaka-devnet-2",
+            "besu": "hyperledger/besu@fusaka-devnet-2",
+            "reth": "paradigmxyz/reth@fusaka-devnet-2",
+            "nethermind": "NethermindEth/nethermind@fusaka-devnet-2",
+            "erigon": "erigontech/erigon@fusaka-devnet-2",
+            "nimbusel": "status-im/nimbus-eth1@fusaka-devnet-2"
+          }
+        description: 'JSON object containing client versions in format {"client": "repo@tag", ...}'
+      client_images:
+          type: string
+          default: |
+            {
+              "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-2",
+              "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-2",
+              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2",
+              "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2",
+              "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2",
+              "nimbusel": "docker.ethquokkaops.io/dh/status-im/nimbus-eth1:fusaka-devnet-2"
+            }
+          description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
 env:
   # Proxy
@@ -82,25 +91,32 @@ jobs:
       # Hive version
       hive_repo: ${{ steps.parse.outputs.hive_repo }}
       hive_tag: ${{ steps.parse.outputs.hive_tag }}
-      # Versions of the clients
+      # Git versions of the clients
       geth_repo: ${{ steps.parse.outputs.geth_repo }}
       geth_tag: ${{ steps.parse.outputs.geth_tag }}
-      geth_docker_image_tag: ${{ steps.parse.outputs.geth_docker_image_tag }}
       besu_repo: ${{ steps.parse.outputs.besu_repo }}
       besu_tag: ${{ steps.parse.outputs.besu_tag }}
-      besu_docker_image_tag: ${{ steps.parse.outputs.besu_docker_image_tag }}
       reth_repo: ${{ steps.parse.outputs.reth_repo }}
       reth_tag: ${{ steps.parse.outputs.reth_tag }}
-      reth_docker_image_tag: ${{ steps.parse.outputs.reth_docker_image_tag }}
       nethermind_repo: ${{ steps.parse.outputs.nethermind_repo }}
       nethermind_tag: ${{ steps.parse.outputs.nethermind_tag }}
-      nethermind_docker_image_tag: ${{ steps.parse.outputs.nethermind_docker_image_tag }}
-      erigon_image: ${{ steps.parse.outputs.erigon_image }}
+      erigon_repo: ${{ steps.parse.outputs.erigon_repo }}
       erigon_tag: ${{ steps.parse.outputs.erigon_tag }}
-      erigon_docker_image_tag: ${{ steps.parse.outputs.erigon_docker_image_tag }}
       nimbusel_repo: ${{ steps.parse.outputs.nimbusel_repo }}
       nimbusel_tag: ${{ steps.parse.outputs.nimbusel_tag }}
-      nimbusel_docker_image_tag: ${{ steps.parse.outputs.nimbusel_docker_image_tag }}
+      # Docker images for clients - registry and tag separated
+      geth_docker_registry: ${{ steps.parse.outputs.geth_docker_registry }}
+      geth_docker_tag: ${{ steps.parse.outputs.geth_docker_tag }}
+      besu_docker_registry: ${{ steps.parse.outputs.besu_docker_registry }}
+      besu_docker_tag: ${{ steps.parse.outputs.besu_docker_tag }}
+      reth_docker_registry: ${{ steps.parse.outputs.reth_docker_registry }}
+      reth_docker_tag: ${{ steps.parse.outputs.reth_docker_tag }}
+      nethermind_docker_registry: ${{ steps.parse.outputs.nethermind_docker_registry }}
+      nethermind_docker_tag: ${{ steps.parse.outputs.nethermind_docker_tag }}
+      erigon_docker_registry: ${{ steps.parse.outputs.erigon_docker_registry }}
+      erigon_docker_tag: ${{ steps.parse.outputs.erigon_docker_tag }}
+      nimbusel_docker_registry: ${{ steps.parse.outputs.nimbusel_docker_registry }}
+      nimbusel_docker_tag: ${{ steps.parse.outputs.nimbusel_docker_tag }}
       # client_config contains the YAML client config for Hive
       client_config: ${{ steps.client_config.outputs.config }}
     steps:
@@ -115,48 +131,85 @@ jobs:
           NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-2"
           HIVE_DEFAULT="ethereum/hive@master"
 
-          # Parse geth
-          echo "geth_repo=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "geth_tag=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "geth_docker_image_tag=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          # Parse client versions from JSON or use defaults
+          CLIENT_VERSIONS='${{ inputs.client_versions }}'
+          if [ -n "$CLIENT_VERSIONS" ]; then
+            GETH_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.geth // "'"$GETH_DEFAULT"'"')
+            BESU_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.besu // "'"$BESU_DEFAULT"'"')
+            RETH_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.reth // "'"$RETH_DEFAULT"'"')
+            NETHERMIND_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.nethermind // "'"$NETHERMIND_DEFAULT"'"')
+            ERIGON_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.erigon // "'"$ERIGON_DEFAULT"'"')
+            NIMBUSEL_VERSION=$(echo "$CLIENT_VERSIONS" | jq -r '.nimbusel // "'"$NIMBUSEL_DEFAULT"'"')
+          else
+            GETH_VERSION="$GETH_DEFAULT"
+            BESU_VERSION="$BESU_DEFAULT"
+            RETH_VERSION="$RETH_DEFAULT"
+            NETHERMIND_VERSION="$NETHERMIND_DEFAULT"
+            ERIGON_VERSION="$ERIGON_DEFAULT"
+            NIMBUSEL_VERSION="$NIMBUSEL_DEFAULT"
+          fi
 
-          # Parse besu
-          echo "besu_repo=$(echo ${BESU_VERSION:-$BESU_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "besu_tag=$(echo ${BESU_VERSION:-$BESU_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "besu_docker_image_tag=$(echo ${BESU_VERSION:-$BESU_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          # Parse clients repos and tags
+          echo "geth_repo=$(echo ${GETH_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+          echo "geth_tag=$(echo ${GETH_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+          echo "besu_repo=$(echo ${BESU_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+          echo "besu_tag=$(echo ${BESU_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+          echo "reth_repo=$(echo ${RETH_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+          echo "reth_tag=$(echo ${RETH_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+          echo "nethermind_repo=$(echo ${NETHERMIND_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+          echo "nethermind_tag=$(echo ${NETHERMIND_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+          echo "erigon_repo=$(echo ${ERIGON_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+          echo "erigon_tag=$(echo ${ERIGON_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+          echo "nimbusel_repo=$(echo ${NIMBUSEL_VERSION} | cut -d@ -f1)" >> $GITHUB_OUTPUT
+          echo "nimbusel_tag=$(echo ${NIMBUSEL_VERSION} | cut -d@ -f2)" >> $GITHUB_OUTPUT
 
-          # Parse reth
-          echo "reth_repo=$(echo ${RETH_VERSION:-$RETH_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "reth_tag=$(echo ${RETH_VERSION:-$RETH_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "reth_docker_image_tag=$(echo ${RETH_VERSION:-$RETH_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          # Default client docker images
+          GETH_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-2"
+          BESU_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-2"
+          RETH_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2"
+          NETHERMIND_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2"
+          ERIGON_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2"
+          NIMBUSEL_IMAGE_DEFAULT="docker.ethquokkaops.io/dh/status-im/nimbus-eth1:fusaka-devnet-2"
 
-          # Parse nethermind
-          echo "nethermind_repo=$(echo ${NETHERMIND_VERSION:-$NETHERMIND_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "nethermind_tag=$(echo ${NETHERMIND_VERSION:-$NETHERMIND_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "nethermind_docker_image_tag=$(echo ${NETHERMIND_VERSION:-$NETHERMIND_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          # Parse client images from JSON or use defaults
+          CLIENT_IMAGES='${{ inputs.client_images }}'
+          if [ -n "$CLIENT_IMAGES" ]; then
+            GETH_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.geth // "'"$GETH_IMAGE_DEFAULT"'"')
+            BESU_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.besu // "'"$BESU_IMAGE_DEFAULT"'"')
+            RETH_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.reth // "'"$RETH_IMAGE_DEFAULT"'"')
+            NETHERMIND_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.nethermind // "'"$NETHERMIND_IMAGE_DEFAULT"'"')
+            ERIGON_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.erigon // "'"$ERIGON_IMAGE_DEFAULT"'"')
+            NIMBUSEL_IMAGE=$(echo "$CLIENT_IMAGES" | jq -r '.nimbusel // "'"$NIMBUSEL_IMAGE_DEFAULT"'"')
+          else
+            GETH_IMAGE="$GETH_IMAGE_DEFAULT"
+            BESU_IMAGE="$BESU_IMAGE_DEFAULT"
+            RETH_IMAGE="$RETH_IMAGE_DEFAULT"
+            NETHERMIND_IMAGE="$NETHERMIND_IMAGE_DEFAULT"
+            ERIGON_IMAGE="$ERIGON_IMAGE_DEFAULT"
+            NIMBUSEL_IMAGE="$NIMBUSEL_IMAGE_DEFAULT"
+          fi
 
-          # Parse erigon
-          echo "erigon_repo=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "erigon_tag=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "erigon_docker_image_tag=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          # Parse client docker images into registry and tag
+          echo "geth_docker_registry=$(echo ${GETH_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
+          echo "geth_docker_tag=$(echo ${GETH_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          echo "besu_docker_registry=$(echo ${BESU_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
+          echo "besu_docker_tag=$(echo ${BESU_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          echo "reth_docker_registry=$(echo ${RETH_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
+          echo "reth_docker_tag=$(echo ${RETH_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          echo "nethermind_docker_registry=$(echo ${NETHERMIND_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
+          echo "nethermind_docker_tag=$(echo ${NETHERMIND_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          echo "erigon_docker_registry=$(echo ${ERIGON_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
+          echo "erigon_docker_tag=$(echo ${ERIGON_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
+          echo "nimbusel_docker_registry=$(echo ${NIMBUSEL_IMAGE} | cut -d: -f1)" >> $GITHUB_OUTPUT
+          echo "nimbusel_docker_tag=$(echo ${NIMBUSEL_IMAGE} | cut -d: -f2)" >> $GITHUB_OUTPUT
 
-          # Parse nimbusel
-          echo "nimbusel_repo=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "nimbusel_tag=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "nimbusel_docker_image_tag=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse hive
+          # Parse hive repo and tag
           echo "hive_repo=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
           echo "hive_tag=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+
         env:
-          GETH_VERSION: ${{ inputs.geth_version }}
-          BESU_VERSION: ${{ inputs.besu_version }}
-          RETH_VERSION: ${{ inputs.reth_version }}
-          NETHERMIND_VERSION: ${{ inputs.nethermind_version }}
-          ERIGON_VERSION: ${{ inputs.erigon_version }}
-          NIMBUSEL_VERSION: ${{ inputs.nimbusel_version }}
           HIVE_VERSION: ${{ inputs.hive_version }}
-      - id: client_config
+      - id: client_config_git
         run: |
           cat << 'EOF' >> $GITHUB_OUTPUT
           config<<ENDCONFIG
@@ -200,7 +253,49 @@ jobs:
               tag: ${{ steps.parse.outputs.nimbusel_tag }}
           ENDCONFIG
           EOF
-
+      - id: client_config_docker
+        run: |
+          cat << 'EOF' >> $GITHUB_OUTPUT
+          config<<ENDCONFIG
+          - client: go-ethereum
+            nametag: default
+            build_args:
+              baseimage: ${{ steps.parse.outputs.geth_docker_registry }}
+              tag: ${{ steps.parse.outputs.geth_docker_tag }}
+          - client: besu
+            nametag: default
+            build_args:
+              baseimage: ${{ steps.parse.outputs.besu_docker_registry }}
+              tag: ${{ steps.parse.outputs.besu_docker_tag }}
+          - client: reth
+            nametag: default
+            build_args:
+              baseimage: ${{ steps.parse.outputs.reth_docker_registry }}
+              tag: ${{ steps.parse.outputs.reth_docker_tag }}
+          - client: nethermind
+            nametag: default
+            build_args:
+              baseimage: ${{ steps.parse.outputs.nethermind_docker_registry }}
+              tag: ${{ steps.parse.outputs.nethermind_docker_tag }}
+          - client: erigon
+            nametag: default
+            build_args:
+              baseimage: ${{ steps.parse.outputs.erigon_docker_registry }}
+              tag: ${{ steps.parse.outputs.erigon_docker_tag }}
+          - client: nimbus-el
+            nametag: default
+            build_args:
+              baseimage: ${{ steps.parse.outputs.nimbusel_docker_registry }}
+              tag: ${{ steps.parse.outputs.nimbusel_docker_tag }}
+          ENDCONFIG
+          EOF
+      - id: client_config
+        run: |
+          cat << 'EOF' >> $GITHUB_OUTPUT
+          config<<ENDCONFIG
+          ${{ inputs.client_source == 'docker' && steps.client_config_docker.outputs.config || steps.client_config_git.outputs.config }}
+          ENDCONFIG
+          EOF
   test:
     timeout-minutes: 540 # 9 hours
     needs: prepare
