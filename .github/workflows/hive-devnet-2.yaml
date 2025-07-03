@@ -115,9 +115,9 @@ jobs:
           steps.client_config_dispatch.outputs.client_config
         }}
     steps:
-      # Scheduled runs
       - uses: ethpandaops/hive-github-action/helpers/client-config@c533b9b1683272e443db170d0ea4468ec0dfd272
         if: github.event_name == 'schedule'
+        name: 'Client config: schedule'
         id: client_config_schedule
         with:
           common_client_tag: 'fusaka-devnet-2'
@@ -125,9 +125,9 @@ jobs:
           hive_version: 'ethereum/hive@master'
           goproxy: ${{ env.GOPROXY }}
 
-      # Manual dispatch
       - uses: ethpandaops/hive-github-action/helpers/client-config@c533b9b1683272e443db170d0ea4468ec0dfd272
         if: github.event_name == 'workflow_dispatch'
+        name: 'Client config: workflow_dispatch'
         id: client_config_dispatch
         with:
           client_repos: ${{ inputs.client_repos }}
