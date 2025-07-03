@@ -1,0 +1,24 @@
+name: Hive - Consume Engine X Simulator
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # 4-hourly at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC
+  workflow_dispatch:
+
+jobs:
+  trigger-generic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'hive-devnet-2.yaml',
+              ref: 'master',
+              inputs: {
+                simulator: '"ethereum/eest/consume-enginex"',
+                concurrency_group: 'four-hourly'
+              }
+            });

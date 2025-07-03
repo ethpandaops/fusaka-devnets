@@ -1,10 +1,6 @@
 name: Hive - Devnet 2
 on:
-  schedule:
-    - cron: '45 9 * * *'  # Daily at 09:45 UTC
-    - cron: '0 */4 * * *'  # 4-hourly at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC
   workflow_dispatch:
-    # Note: We're limited to 10 inputs
     inputs:
       client:
         type: string
@@ -32,6 +28,7 @@ on:
         options:
           - docker
           - git
+        default: docker
       common_client_tag:
         type: string
         description: >-
@@ -65,11 +62,12 @@ on:
           type: boolean
           description: 'Force run even if no changes detected'
           default: false
+      concurrency_group:
+        type: string
+        default: "daily"
+        description: Concurrency group for the workflow
 
 env:
-  # Simulator schedules
-  DAILY_SIMULATORS: '["ethereum/eest/consume-rlp","ethereum/eest/consume-engine"]'
-  FOUR_HOURLY_SIMULATORS: '["ethereum/eest/consume-enginex"]'
   # Default clients to test
   DEFAULT_CLIENTS: '["go-ethereum","reth","nethermind","nimbus-el","besu","erigon"]'
   # Proxy
@@ -115,80 +113,36 @@ jobs:
     outputs:
       clients_to_test: ${{ steps.determine_scope.outputs.clients }}
       simulators_to_test: ${{ steps.determine_scope.outputs.simulators }}
-      hive_repo: >-
-        ${{
-          steps.client_config_schedule.outputs.hive_repo ||
-          steps.client_config_dispatch.outputs.hive_repo
-        }}
-      hive_tag: >-
-        ${{
-          steps.client_config_schedule.outputs.hive_tag ||
-          steps.client_config_dispatch.outputs.hive_tag
-        }}
-      client_config: >-
-        ${{
-          steps.client_config_schedule.outputs.client_config ||
-          steps.client_config_dispatch.outputs.client_config
-        }}
+      hive_repo: ${{ steps.client_config.outputs.hive_repo }}
+      hive_tag: ${{ steps.client_config.outputs.hive_tag }}
+      client_config: ${{ steps.client_config.outputs.client_config }}
     steps:
       - id: determine_scope
         run: |
-          # Determine which clients and simulators to test based on trigger
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            # For scheduled runs, use default clients
-            echo "clients=${{ env.DEFAULT_CLIENTS }}" >> $GITHUB_OUTPUT
-            
-            # Determine simulators based on schedule
-            if [ "${{ github.event.schedule }}" = "45 9 * * *" ]; then
-              echo "simulators=${{ env.DAILY_SIMULATORS }}" >> $GITHUB_OUTPUT
-              echo "Daily run: testing all simulators"
-            else
-              echo "simulators=${{ env.FOUR_HOURLY_SIMULATORS }}" >> $GITHUB_OUTPUT
-              echo "4-hourly run: testing limited simulators"
-            fi
-          else
-            # For manual runs, use inputs
-            clients_input='${{ inputs.client }}'
-            simulators_input='${{ inputs.simulator }}'
-            
-            # Convert comma-separated strings to JSON arrays
-            clients_array='[]'
-            if [ -n "$clients_input" ]; then
-              # Parse the input string and convert to JSON array
-              clients_array=$(echo "$clients_input" | sed 's/[",]//g' | tr ' ' '\n' | grep -v '^$' | jq -R . | jq -s .)
-            fi
-            if [ "$clients_array" = "[]" ]; then
-              clients_array='${{ env.DEFAULT_CLIENTS }}'
-            fi
-            
-            simulators_array='[]'
-            if [ -n "$simulators_input" ]; then
-              # Parse the multi-line input and convert to JSON array
-              simulators_array=$(echo "$simulators_input" | sed 's/[",]//g' | tr '\n' ' ' | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v '^$' | jq -R . | jq -s .)
-            fi
-            if [ "$simulators_array" = "[]" ]; then
-              simulators_array='${{ env.DAILY_SIMULATORS }}'
-            fi
-            
-            echo "clients=$clients_array" >> $GITHUB_OUTPUT
-            echo "simulators=$simulators_array" >> $GITHUB_OUTPUT
-            echo "Manual run: using provided inputs"
+          # Parse clients and simulators from inputs
+          clients_input='${{ inputs.client }}'
+          simulators_input='${{ inputs.simulator }}'
+          
+          # Convert comma-separated strings to JSON arrays
+          clients_array='[]'
+          if [ -n "$clients_input" ]; then
+            clients_array=$(echo "$clients_input" | sed 's/[",]//g' | tr ' ' '\n' | grep -v '^$' | jq -R . | jq -s .)
           fi
+          if [ "$clients_array" = "[]" ]; then
+            clients_array='${{ env.DEFAULT_CLIENTS }}'
+          fi
+          
+          simulators_array='[]'
+          if [ -n "$simulators_input" ]; then
+            simulators_array=$(echo "$simulators_input" | sed 's/[",]//g' | tr '\n' ' ' | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v '^$' | jq -R . | jq -s .)
+          fi
+          
+          echo "clients=$clients_array" >> $GITHUB_OUTPUT
+          echo "simulators=$simulators_array" >> $GITHUB_OUTPUT
 
       - uses: ethpandaops/hive-github-action/helpers/client-config@c533b9b1683272e443db170d0ea4468ec0dfd272
-        if: github.event_name == 'schedule'
-        name: 'Client config: schedule'
-        id: client_config_schedule
-        with:
-          common_client_tag: 'fusaka-devnet-2'
-          client_source: 'docker'
-          hive_version: 'ethereum/hive@master'
-          goproxy: ${{ env.GOPROXY }}
-
-      - uses: ethpandaops/hive-github-action/helpers/client-config@c533b9b1683272e443db170d0ea4468ec0dfd272
-        if: github.event_name == 'workflow_dispatch'
-        name: 'Client config: workflow_dispatch'
-        id: client_config_dispatch
+        name: 'Client config'
+        id: client_config
         with:
           client_repos: ${{ inputs.client_repos }}
           client_images: ${{ inputs.client_images }}
@@ -201,10 +155,10 @@ jobs:
     needs: prepare
     uses: ./.github/workflows/check-client-changes.yaml
     with:
-      client_source: ${{ github.event_name == 'schedule' && 'docker' || inputs.client_source }}
+      client_source: ${{ inputs.client_source }}
       client_versions: ${{ inputs.client_repos }}
       client_images: ${{ inputs.client_images }}
-      common_client_tag: ${{ github.event_name == 'schedule' && 'fusaka-devnet-2' || inputs.common_client_tag }}
+      common_client_tag: ${{ inputs.common_client_tag }}
       force_run: ${{ inputs.force_run }}
       clients_to_test: ${{ needs.prepare.outputs.clients_to_test }}
       simulators_to_test: ${{ needs.prepare.outputs.simulators_to_test }}
@@ -221,7 +175,7 @@ jobs:
       }}
     concurrency:
       group: >-
-        ${{ github.head_ref || github.run_id }}-${{ matrix.client }}-${{ matrix.simulator }}
+        ${{ github.head_ref || inputs.concurrency_group }}-${{ matrix.client }}-${{ matrix.simulator }}
     strategy:
       fail-fast: false
       matrix:
