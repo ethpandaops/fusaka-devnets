@@ -284,7 +284,10 @@ jobs:
           # Generate client config based on client_source
           cat << 'EOF' >> $GITHUB_OUTPUT
           config<<ENDCONFIG
-          ${{ inputs.client_source == 'docker' && steps.client_config_docker.outputs.config || steps.client_config_git.outputs.config }}
+          ${{
+            github.event_name == 'schedule' && steps.client_config_docker.outputs.config ||
+            (inputs.client_source == 'docker' && steps.client_config_docker.outputs.config || steps.client_config_git.outputs.config)
+          }}
           ENDCONFIG
           EOF
   test:
