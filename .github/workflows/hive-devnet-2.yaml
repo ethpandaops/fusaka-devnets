@@ -12,7 +12,9 @@ on:
       simulator:
         type: string
         default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp"'
-        description: Comma-separated list of simulators to test .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
+        description: >-
+          Comma-separated list of simulators to test
+          .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
       hive_version:
         type: string
         default: ethereum/hive@master
@@ -21,33 +23,37 @@ on:
         type: choice
         description: >-
           How client images should be sourced.
-          1. git will use the github repo and tag (See client_versions).
-          2. docker will use the docker registry and tag (See client_images).
+          'git' will use the github repo and tag (See client_versions).
+          'docker' will use the docker registry and tag (See client_images).
         options:
           - git
           - docker
+      common_client_tag:
+        type: string
+        description: 'If provided, this tag will be used for all clients, overriding individual tags/branches in client_versions and client_images'
+        default: 'fusaka-devnet-2'
       client_versions:
         type: string
         default: |
           {
-            "geth": "ethereum/go-ethereum@fusaka-devnet-2",
-            "besu": "hyperledger/besu@fusaka-devnet-2",
-            "reth": "paradigmxyz/reth@fusaka-devnet-2",
-            "nethermind": "NethermindEth/nethermind@fusaka-devnet-2",
-            "erigon": "erigontech/erigon@fusaka-devnet-2",
-            "nimbusel": "status-im/nimbus-eth1@fusaka-devnet-2"
+            "geth": "ethereum/go-ethereum@master",
+            "besu": "hyperledger/besu@main",
+            "reth": "paradigmxyz/reth@main",
+            "nethermind": "NethermindEth/nethermind@master",
+            "erigon": "erigontech/erigon@main",
+            "nimbusel": "status-im/nimbus-eth1@master"
           }
         description: 'JSON object containing client versions in format {"client": "repo@tag", ...}'
       client_images:
           type: string
           default: |
             {
-              "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-2",
-              "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-2",
-              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2",
-              "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2",
-              "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2",
-              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-2"
+              "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:master",
+              "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:main",
+              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:main",
+              "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:master",
+              "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:main",
+              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
             }
           description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
@@ -124,25 +130,32 @@ jobs:
         run: |
           # Define client configurations
           declare -A CLIENT_DEFAULTS=(
-            ["geth"]="ethereum/go-ethereum@fusaka-devnet-2"
-            ["besu"]="hyperledger/besu@fusaka-devnet-2"
-            ["reth"]="paradigmxyz/reth@fusaka-devnet-2"
-            ["nethermind"]="NethermindEth/nethermind@fusaka-devnet-2"
-            ["erigon"]="erigontech/erigon@fusaka-devnet-2"
-            ["nimbusel"]="status-im/nimbus-eth1@fusaka-devnet-2"
+            ["geth"]="ethereum/go-ethereum@master"
+            ["besu"]="hyperledger/besu@main"
+            ["reth"]="paradigmxyz/reth@main"
+            ["nethermind"]="NethermindEth/nethermind@master"
+            ["erigon"]="erigontech/erigon@main"
+            ["nimbusel"]="status-im/nimbus-eth1@master"
           )
 
           declare -A CLIENT_IMAGE_DEFAULTS=(
-            ["geth"]="docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-2"
-            ["besu"]="docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-2"
-            ["reth"]="docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-2"
-            ["nethermind"]="docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-2"
-            ["erigon"]="docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-2"
-            ["nimbusel"]="docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-2"
+            ["geth"]="docker.ethquokkaops.io/dh/ethpandaops/geth:master"
+            ["besu"]="docker.ethquokkaops.io/dh/ethpandaops/besu:main"
+            ["reth"]="docker.ethquokkaops.io/dh/ethpandaops/reth:main"
+            ["nethermind"]="docker.ethquokkaops.io/dh/ethpandaops/nethermind:master"
+            ["erigon"]="docker.ethquokkaops.io/dh/ethpandaops/erigon:main"
+            ["nimbusel"]="docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
           )
 
           CLIENT_VERSIONS='${{ inputs.client_versions }}'
           CLIENT_IMAGES='${{ inputs.client_images }}'
+
+          # For scheduled runs, set the common client tag
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            COMMON_CLIENT_TAG='fusaka-devnet-2'
+          else
+            COMMON_CLIENT_TAG='${{ inputs.common_client_tag }}'
+          fi
 
           # Process each client
           for client in "${!CLIENT_DEFAULTS[@]}"; do
@@ -155,7 +168,11 @@ jobs:
 
             # Extract repo and tag from version
             echo "${client}_repo=$(echo ${client_version} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-            echo "${client}_tag=$(echo ${client_version} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+            if [ -n "$COMMON_CLIENT_TAG" ]; then
+              echo "${client}_tag=${COMMON_CLIENT_TAG}" >> $GITHUB_OUTPUT
+            else
+              echo "${client}_tag=$(echo ${client_version} | cut -d@ -f2)" >> $GITHUB_OUTPUT
+            fi
 
             # Parse client docker image
             if [ -n "$CLIENT_IMAGES" ]; then
@@ -166,7 +183,11 @@ jobs:
 
             # Extract registry and tag from docker image
             echo "${client}_docker_registry=$(echo ${client_image} | cut -d: -f1)" >> $GITHUB_OUTPUT
-            echo "${client}_docker_tag=$(echo ${client_image} | cut -d: -f2)" >> $GITHUB_OUTPUT
+            if [ -n "$COMMON_CLIENT_TAG" ]; then
+              echo "${client}_docker_tag=${COMMON_CLIENT_TAG}" >> $GITHUB_OUTPUT
+            else
+              echo "${client}_docker_tag=$(echo ${client_image} | cut -d: -f2)" >> $GITHUB_OUTPUT
+            fi
           done
 
           # Parse hive repo and tag
