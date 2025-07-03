@@ -25,7 +25,7 @@ on:
         type: choice
         description: >-
           How client images should be sourced.
-          'git' will use the github repo and tag (See client_versions).
+          'git' will use the github repo and tag (See client_repos).
           'docker' will use the docker registry and tag (See client_images).
         options:
           - docker
@@ -33,9 +33,9 @@ on:
       common_client_tag:
         type: string
         description: >-
-          If provided, this tag will be used for all clients, overriding individual tags/branches in client_versions and client_images
+          If provided, this tag will be used for all clients, overriding individual tags/branches in client_repos and client_images
         default: 'fusaka-devnet-2'
-      client_versions:
+      client_repos:
         type: string
         default: |
           {
@@ -130,7 +130,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         id: client_config_dispatch
         with:
-          client_versions: ${{ inputs.client_versions }}
+          client_repos: ${{ inputs.client_repos }}
           client_images: ${{ inputs.client_images }}
           common_client_tag: ${{ inputs.common_client_tag }}
           client_source: ${{ inputs.client_source }}
