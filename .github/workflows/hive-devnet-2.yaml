@@ -1,7 +1,8 @@
 name: Hive - Devnet 2
 on:
   schedule:
-    - cron: '45 12 * * *'
+    - cron: '45 9 * * *'  # Daily at 09:45 UTC
+    - cron: '0 */4 * * *'  # 4-hourly at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC
   workflow_dispatch:
     # Note: We're limited to 10 inputs
     inputs:
@@ -61,6 +62,9 @@ on:
           description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
 env:
+  # Simulator schedules
+  DAILY_SIMULATORS: '"ethereum/eest/consume-rlp","ethereum/eest/consume-engine"'
+  FOUR_HOURLY_SIMULATORS: '"ethereum/eest/consume-enginex"'
   # Proxy
   GOPROXY: "${{ vars.GOPROXY }}"
   # Hive action environment variables
@@ -163,10 +167,8 @@ jobs:
           '))}}
         simulator: >-
           ${{
-            fromJSON(format('[{0}]', inputs.simulator || '
-            "ethereum/eest/consume-engine",
-            "ethereum/eest/consume-rlp"
-          '))}}
+            fromJSON(format('[{0}]', needs.prepare.outputs.simulators_to_run))
+          }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@299a5ffad55b067d7dd26ab9fe40ff999cbb5029 # v0.3.0
