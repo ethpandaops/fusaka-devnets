@@ -11,7 +11,9 @@ on:
         description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, nimbus-el
       simulator:
         type: string
-        default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp"'
+        default: >-
+          "ethereum/eest/consume-engine",
+          "ethereum/eest/consume-rlp"
         description: >-
           Comma-separated list of simulators to test
           .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
@@ -26,8 +28,8 @@ on:
           'git' will use the github repo and tag (See client_versions).
           'docker' will use the docker registry and tag (See client_images).
         options:
-          - git
           - docker
+          - git
       common_client_tag:
         type: string
         description: 'If provided, this tag will be used for all clients, overriding individual tags/branches in client_versions and client_images'
