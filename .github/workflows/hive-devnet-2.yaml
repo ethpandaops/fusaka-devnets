@@ -32,7 +32,8 @@ on:
           - git
       common_client_tag:
         type: string
-        description: 'If provided, this tag will be used for all clients, overriding individual tags/branches in client_versions and client_images'
+        description: >-
+          If provided, this tag will be used for all clients, overriding individual tags/branches in client_versions and client_images
         default: 'fusaka-devnet-2'
       client_versions:
         type: string
@@ -97,201 +98,44 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Hive version
-      hive_repo: ${{ steps.parse.outputs.hive_repo }}
-      hive_tag: ${{ steps.parse.outputs.hive_tag }}
-      # Git versions of the clients
-      geth_repo: ${{ steps.parse.outputs.geth_repo }}
-      geth_tag: ${{ steps.parse.outputs.geth_tag }}
-      besu_repo: ${{ steps.parse.outputs.besu_repo }}
-      besu_tag: ${{ steps.parse.outputs.besu_tag }}
-      reth_repo: ${{ steps.parse.outputs.reth_repo }}
-      reth_tag: ${{ steps.parse.outputs.reth_tag }}
-      nethermind_repo: ${{ steps.parse.outputs.nethermind_repo }}
-      nethermind_tag: ${{ steps.parse.outputs.nethermind_tag }}
-      erigon_repo: ${{ steps.parse.outputs.erigon_repo }}
-      erigon_tag: ${{ steps.parse.outputs.erigon_tag }}
-      nimbusel_repo: ${{ steps.parse.outputs.nimbusel_repo }}
-      nimbusel_tag: ${{ steps.parse.outputs.nimbusel_tag }}
-      # Docker images for clients - registry and tag separated
-      geth_docker_registry: ${{ steps.parse.outputs.geth_docker_registry }}
-      geth_docker_tag: ${{ steps.parse.outputs.geth_docker_tag }}
-      besu_docker_registry: ${{ steps.parse.outputs.besu_docker_registry }}
-      besu_docker_tag: ${{ steps.parse.outputs.besu_docker_tag }}
-      reth_docker_registry: ${{ steps.parse.outputs.reth_docker_registry }}
-      reth_docker_tag: ${{ steps.parse.outputs.reth_docker_tag }}
-      nethermind_docker_registry: ${{ steps.parse.outputs.nethermind_docker_registry }}
-      nethermind_docker_tag: ${{ steps.parse.outputs.nethermind_docker_tag }}
-      erigon_docker_registry: ${{ steps.parse.outputs.erigon_docker_registry }}
-      erigon_docker_tag: ${{ steps.parse.outputs.erigon_docker_tag }}
-      nimbusel_docker_registry: ${{ steps.parse.outputs.nimbusel_docker_registry }}
-      nimbusel_docker_tag: ${{ steps.parse.outputs.nimbusel_docker_tag }}
+      hive_repo: >-
+        ${{
+          steps.client_config_schedule.outputs.hive_repo ||
+          steps.client_config_dispatch.outputs.hive_repo
+        }}
+      hive_tag: >-
+        ${{
+          steps.client_config_schedule.outputs.hive_tag ||
+          steps.client_config_dispatch.outputs.hive_tag
+        }}
       # client_config contains the YAML client config for Hive
-      client_config: ${{ steps.client_config.outputs.config }}
+      client_config: >-
+        ${{
+          steps.client_config_schedule.outputs.client_config ||
+          steps.client_config_dispatch.outputs.client_config
+        }}
     steps:
-      - id: parse
-        run: |
-          # Define client configurations
-          declare -A CLIENT_DEFAULTS=(
-            ["geth"]="ethereum/go-ethereum@master"
-            ["besu"]="hyperledger/besu@main"
-            ["reth"]="paradigmxyz/reth@main"
-            ["nethermind"]="NethermindEth/nethermind@master"
-            ["erigon"]="erigontech/erigon@main"
-            ["nimbusel"]="status-im/nimbus-eth1@master"
-          )
+      # Scheduled runs
+      - uses: ethpandaops/hive-github-action/helpers/client-config@c533b9b1683272e443db170d0ea4468ec0dfd272
+        if: github.event_name == 'schedule'
+        id: client_config_schedule
+        with:
+          common_client_tag: 'fusaka-devnet-2'
+          client_source: 'docker'
+          hive_version: 'ethereum/hive@master'
+          goproxy: ${{ env.GOPROXY }}
 
-          declare -A CLIENT_IMAGE_DEFAULTS=(
-            ["geth"]="docker.ethquokkaops.io/dh/ethpandaops/geth:master"
-            ["besu"]="docker.ethquokkaops.io/dh/ethpandaops/besu:main"
-            ["reth"]="docker.ethquokkaops.io/dh/ethpandaops/reth:main"
-            ["nethermind"]="docker.ethquokkaops.io/dh/ethpandaops/nethermind:master"
-            ["erigon"]="docker.ethquokkaops.io/dh/ethpandaops/erigon:main"
-            ["nimbusel"]="docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
-          )
-
-          CLIENT_VERSIONS='${{ inputs.client_versions }}'
-          CLIENT_IMAGES='${{ inputs.client_images }}'
-
-          # For scheduled runs, set the common client tag
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            COMMON_CLIENT_TAG='fusaka-devnet-2'
-          else
-            COMMON_CLIENT_TAG='${{ inputs.common_client_tag }}'
-          fi
-
-          # Process each client
-          for client in "${!CLIENT_DEFAULTS[@]}"; do
-            # Parse client version
-            if [ -n "$CLIENT_VERSIONS" ]; then
-              client_version=$(echo "$CLIENT_VERSIONS" | jq -r ".${client} // \"${CLIENT_DEFAULTS[$client]}\"")
-            else
-              client_version="${CLIENT_DEFAULTS[$client]}"
-            fi
-
-            # Extract repo and tag from version
-            echo "${client}_repo=$(echo ${client_version} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-            if [ -n "$COMMON_CLIENT_TAG" ]; then
-              echo "${client}_tag=${COMMON_CLIENT_TAG}" >> $GITHUB_OUTPUT
-            else
-              echo "${client}_tag=$(echo ${client_version} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-            fi
-
-            # Parse client docker image
-            if [ -n "$CLIENT_IMAGES" ]; then
-              client_image=$(echo "$CLIENT_IMAGES" | jq -r ".${client} // \"${CLIENT_IMAGE_DEFAULTS[$client]}\"")
-            else
-              client_image="${CLIENT_IMAGE_DEFAULTS[$client]}"
-            fi
-
-            # Extract registry and tag from docker image
-            echo "${client}_docker_registry=$(echo ${client_image} | cut -d: -f1)" >> $GITHUB_OUTPUT
-            if [ -n "$COMMON_CLIENT_TAG" ]; then
-              echo "${client}_docker_tag=${COMMON_CLIENT_TAG}" >> $GITHUB_OUTPUT
-            else
-              echo "${client}_docker_tag=$(echo ${client_image} | cut -d: -f2)" >> $GITHUB_OUTPUT
-            fi
-          done
-
-          # Parse hive repo and tag
-          HIVE_DEFAULT="ethereum/hive@master"
-          echo "hive_repo=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "hive_tag=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-
-        env:
-          HIVE_VERSION: ${{ inputs.hive_version }}
-      - id: client_config_git
-        run: |
-          # Generate git client config
-          cat << 'EOF' >> $GITHUB_OUTPUT
-          config<<ENDCONFIG
-          - client: go-ethereum
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.geth_repo }}
-              tag: ${{ steps.parse.outputs.geth_tag }}
-              GOPROXY: ${{ env.GOPROXY }}
-          - client: besu
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.besu_repo }}
-              tag: ${{ steps.parse.outputs.besu_tag }}
-          - client: reth
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.reth_repo }}
-              tag: ${{ steps.parse.outputs.reth_tag }}
-          - client: nethermind
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.nethermind_repo }}
-              tag: ${{ steps.parse.outputs.nethermind_tag }}
-          - client: erigon
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.erigon_repo }}
-              tag: ${{ steps.parse.outputs.erigon_tag }}
-              GOPROXY: ${{ env.GOPROXY }}
-          - client: nimbus-el
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.nimbusel_repo }}
-              tag: ${{ steps.parse.outputs.nimbusel_tag }}
-          ENDCONFIG
-          EOF
-      - id: client_config_docker
-        run: |
-          # Generate docker client config
-          cat << 'EOF' >> $GITHUB_OUTPUT
-          config<<ENDCONFIG
-          - client: go-ethereum
-            nametag: default
-            build_args:
-              baseimage: ${{ steps.parse.outputs.geth_docker_registry }}
-              tag: ${{ steps.parse.outputs.geth_docker_tag }}
-          - client: besu
-            nametag: default
-            build_args:
-              baseimage: ${{ steps.parse.outputs.besu_docker_registry }}
-              tag: ${{ steps.parse.outputs.besu_docker_tag }}
-          - client: reth
-            nametag: default
-            build_args:
-              baseimage: ${{ steps.parse.outputs.reth_docker_registry }}
-              tag: ${{ steps.parse.outputs.reth_docker_tag }}
-          - client: nethermind
-            nametag: default
-            build_args:
-              baseimage: ${{ steps.parse.outputs.nethermind_docker_registry }}
-              tag: ${{ steps.parse.outputs.nethermind_docker_tag }}
-          - client: erigon
-            nametag: default
-            build_args:
-              baseimage: ${{ steps.parse.outputs.erigon_docker_registry }}
-              tag: ${{ steps.parse.outputs.erigon_docker_tag }}
-          - client: nimbus-el
-            nametag: default
-            build_args:
-              baseimage: ${{ steps.parse.outputs.nimbusel_docker_registry }}
-              tag: ${{ steps.parse.outputs.nimbusel_docker_tag }}
-          ENDCONFIG
-          EOF
-      - id: client_config
-        run: |
-          # Generate client config based on client_source
-          cat << 'EOF' >> $GITHUB_OUTPUT
-          config<<ENDCONFIG
-          ${{
-            github.event_name == 'schedule' && steps.client_config_docker.outputs.config ||
-            (inputs.client_source == 'docker' && steps.client_config_docker.outputs.config || steps.client_config_git.outputs.config)
-          }}
-          ENDCONFIG
-          EOF
+      # Manual dispatch
+      - uses: ethpandaops/hive-github-action/helpers/client-config@c533b9b1683272e443db170d0ea4468ec0dfd272
+        if: github.event_name == 'workflow_dispatch'
+        id: client_config_dispatch
+        with:
+          client_versions: ${{ inputs.client_versions }}
+          client_images: ${{ inputs.client_images }}
+          common_client_tag: ${{ inputs.common_client_tag }}
+          client_source: ${{ inputs.client_source }}
+          hive_version: ${{ inputs.hive_version }}
+          goproxy: ${{ env.GOPROXY }}
   test:
     timeout-minutes: 540 # 9 hours
     needs: prepare
