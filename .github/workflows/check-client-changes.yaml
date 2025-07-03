@@ -1,0 +1,282 @@
+name: Check Client Changes
+
+on:
+    workflow_call:
+        inputs:
+            client_source:
+                description: "How client images should be sourced (git or docker)"
+                type: string
+                required: true
+                default: "docker"
+            client_versions:
+                description: "JSON object containing client versions"
+                type: string
+                required: false
+            client_images:
+                description: "JSON object containing client images"
+                type: string
+                required: false
+            common_client_tag:
+                description: "Common tag to override individual versions"
+                type: string
+                required: false
+            force_run:
+                description: "Force run even if no changes detected"
+                type: boolean
+                required: false
+                default: false
+            clients_to_test:
+                description: "JSON array of clients to test"
+                type: string
+                required: true
+                default: '["go-ethereum","reth","nethermind","nimbus-el","besu","erigon"]'
+            simulators_to_test:
+                description: "JSON array of simulators to test"
+                type: string
+                required: true
+                default: '["ethereum/eest/consume-engine","ethereum/eest/consume-rlp"]'
+        outputs:
+            should_run:
+                description: "Whether the workflow should run"
+                value: ${{ jobs.check.outputs.should_run }}
+            test_matrix:
+                description: "JSON array of client+simulator combinations that need testing"
+                value: ${{ jobs.check.outputs.test_matrix }}
+            current_versions:
+                description: "JSON object of current versions"
+                value: ${{ jobs.check.outputs.current_versions }}
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        outputs:
+            should_run: ${{ steps.check.outputs.should_run }}
+            test_matrix: ${{ steps.check.outputs.test_matrix }}
+            current_versions: ${{ steps.check.outputs.current_versions }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Check for client changes per job
+              id: check
+              run: |
+                  # Force run if requested
+                  if [ "${{ inputs.force_run }}" = "true" ]; then
+                    echo "Force run requested"
+                    # Generate full matrix for force run
+                    clients='${{ inputs.clients_to_test }}'
+                    simulators='${{ inputs.simulators_to_test }}'
+                    
+                    matrix='[]'
+                    for client in $(echo "$clients" | jq -r '.[]'); do
+                      for simulator in $(echo "$simulators" | jq -r '.[]'); do
+                        matrix=$(echo "$matrix" | jq ". + [{\"client\": \"$client\", \"simulator\": \"$simulator\"}]")
+                      done
+                    done
+                    
+                    echo "should_run=true" >> $GITHUB_OUTPUT
+                    echo "test_matrix=$matrix" >> $GITHUB_OUTPUT
+                    exit 0
+                  fi
+
+                  # Define client configurations
+                  declare -A CLIENT_DEFAULTS=(
+                    ["geth"]="ethereum/go-ethereum@master"
+                    ["besu"]="hyperledger/besu@main"
+                    ["reth"]="paradigmxyz/reth@main"
+                    ["nethermind"]="NethermindEth/nethermind@master"
+                    ["erigon"]="erigontech/erigon@main"
+                    ["nimbusel"]="status-im/nimbus-eth1@master"
+                  )
+
+                  declare -A CLIENT_IMAGE_DEFAULTS=(
+                    ["geth"]="docker.ethquokkaops.io/dh/ethpandaops/geth:master"
+                    ["besu"]="docker.ethquokkaops.io/dh/ethpandaops/besu:main"
+                    ["reth"]="docker.ethquokkaops.io/dh/ethpandaops/reth:main"
+                    ["nethermind"]="docker.ethquokkaops.io/dh/ethpandaops/nethermind:master"
+                    ["erigon"]="docker.ethquokkaops.io/dh/ethpandaops/erigon:main"
+                    ["nimbusel"]="docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
+                  )
+
+                  # Map display names to API names
+                  declare -A CLIENT_NAME_MAP=(
+                    ["go-ethereum"]="geth"
+                    ["besu"]="besu"
+                    ["reth"]="reth"
+                    ["nethermind"]="nethermind"
+                    ["erigon"]="erigon"
+                    ["nimbus-el"]="nimbusel"
+                  )
+
+                  CLIENT_VERSIONS='${{ inputs.client_versions }}'
+                  CLIENT_IMAGES='${{ inputs.client_images }}'
+                  CLIENT_SOURCE='${{ inputs.client_source }}'
+                  COMMON_CLIENT_TAG='${{ inputs.common_client_tag }}'
+
+                  # Get current versions for all clients
+                  declare -A CURRENT_VERSIONS
+                  
+                  for display_name in $(echo '${{ inputs.clients_to_test }}' | jq -r '.[]'); do
+                    config_name="${CLIENT_NAME_MAP[$display_name]}"
+                    if [ -z "$config_name" ]; then
+                      echo "Warning: Unknown client $display_name"
+                      continue
+                    fi
+                    
+                    if [ "$CLIENT_SOURCE" = "docker" ]; then
+                      # Check Docker images
+                      if [ -n "$CLIENT_IMAGES" ]; then
+                        client_image=$(echo "$CLIENT_IMAGES" | jq -r ".${config_name} // \"${CLIENT_IMAGE_DEFAULTS[$config_name]}\"")
+                      else
+                        client_image="${CLIENT_IMAGE_DEFAULTS[$config_name]}"
+                      fi
+                      
+                      if [ -n "$COMMON_CLIENT_TAG" ]; then
+                        registry=$(echo ${client_image} | cut -d: -f1)
+                        current_version="${registry}:${COMMON_CLIENT_TAG}"
+                      else
+                        current_version="$client_image"
+                      fi
+                      
+                      CURRENT_VERSIONS[$display_name]="$current_version"
+                      echo "Current Docker image for $display_name: $current_version"
+                    else
+                      # Check Git commits
+                      if [ -n "$CLIENT_VERSIONS" ]; then
+                        client_version=$(echo "$CLIENT_VERSIONS" | jq -r ".${config_name} // \"${CLIENT_DEFAULTS[$config_name]}\"")
+                      else
+                        client_version="${CLIENT_DEFAULTS[$config_name]}"
+                      fi
+                      
+                      repo=$(echo ${client_version} | cut -d@ -f1)
+                      if [ -n "$COMMON_CLIENT_TAG" ]; then
+                        branch="$COMMON_CLIENT_TAG"
+                      else
+                        branch=$(echo ${client_version} | cut -d@ -f2)
+                      fi
+                      
+                      # Get latest commit hash
+                      echo "Checking Git commit: $repo @ $branch"
+                      commit_hash=$(curl -s "https://api.github.com/repos/$repo/commits/$branch" | jq -r '.sha // empty' || echo "")
+                      
+                      if [ -n "$commit_hash" ]; then
+                        CURRENT_VERSIONS[$display_name]="${repo}@${branch}:${commit_hash}"
+                      else
+                        CURRENT_VERSIONS[$display_name]="${repo}@${branch}"
+                      fi
+                    fi
+                  done
+
+                  # Create current versions JSON
+                  current_versions_json="{"
+                  for client in "${!CURRENT_VERSIONS[@]}"; do
+                    current_versions_json+='"'$client'":"'${CURRENT_VERSIONS[$client]}'",'
+                  done
+                  current_versions_json="${current_versions_json%,}}"
+                  echo "current_versions=$current_versions_json" >> $GITHUB_OUTPUT
+
+                  # Get recent workflow runs to check individual jobs
+                  echo "Fetching recent workflow runs..."
+                  recent_runs=$(curl -s -H "Authorization: Bearer ${{ github.token }}" \
+                    "https://api.github.com/repos/${{ github.repository }}/actions/workflows/hive-devnet-2.yaml/runs?per_page=20")
+
+                  # Build matrix of combinations that need testing
+                  test_matrix='[]'
+                  
+                  clients='${{ inputs.clients_to_test }}'
+                  simulators='${{ inputs.simulators_to_test }}'
+                  
+                  for client in $(echo "$clients" | jq -r '.[]'); do
+                    for simulator in $(echo "$simulators" | jq -r '.[]'); do
+                      job_name="test ($client, $simulator)"
+                      echo "Checking job: $job_name"
+                      
+                      # Find the most recent successful run of this specific job
+                      last_successful_version=""
+                      
+                      # Look through recent runs
+                      for run_id in $(echo "$recent_runs" | jq -r '.workflow_runs[].id'); do
+                        if [ -z "$run_id" ] || [ "$run_id" = "null" ]; then
+                          continue
+                        fi
+                        
+                        # Get jobs for this run
+                        jobs_response=$(curl -s -H "Authorization: Bearer ${{ github.token }}" \
+                          "https://api.github.com/repos/${{ github.repository }}/actions/runs/$run_id/jobs")
+                        
+                        # Check if this specific job was successful
+                        job_conclusion=$(echo "$jobs_response" | jq -r ".jobs[] | select(.name == \"$job_name\") | .conclusion")
+                        
+                        if [ "$job_conclusion" = "success" ]; then
+                          echo "Found last successful run for $job_name: run $run_id"
+                          
+                          # Try to get the client versions from this run
+                          artifacts_response=$(curl -s -H "Authorization: Bearer ${{ github.token }}" \
+                            "https://api.github.com/repos/${{ github.repository }}/actions/runs/$run_id/artifacts")
+                          
+                          artifact_url=$(echo "$artifacts_response" | jq -r '.artifacts[] | select(.name=="client-versions") | .archive_download_url // empty')
+                          
+                          if [ -n "$artifact_url" ] && [ "$artifact_url" != "null" ]; then
+                            # Download and check the version
+                            curl -s -H "Authorization: Bearer ${{ github.token }}" -L "$artifact_url" -o "previous-$run_id.zip"
+                            if [ -f "previous-$run_id.zip" ]; then
+                              unzip -q "previous-$run_id.zip" -d "previous-$run_id"
+                              if [ -f "previous-$run_id/client-versions.json" ]; then
+                                last_successful_version=$(jq -r ".\"$client\" // empty" "previous-$run_id/client-versions.json")
+                                echo "Last successful version for $client: $last_successful_version"
+                                break
+                              fi
+                            fi
+                          fi
+                          
+                          # If we can't get artifacts, assume we need to run (better safe than sorry)
+                          break
+                        fi
+                      done
+                      
+                      # Compare versions
+                      current_version="${CURRENT_VERSIONS[$client]}"
+                      should_test=false
+                      
+                      if [ -z "$last_successful_version" ]; then
+                        echo "No previous successful run found for $job_name - will test"
+                        should_test=true
+                      elif [ "$current_version" != "$last_successful_version" ]; then
+                        echo "Version changed for $client: '$last_successful_version' -> '$current_version' - will test"
+                        should_test=true
+                      else
+                        echo "No change for $client ($current_version) - skipping"
+                      fi
+                      
+                      # Add to matrix if needed
+                      if [ "$should_test" = "true" ]; then
+                        test_matrix=$(echo "$test_matrix" | jq ". + [{\"client\": \"$client\", \"simulator\": \"$simulator\"}]")
+                      fi
+                    done
+                  done
+
+                  # Determine if we should run
+                  matrix_length=$(echo "$test_matrix" | jq '. | length')
+                  if [ "$matrix_length" -gt 0 ]; then
+                    echo "should_run=true" >> $GITHUB_OUTPUT
+                    echo "test_matrix=$test_matrix" >> $GITHUB_OUTPUT
+                    echo "Will test $matrix_length client+simulator combinations"
+                  else
+                    echo "should_run=false" >> $GITHUB_OUTPUT
+                    echo "test_matrix=[]" >> $GITHUB_OUTPUT
+                    echo "No changes detected in any client+simulator combinations"
+                  fi
+
+            - name: Save current versions
+              if: steps.check.outputs.should_run == 'true'
+              run: |
+                  echo '${{ steps.check.outputs.current_versions }}' > client-versions.json
+                  echo "Saved current versions:"
+                  cat client-versions.json
+
+            - name: Upload current versions
+              if: steps.check.outputs.should_run == 'true'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: client-versions
+                  path: client-versions.json
+                  retention-days: 30
