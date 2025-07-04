@@ -3,11 +3,25 @@ ethereum_cl_bootnodes:
   - "{{ hostvars['bootnode-1']['ethereum_node_fact_cl_enr'] }}"
   - "{{ hostvars['lighthouse-geth-1']['ethereum_node_fact_cl_enr'] }}"
   - "{{ hostvars['teku-geth-2']['ethereum_node_fact_cl_enr'] }}"
+  - "{{ hostvars['prysm-geth-2']['ethereum_node_fact_cl_enr'] }}"
+  - "{{ hostvars['nimbus-geth-2']['ethereum_node_fact_cl_enr'] }}"
+  - "{{ hostvars['lodestar-geth-2']['ethereum_node_fact_cl_enr'] }}"
+  - "{{ hostvars['grandine-geth-2']['ethereum_node_fact_cl_enr'] }}"
+
 
 ethereum_el_bootnodes:
   - "{{ hostvars['bootnode-1']['ethereum_node_fact_el_enode'] }}"
   - "{{ hostvars['lighthouse-geth-1']['ethereum_node_fact_el_enode'] }}"
   - "{{ hostvars['teku-geth-2']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['teku-geth-1']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['prysm-geth-1']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['prysm-geth-2']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['nimbus-geth-1']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['nimbus-geth-2']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['lodestar-geth-1']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['lodestar-geth-2']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['grandine-geth-1']['ethereum_node_fact_el_enode'] }}"
+  - "{{ hostvars['grandine-geth-2']['ethereum_node_fact_el_enode'] }}"
 
 ethereum_node_xatu_sentry_enabled: true
 
