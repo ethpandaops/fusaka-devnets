@@ -11,36 +11,54 @@ on:
         description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, nimbus-el
       simulator:
         type: string
-        default: '"ethereum/eest/consume-engine","ethereum/eest/consume-rlp"'
-        description: Comma-separated list of simulators to test .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
+        default: >-
+          "ethereum/eest/consume-engine",
+          "ethereum/eest/consume-rlp"
+        description: >-
+          Comma-separated list of simulators to test
+          .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
       hive_version:
         type: string
         default: ethereum/hive@master
         description: GitHub repository and tag for hive (repo@tag)
-      geth_version:
+      client_source:
+        type: choice
+        description: >-
+          How client images should be sourced.
+          'git' will use the github repo and tag (See client_repos).
+          'docker' will use the docker registry and tag (See client_images).
+        options:
+          - docker
+          - git
+      common_client_tag:
         type: string
-        default: ethereum/go-ethereum@fusaka-devnet-2
-        description: GitHub repository and tag for go-ethereum (repo@tag)
-      besu_version:
+        description: >-
+          If provided, this tag will be used for all clients, overriding individual tags/branches in client_repos and client_images
+        default: 'fusaka-devnet-2'
+      client_repos:
         type: string
-        default: hyperledger/besu@fusaka-devnet-2
-        description: GitHub repository and tag for besu (repo@tag)
-      reth_version:
-        type: string
-        default: paradigmxyz/reth@fusaka-devnet-2
-        description: GitHub repository and tag for reth (repo@tag)
-      nethermind_version:
-        type: string
-        default: NethermindEth/nethermind@fusaka-devnet-2
-        description: GitHub repository and tag for nethermind (repo@tag)
-      erigon_version:
-        type: string
-        default: erigontech/erigon@fusaka-devnet-2
-        description: GitHub repository and tag for erigon (repo@tag)
-      nimbusel_version:
-        type: string
-        default: status-im/nimbus-eth1@fusaka-devnet-2
-        description: GitHub repository and tag for nimbus-el (repo@tag)
+        default: |
+          {
+            "geth": "ethereum/go-ethereum@master",
+            "besu": "hyperledger/besu@main",
+            "reth": "paradigmxyz/reth@main",
+            "nethermind": "NethermindEth/nethermind@master",
+            "erigon": "erigontech/erigon@main",
+            "nimbusel": "status-im/nimbus-eth1@master"
+          }
+        description: 'JSON object containing client versions in format {"client": "repo@tag", ...}'
+      client_images:
+          type: string
+          default: |
+            {
+              "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:master",
+              "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:main",
+              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:main",
+              "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:master",
+              "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:main",
+              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
+            }
+          description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
 env:
   # Proxy
@@ -48,7 +66,7 @@ env:
   # Hive action environment variables
   S3_BUCKET: hive-results
   S3_PATH: fusaka-devnet-2
-  S3_PUBLIC_URL: https://hive.ethpandaops.io/fusaka-devnet-2
+  S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka-devnet-2/
   INSTALL_RCLONE_VERSION: v1.68.2
   EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-2%40v1.2.0/fixtures_fusaka-devnet-2.tar.gz
   EEST_BUILD_ARG_BRANCH: fusaka-devnet-2
@@ -80,127 +98,44 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Hive version
-      hive_repo: ${{ steps.parse.outputs.hive_repo }}
-      hive_tag: ${{ steps.parse.outputs.hive_tag }}
-      # Versions of the clients
-      geth_repo: ${{ steps.parse.outputs.geth_repo }}
-      geth_tag: ${{ steps.parse.outputs.geth_tag }}
-      geth_docker_image_tag: ${{ steps.parse.outputs.geth_docker_image_tag }}
-      besu_repo: ${{ steps.parse.outputs.besu_repo }}
-      besu_tag: ${{ steps.parse.outputs.besu_tag }}
-      besu_docker_image_tag: ${{ steps.parse.outputs.besu_docker_image_tag }}
-      reth_repo: ${{ steps.parse.outputs.reth_repo }}
-      reth_tag: ${{ steps.parse.outputs.reth_tag }}
-      reth_docker_image_tag: ${{ steps.parse.outputs.reth_docker_image_tag }}
-      nethermind_repo: ${{ steps.parse.outputs.nethermind_repo }}
-      nethermind_tag: ${{ steps.parse.outputs.nethermind_tag }}
-      nethermind_docker_image_tag: ${{ steps.parse.outputs.nethermind_docker_image_tag }}
-      erigon_image: ${{ steps.parse.outputs.erigon_image }}
-      erigon_tag: ${{ steps.parse.outputs.erigon_tag }}
-      erigon_docker_image_tag: ${{ steps.parse.outputs.erigon_docker_image_tag }}
-      nimbusel_repo: ${{ steps.parse.outputs.nimbusel_repo }}
-      nimbusel_tag: ${{ steps.parse.outputs.nimbusel_tag }}
-      nimbusel_docker_image_tag: ${{ steps.parse.outputs.nimbusel_docker_image_tag }}
+      hive_repo: >-
+        ${{
+          steps.client_config_schedule.outputs.hive_repo ||
+          steps.client_config_dispatch.outputs.hive_repo
+        }}
+      hive_tag: >-
+        ${{
+          steps.client_config_schedule.outputs.hive_tag ||
+          steps.client_config_dispatch.outputs.hive_tag
+        }}
       # client_config contains the YAML client config for Hive
-      client_config: ${{ steps.client_config.outputs.config }}
+      client_config: >-
+        ${{
+          steps.client_config_schedule.outputs.client_config ||
+          steps.client_config_dispatch.outputs.client_config
+        }}
     steps:
-      - id: parse
-        run: |
-          # Default client versions
-          GETH_DEFAULT="ethereum/go-ethereum@fusaka-devnet-2"
-          BESU_DEFAULT="hyperledger/besu@fusaka-devnet-2"
-          RETH_DEFAULT="paradigmxyz/reth@fusaka-devnet-2"
-          NETHERMIND_DEFAULT="NethermindEth/nethermind@fusaka-devnet-2"
-          ERIGON_DEFAULT="erigontech/erigon@fusaka-devnet-2"
-          NIMBUSEL_DEFAULT="status-im/nimbus-eth1@fusaka-devnet-2"
-          HIVE_DEFAULT="ethereum/hive@master"
+      - uses: ethpandaops/hive-github-action/helpers/client-config@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+        if: github.event_name == 'schedule'
+        name: 'Client config: schedule'
+        id: client_config_schedule
+        with:
+          common_client_tag: 'fusaka-devnet-2'
+          client_source: 'docker'
+          hive_version: 'ethereum/hive@master'
+          goproxy: ${{ env.GOPROXY }}
 
-          # Parse geth
-          echo "geth_repo=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "geth_tag=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "geth_docker_image_tag=$(echo ${GETH_VERSION:-$GETH_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse besu
-          echo "besu_repo=$(echo ${BESU_VERSION:-$BESU_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "besu_tag=$(echo ${BESU_VERSION:-$BESU_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "besu_docker_image_tag=$(echo ${BESU_VERSION:-$BESU_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse reth
-          echo "reth_repo=$(echo ${RETH_VERSION:-$RETH_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "reth_tag=$(echo ${RETH_VERSION:-$RETH_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "reth_docker_image_tag=$(echo ${RETH_VERSION:-$RETH_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse nethermind
-          echo "nethermind_repo=$(echo ${NETHERMIND_VERSION:-$NETHERMIND_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "nethermind_tag=$(echo ${NETHERMIND_VERSION:-$NETHERMIND_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "nethermind_docker_image_tag=$(echo ${NETHERMIND_VERSION:-$NETHERMIND_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse erigon
-          echo "erigon_repo=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "erigon_tag=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "erigon_docker_image_tag=$(echo ${ERIGON_VERSION:-$ERIGON_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse nimbusel
-          echo "nimbusel_repo=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "nimbusel_tag=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-          echo "nimbusel_docker_image_tag=$(echo ${NIMBUSEL_VERSION:-$NIMBUSEL_DEFAULT} | sed 's/[@\/]/_/g' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
-
-          # Parse hive
-          echo "hive_repo=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f1)" >> $GITHUB_OUTPUT
-          echo "hive_tag=$(echo ${HIVE_VERSION:-$HIVE_DEFAULT} | cut -d@ -f2)" >> $GITHUB_OUTPUT
-        env:
-          GETH_VERSION: ${{ inputs.geth_version }}
-          BESU_VERSION: ${{ inputs.besu_version }}
-          RETH_VERSION: ${{ inputs.reth_version }}
-          NETHERMIND_VERSION: ${{ inputs.nethermind_version }}
-          ERIGON_VERSION: ${{ inputs.erigon_version }}
-          NIMBUSEL_VERSION: ${{ inputs.nimbusel_version }}
-          HIVE_VERSION: ${{ inputs.hive_version }}
-      - id: client_config
-        run: |
-          cat << 'EOF' >> $GITHUB_OUTPUT
-          config<<ENDCONFIG
-          - client: go-ethereum
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.geth_repo }}
-              tag: ${{ steps.parse.outputs.geth_tag }}
-              GOPROXY: ${{ env.GOPROXY }}
-          - client: besu
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.besu_repo }}
-              tag: ${{ steps.parse.outputs.besu_tag }}
-          - client: reth
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.reth_repo }}
-              tag: ${{ steps.parse.outputs.reth_tag }}
-          - client: nethermind
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.nethermind_repo }}
-              tag: ${{ steps.parse.outputs.nethermind_tag }}
-          - client: erigon
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.erigon_repo }}
-              tag: ${{ steps.parse.outputs.erigon_tag }}
-              GOPROXY: ${{ env.GOPROXY }}
-          - client: nimbus-el
-            nametag: default
-            dockerfile: git
-            build_args:
-              github: ${{ steps.parse.outputs.nimbusel_repo }}
-              tag: ${{ steps.parse.outputs.nimbusel_tag }}
-          ENDCONFIG
-          EOF
-
+      - uses: ethpandaops/hive-github-action/helpers/client-config@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+        if: github.event_name == 'workflow_dispatch'
+        name: 'Client config: workflow_dispatch'
+        id: client_config_dispatch
+        with:
+          client_repos: ${{ inputs.client_repos }}
+          client_images: ${{ inputs.client_images }}
+          common_client_tag: ${{ inputs.common_client_tag }}
+          client_source: ${{ inputs.client_source }}
+          hive_version: ${{ inputs.hive_version }}
+          goproxy: ${{ env.GOPROXY }}
   test:
     timeout-minutes: 540 # 9 hours
     needs: prepare
@@ -234,13 +169,13 @@ jobs:
           '))}}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@299a5ffad55b067d7dd26ab9fe40ff999cbb5029 # v0.3.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
         with:
           username: ethpandaops
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: ethpandaops/hive-github-action@299a5ffad55b067d7dd26ab9fe40ff999cbb5029 # v0.3.0
+      - uses: ethpandaops/hive-github-action@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
         with:
           hive_repository: ${{ needs.prepare.outputs.hive_repo }}
           hive_version: ${{ needs.prepare.outputs.hive_tag }}
