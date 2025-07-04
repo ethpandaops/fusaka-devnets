@@ -1,5 +1,5 @@
 #!/bin/zsh
-node="bootnode-1"
+node="lighthouse-geth-1"
 network="devnet-2"
 domain="ethpandaops.io"
 prefix="fusaka"
@@ -404,12 +404,12 @@ for arg in "${command[@]}"; do
             echo "offline-preparation.json already exists, remove it to prepare a new one"
           fi
           echo "[" > exit.json
-          for i in $(seq ${command[2]} ${command[3]})
+          for i in $(seq ${command[2]} $((command[3] - 1)))
           do
             echo "Exiting validator $i"
             ethdo validator exit --offline --mnemonic="$sops_mnemonic" --path="m/12381/3600/$i/0/0"
             cat exit-operations.json >> exit.json
-            if [[ $i -ne ${command[3]} ]]; then
+            if [[ $i -ne $((command[3] - 1)) ]]; then
               echo "," >> exit.json
             fi
 
@@ -417,7 +417,7 @@ for arg in "${command[@]}"; do
           echo "]" >> exit.json
           mv exit.json exit-operations.json
           ethdo validator exit --connection=$bn_endpoint --timeout=300s
-          echo "validator exit submitted for validators ${command[2]} to ${command[3]}"
+          echo "validator exit submitted for validators ${command[2]} to $((command[3] - 1))"
           exit;
         else
           echo "Exiting validator ${command[2]}"
