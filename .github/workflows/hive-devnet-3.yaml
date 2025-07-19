@@ -1,4 +1,4 @@
-name: Hive - Devnet 2
+name: Hive - Devnet 3
 on:
   schedule:
     - cron: '45 12 * * *'
