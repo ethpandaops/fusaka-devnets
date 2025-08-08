@@ -68,7 +68,7 @@ env:
   S3_PATH: fusaka-devnet-3
   S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka-devnet-3/
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-3%40v1.0.0/fixtures_fusaka-devnet-3.tar.gz
+  EEST_BUILD_ARG_FIXTURES: https://github.com/spencer-tb/execution-spec-tests/releases/download/new/fixtures_temp.tar.gz
   EEST_BUILD_ARG_BRANCH: hive
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
