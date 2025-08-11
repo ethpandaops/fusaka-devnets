@@ -119,6 +119,7 @@ xatu_sentry_config:
     - contribution_and_proof
     - blob_sidecar
     - data_column_sidecar
+    - single_attestation
   attestationData:
     enabled: false
   beaconCommittees:
