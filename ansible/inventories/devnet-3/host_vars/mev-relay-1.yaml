@@ -195,7 +195,7 @@ ethereum_node_json_rpc_snooper_engine_enabled: false
 
 reth_rbuilder_config: |
   log_json = true
-  log_level = "info,rbuilder=debug"
+  log_level = "trace,rbuilder=trace"
   redacted_telemetry_server_port = 6061
   redacted_telemetry_server_ip = "0.0.0.0"
   full_telemetry_server_port = 6060

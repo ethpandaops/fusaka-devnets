@@ -1,6 +1,6 @@
 default_ethereum_client_images:
 ### Consensus layer clients
-  lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:fusaka-devnet-3
+  lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:getBlobs-flag-d3c0634
   lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:fusaka-devnet-3
   nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:fusaka-devnet-3
   prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:fusaka-devnet-3
