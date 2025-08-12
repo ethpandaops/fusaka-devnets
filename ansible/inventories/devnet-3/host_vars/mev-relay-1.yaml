@@ -166,6 +166,7 @@ reth_container_env:
   COINBASE_SECRET_KEY: "{{ secret_mev_signingkey }}"
   RELAY_SECRET_KEY: "{{ secret_mev_signingkey }}"
   OPTIMISTIC_RELAY_SECRET_KEY: "{{ secret_mev_signingkey }}"
+  RUST_LOG: "payload_builder=trace,txpool=trace"
 
 reth_container_ports_ipv4:
   - "127.0.0.1:{{ reth_ports_http_rpc }}:{{ reth_ports_http_rpc }}"
