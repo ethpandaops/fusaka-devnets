@@ -7,7 +7,8 @@
 
 domain: ethpandaops.io
 network_subdomain: "{{ ethereum_network_name }}.{{ domain }}"
-server_fqdn: "{{ inventory_hostname }}.{{ network_subdomain }}"
+network_server_subdomain: "{{ network_subdomain }}"
+server_fqdn: "{{ inventory_hostname }}.{{ network_server_subdomain }}"
 
 ethereum_network_id: >-
   {{ (lookup('file', eth_testnet_config_local_dir_src + '/genesis.json') | from_json).config.chainId }}
