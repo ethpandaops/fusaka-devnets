@@ -9,6 +9,22 @@ resource "hcloud_firewall" "machine_firewall" {
     source_ips  = ["0.0.0.0/0", "::/0"]
   }
 
+  # DNS
+  rule {
+    description = "Allow DNS UDP"
+    direction   = "in"
+    protocol    = "udp"
+    port        = "53"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+  rule {
+    description = "Allow DNS TCP"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = "53"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+
   # SSH
   rule {
     description = "Allow SSH"
