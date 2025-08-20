@@ -44,6 +44,12 @@ prysm_container_entrypoint:
   - /app/cmd/beacon-chain/beacon-chain
 prysm_container_command_extra_args: >-
   {{ prysm_container_command_extra_simple_args + prysm_container_command_extra_bootnode_args }}
+prysm_container_ports_ipv4:
+  - "127.0.0.1:{{ prysm_ports_http_beacon }}:{{ prysm_ports_http_beacon }}"
+  - "127.0.0.1:{{ prysm_ports_metrics }}:{{ prysm_ports_metrics }}"
+  - "0.0.0.0:{{ prysm_ports_p2p_tcp }}:{{ prysm_ports_p2p_tcp }}"
+  - "0.0.0.0:{{ prysm_ports_p2p_udp }}:{{ prysm_ports_p2p_udp }}/udp"
+  - "127.0.0.1:6061:6060"
 prysm_container_command_extra_simple_args:
   - --grpc-gateway-corsdomain=*
   - --chain-config-file=/network-config/config.yaml
