@@ -130,7 +130,7 @@ jobs:
         EOF
         echo "el-images=$(cat /tmp/default-el-images.json | jq -c .)" >> $GITHUB_OUTPUT
 
-    - name: Parse images
+    - name: Prepare inputs
       id: prepare
       env:
         EL_IMAGES: ${{ github.event_name == 'schedule' && steps.default-images.outputs.el-images || inputs.el-image }}
