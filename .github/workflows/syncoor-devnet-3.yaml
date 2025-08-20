@@ -48,7 +48,15 @@ on:
       el-image:
         description: 'Execution layer client images as JSON (e.g., {"geth": "ethereum/client-go:latest", "besu": "hyperledger/besu:latest"})'
         required: false
-        default: '{"besu": "ethpandaops/besu:main", "geth": "ethpandaops/geth:master", "erigon": "ethpandaops/erigon:main", "nethermind": "ethpandaops/nethermind:master", "reth": "ethpandaops/reth:fusaka-devnet-3", "nimbusel": "ethpandaops/nimbus-eth1:master"}'
+        default: >-
+          {
+            "besu": "ethpandaops/besu:main",
+            "geth": "ethpandaops/geth:master",
+            "erigon": "ethpandaops/erigon:main",
+            "nethermind": "ethpandaops/nethermind:master",
+            "reth": "ethpandaops/reth:fusaka-devnet-3",
+            "nimbusel": "ethpandaops/nimbus-eth1:master"
+          }
         type: string
       cl-image:
         description: 'Consensus layer client images as JSON (e.g., {"lighthouse": "sigp/lighthouse:latest", "teku": "consensys/teku:latest"})'
@@ -110,7 +118,23 @@ jobs:
       id: prepare
       run: |
         # Parse EL images
-        EL_IMAGES='${{ inputs.el-image }}'
+        # For scheduled runs, always use the default el-image values
+        if [ "${{ github.event_name }}" = "schedule" ]; then
+          EL_IMAGES=$(cat <<'EOF'
+        {
+          "besu": "ethpandaops/besu:main",
+          "geth": "ethpandaops/geth:master",
+          "erigon": "ethpandaops/erigon:main",
+          "nethermind": "ethpandaops/nethermind:master",
+          "reth": "ethpandaops/reth:fusaka-devnet-3",
+          "nimbusel": "ethpandaops/nimbus-eth1:master"
+        }
+        EOF
+        )
+        else
+          EL_IMAGES='${{ inputs.el-image }}'
+        fi
+
         if [ "$EL_IMAGES" != '{}' ] && [ -n "$EL_IMAGES" ]; then
           EL_CLIENT="${{ matrix.el-client }}"
           EL_IMAGE=$(echo "$EL_IMAGES" | jq -r --arg client "$EL_CLIENT" '.[$client] // ""')
