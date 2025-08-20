@@ -11,7 +11,7 @@ on:
       s3-path:
         description: 'Path to the reports in S3 bucket'
         required: false
-        default: 'test-reports'
+        default: 'devnets/fusaka-devnet-3'
         type: string
 
 env:
