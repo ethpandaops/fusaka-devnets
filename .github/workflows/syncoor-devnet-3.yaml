@@ -71,7 +71,7 @@ jobs:
     # - 24h -> 1440m
     # - 48h -> 2880m
     # - 72h -> 4320m
-    timeout-minutes: ${{ github.event_name == 'schedule' && 45 || fromJSON(inputs.run-timeout || '1800') }}
+    timeout-minutes: ${{ github.event_name == 'schedule' && 120 || fromJSON(inputs.run-timeout || '1800') }}
     # Self-hosted runner sizes:
     # - ccx13: 2 cores, 8GB, 80GB disk
     # - ccx23: 4 cores, 16GB, 160GB disk
@@ -131,7 +131,7 @@ jobs:
 
         # Calculate timeout (subtract 10 minutes)
         if [ "${{ github.event_name }}" = "schedule" ]; then
-          TIMEOUT=$((45 - 10))
+          TIMEOUT=$((120 - 10))
         else
           INPUT_TIMEOUT=${{ inputs.run-timeout || '1800' }}
           TIMEOUT=$((INPUT_TIMEOUT - 10))
