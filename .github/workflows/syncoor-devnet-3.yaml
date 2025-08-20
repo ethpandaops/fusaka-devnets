@@ -114,13 +114,11 @@ jobs:
           '))}}
 
     steps:
-    - name: Prepare
-      id: prepare
+    - name: Set default images for scheduled runs
+      id: default-images
+      if: github.event_name == 'schedule'
       run: |
-        # Parse EL images
-        # For scheduled runs, always use the default el-image values
-        if [ "${{ github.event_name }}" = "schedule" ]; then
-          EL_IMAGES=$(cat <<'EOF'
+        cat > /tmp/default-el-images.json <<'EOF'
         {
           "besu": "ethpandaops/besu:main",
           "geth": "ethpandaops/geth:master",
@@ -130,36 +128,32 @@ jobs:
           "nimbusel": "ethpandaops/nimbus-eth1:master"
         }
         EOF
-        )
-        else
-          EL_IMAGES='${{ inputs.el-image }}'
-        fi
+        echo "el-images=$(cat /tmp/default-el-images.json | jq -c .)" >> $GITHUB_OUTPUT
 
+    - name: Parse images
+      id: prepare
+      env:
+        EL_IMAGES: ${{ github.event_name == 'schedule' && steps.default-images.outputs.el-images || inputs.el-image }}
+        CL_IMAGES: ${{ inputs.cl-image }}
+      run: |
+        # Parse EL image for current client
         if [ "$EL_IMAGES" != '{}' ] && [ -n "$EL_IMAGES" ]; then
-          EL_CLIENT="${{ matrix.el-client }}"
-          EL_IMAGE=$(echo "$EL_IMAGES" | jq -r --arg client "$EL_CLIENT" '.[$client] // ""')
+          EL_IMAGE=$(echo "$EL_IMAGES" | jq -r --arg client "${{ matrix.el-client }}" '.[$client] // ""')
           echo "el-image=$EL_IMAGE" >> $GITHUB_OUTPUT
         else
           echo "el-image=" >> $GITHUB_OUTPUT
         fi
 
-        # Parse CL images
-        CL_IMAGES='${{ inputs.cl-image }}'
+        # Parse CL image for current client
         if [ "$CL_IMAGES" != '{}' ] && [ -n "$CL_IMAGES" ]; then
-          CL_CLIENT="${{ matrix.cl-client }}"
-          CL_IMAGE=$(echo "$CL_IMAGES" | jq -r --arg client "$CL_CLIENT" '.[$client] // ""')
+          CL_IMAGE=$(echo "$CL_IMAGES" | jq -r --arg client "${{ matrix.cl-client }}" '.[$client] // ""')
           echo "cl-image=$CL_IMAGE" >> $GITHUB_OUTPUT
         else
           echo "cl-image=" >> $GITHUB_OUTPUT
         fi
 
         # Calculate timeout (subtract 10 minutes)
-        if [ "${{ github.event_name }}" = "schedule" ]; then
-          TIMEOUT=$((120 - 10))
-        else
-          INPUT_TIMEOUT=${{ inputs.run-timeout || '1800' }}
-          TIMEOUT=$((INPUT_TIMEOUT - 10))
-        fi
+        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 120 || fromJSON(inputs.run-timeout || '1800') }} - 10 ))
         echo "run-timeout=$TIMEOUT" >> $GITHUB_OUTPUT
 
     - name: Run Syncoor Test
