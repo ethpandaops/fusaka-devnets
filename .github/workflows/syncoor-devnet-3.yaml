@@ -48,7 +48,7 @@ on:
       el-image:
         description: 'Execution layer client images as JSON (e.g., {"geth": "ethereum/client-go:latest", "besu": "hyperledger/besu:latest"})'
         required: false
-        default: '{}'
+        default: '{"besu": "ethpandaops/besu:main", "geth": "ethpandaops/geth:master", "erigon": "ethpandaops/erigon:main", "nethermind": "ethpandaops/nethermind:master", "reth": "ethpandaops/reth:fusaka-devnet-3", "nimbusel": "ethpandaops/nimbus-eth1:master"}'
         type: string
       cl-image:
         description: 'Consensus layer client images as JSON (e.g., {"lighthouse": "sigp/lighthouse:latest", "teku": "consensys/teku:latest"})'
