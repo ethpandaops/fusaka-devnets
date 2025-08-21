@@ -172,9 +172,9 @@ jobs:
         cl-image: ${{ steps.prepare.outputs.cl-image }}
         el-extra-args: >-
           ${{
-            (matrix.el-client == 'reth') && '--full' ||
-            (matrix.el-client == 'erigon') && '--prune.mode=full' ||
-            ''
+            (matrix.el-client == 'reth') && '["--full"]' ||
+            (matrix.el-client == 'erigon') && '["--prune.mode=full"]' ||
+            '[]'
           }}
         check-interval: 30s
         run-timeout: ${{ steps.prepare.outputs.run-timeout }}m
