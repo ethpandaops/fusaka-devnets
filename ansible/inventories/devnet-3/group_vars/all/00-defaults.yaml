@@ -53,12 +53,6 @@ docker_networks_shared:
 # role: geerlingguy.docker
 docker_users:
   - devops
-docker_daemon_options:
-  "log-driver": "json-file"
-  "log-opts":
-      "max-size": "500m"
-      "max-file": "8"
-
 # role: ethpandaops.general.prometheus
 prometheus_container_networks: "{{ docker_networks_shared }}"
 
