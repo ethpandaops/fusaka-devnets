@@ -1,6 +1,6 @@
 default_ethereum_client_images:
 ### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:getBlobs-flag-d3c0634
+  lighthouse: ethpandaops/lighthouse:unstable
   lodestar: ethpandaops/lodestar:fusaka-devnet-3
   nimbus: ethpandaops/nimbus-eth2:fusaka-devnet-3
   prysm: ethpandaops/prysm-beacon-chain:peerdas-sync
