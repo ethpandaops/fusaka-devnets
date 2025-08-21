@@ -246,7 +246,7 @@ resource "digitalocean_firewall" "main" {
 }
 
 resource "digitalocean_firewall" "bootnode" {
-  name        = "${var.ethereum_network}-nodes-bootnode"
+  name = "${var.ethereum_network}-nodes-bootnode"
   // Tags are used to select which droplets should
   // be assigned to this firewall.
   tags = [
@@ -352,15 +352,15 @@ resource "cloudflare_record" "server_record_v6" {
 }
 
 resource "cloudflare_record" "server_record_ns" {
-  for_each = {	
-    for vm in local.digitalocean_vms : "${vm.id}" => vm	if can(regex("bootnode", vm.name))
-  }	
-  zone_id = data.cloudflare_zone.default.id	
-  name    = "srv.${var.ethereum_network}"	
-  type    = "NS"	
+  for_each = {
+    for vm in local.digitalocean_vms : "${vm.id}" => vm if can(regex("bootnode", vm.name))
+  }
+  zone_id = data.cloudflare_zone.default.id
+  name    = "srv.${var.ethereum_network}"
+  type    = "NS"
   value   = "${each.value.name}.${var.ethereum_network}.${data.cloudflare_zone.default.name}"
-  proxied = false	
-  ttl     = 120	
+  proxied = false
+  ttl     = 120
 }
 
 
