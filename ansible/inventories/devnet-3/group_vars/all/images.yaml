@@ -1,24 +1,22 @@
 default_ethereum_client_images:
 ### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:getBlobs-flag-d3c0634
-  lodestar: ethpandaops/lodestar:fusaka-devnet-3
+  lighthouse: ethpandaops/lighthouse:unstable
+  lodestar: ethpandaops/lodestar:unstable
   nimbus: ethpandaops/nimbus-eth2:fusaka-devnet-3
-  prysm: ethpandaops/prysm-beacon-chain:peerdas-sync
-  prysm_validator: ethpandaops/prysm-validator:peerdas-sync
+  prysm: ethpandaops/prysm-beacon-chain:develop
+  prysm_validator: ethpandaops/prysm-validator:develop
   teku: ethpandaops/teku:master
   grandine: ethpandaops/grandine:peerdas-fulu
 ### Execution layer clients
   besu: ethpandaops/besu:main
-  geth: ethpandaops/geth:master
+  geth: ethpandaops/geth:pk910-fusaka-devnet-3-bad-iszero
   erigon: ethpandaops/erigon:main
-  nethermind: ethpandaops/nethermind:master
+  nethermind: ethpandaops/nethermind:pk910-fusaka-devnet-3-bad-iszero
   reth: ethpandaops/reth:fusaka-devnet-3
   nimbusel: ethpandaops/nimbus-eth1:master
 
-# mev boost
-  mev_boost: ethpandaops/mev-boost:develop
-
 default_tooling_images:
+  mev_boost: ethpandaops/mev-boost:develop
   mev_builder: ethpandaops/reth-rbuilder:bharath-123-fusaka-devnet-3
   mev_relay: ethpandaops/mev-boost-relay:bharath-123-fusaka-devnet-3
   xatu_sentry: ethpandaops/xatu:latest

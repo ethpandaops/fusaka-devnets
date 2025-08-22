@@ -1,8 +1,0 @@
-ethereum_node_mev_boost_enabled: false
-
-docker_daemon_options:
-  "log-driver": "json-file"
-  "log-opts":
-    "max-size": "500m"
-    "max-file": "8"
-  "registry-mirrors": ["https://docker-cache.ethquokkaops.io","https://docker.ethquokkaops.io/dh"]
