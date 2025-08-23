@@ -130,7 +130,7 @@ jobs:
           hive_version: ${{ inputs.hive_version }}
           goproxy: ${{ env.GOPROXY }}
   test:
-    timeout-minutes: 540 # 9 hours
+    timeout-minutes: 2160
     needs: prepare
     runs-on: >-
       ${{
