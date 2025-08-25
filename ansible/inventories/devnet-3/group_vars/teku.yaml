@@ -48,6 +48,7 @@ teku_container_command_extra_args:
   - --Xlog-include-p2p-warnings-enabled
   - --metrics-block-timing-tracking-enabled
   - --rest-api-docs-enabled
+  - --ignore-weak-subjectivity-period-enabled
 teku_validator_container_volumes:
   - "{{ teku_validator_datadir }}:/validator-data"
 teku_validator_datadir: /data/teku-validator

@@ -9,9 +9,9 @@ default_ethereum_client_images:
   grandine: ethpandaops/grandine:peerdas-fulu
 ### Execution layer clients
   besu: ethpandaops/besu:main
-  geth: ethpandaops/geth:pk910-fusaka-devnet-3-bad-iszero
+  geth: ethpandaops/geth:master
   erigon: ethpandaops/erigon:main
-  nethermind: ethpandaops/nethermind:pk910-fusaka-devnet-3-bad-iszero
+  nethermind: ethpandaops/nethermind:master
   reth: ethpandaops/reth:fusaka-devnet-3
   nimbusel: ethpandaops/nimbus-eth1:master
 
