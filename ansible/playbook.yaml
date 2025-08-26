@@ -1,4 +1,5 @@
 - hosts: localhost
+  connection: local
   roles:
     - role: ethpandaops.general.ethereum_genesis
       tags: [ethereum_genesis]
@@ -67,7 +68,7 @@
 
 - hosts: ethereum_node
   become: true
-  strategy: free
+  strategy: mitogen_free
   roles:
     - role: ethpandaops.general.ethereum_node
       tags: [ethereum, ethereum_node]
@@ -126,6 +127,7 @@
       tags: [dora]
 
 - hosts: localhost
+  connection: local
   roles:
     - role: ethpandaops.general.ethereum_post_network_setup
       tags: [eth_post_network_setup, ethereum_post_network_setup]
