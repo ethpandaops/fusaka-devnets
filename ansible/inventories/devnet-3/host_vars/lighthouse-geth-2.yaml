@@ -1,3 +1,9 @@
 default_ethereum_client_images:
   lighthouse: ethpandaops/lighthouse:ethdreamer-unstable-instrument-beacon-api
   geth: ethpandaops/geth:master
+
+lighthouse_container_command_extra_args:
+  - --testnet-dir=/network-config
+  - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
+  - --disable-get-blobs
+  - --telemetry-collector-url=https://{{ secret_prometheus_remote_write.username }}:{{ secret_prometheus_remote_write.password }}@tempo.primary.production.platform.ethpandaops.io

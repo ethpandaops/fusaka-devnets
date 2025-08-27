@@ -1,4 +1,0 @@
-default_ethereum_client_images:
-  teku: docker.ethquokkaops.io/dh/ethpandaops/teku:fusaka-devnet-3
-  geth: docker.ethquokkaops.io/dh/ethpandaops/geth:mariusvanderwijden-bad-block-generator
-ethereum_node_mev_boost_enabled: false
