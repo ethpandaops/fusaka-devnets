@@ -68,7 +68,7 @@ env:
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
-    --sim.parallelism=4
+    --sim.parallelism=8
     --docker.auth
     --docker.buildoutput
   # Flags used for the ethereum/eest/consume-engine simulator
@@ -135,7 +135,7 @@ jobs:
     runs-on: >-
       ${{
         matrix.simulator == 'ethereum/rpc-compat' && 'ubuntu-latest' ||
-        contains(matrix.simulator, 'ethereum/eest/') && 'self-hosted-ghr-size-m-x64' ||
+        contains(matrix.simulator, 'ethereum/eest/') && 'self-hosted-ghr-size-ccx33-x64' ||
         'ubuntu-latest'
       }}
     concurrency:
@@ -178,7 +178,7 @@ jobs:
           extra_flags: >-
             ${{ env.GLOBAL_EXTRA_FLAGS }}
             ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-rlp') && '--client.checktimelimit=21600s' || '' }}
-            ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-engine') && '--sim.parallelism=1' || '' }}
+            ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-engine') && '--sim.parallelism=8' || '' }}
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-engine' && env.EEST_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-rlp' && env.EEST_RLP_FLAGS || '' }}
