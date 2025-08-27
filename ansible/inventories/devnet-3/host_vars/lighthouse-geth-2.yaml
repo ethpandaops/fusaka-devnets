@@ -8,3 +8,4 @@ lighthouse_container_command_extra_args:
   - --disable-get-blobs
   - --telemetry-collector-url={{ tempo_grpc_url }}
   - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
+  - --debug-level=debug
