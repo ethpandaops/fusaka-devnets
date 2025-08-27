@@ -6,4 +6,5 @@ lighthouse_container_command_extra_args:
   - --testnet-dir=/network-config
   - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
   - --disable-get-blobs
-  - --telemetry-collector-url=https://{{ secret_prometheus_remote_write.username }}:{{ secret_prometheus_remote_write.password }}@tempo.primary.production.platform.ethpandaops.io
+  - --telemetry-collector-url={{ tempo_grpc_url }}
+  - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
