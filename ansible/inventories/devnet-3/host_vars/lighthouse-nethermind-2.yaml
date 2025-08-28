@@ -1,3 +1,12 @@
 default_ethereum_client_images:
-  lighthouse: ethpandaops/lighthouse:pawanjay176-blocks-then-columns
+  lighthouse: ethpandaops/lighthouse:ethdreamer-unstable-instrument-beacon-api
   nethermind: ethpandaops/nethermind:master
+
+
+lighthouse_container_command_extra_args:
+  - --testnet-dir=/network-config
+  - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
+  - --disable-get-blobs
+  - --telemetry-collector-url=http://grpc-snoop:1337
+  - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
+  - --debug-level=debug
