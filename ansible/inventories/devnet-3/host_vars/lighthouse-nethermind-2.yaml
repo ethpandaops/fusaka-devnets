@@ -1,5 +1,5 @@
 default_ethereum_client_images:
-  lighthouse: ethpandaops/lighthouse:ethdreamer-unstable-instrument-beacon-api
+  lighthouse: ethpandaops/lighthouse:unstable
   nethermind: ethpandaops/nethermind:master
 
 
