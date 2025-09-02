@@ -36,7 +36,7 @@ on:
           {
             "geth": "ethereum/go-ethereum@master",
             "besu": "hyperledger/besu@main",
-            "reth": "paradigmxyz/reth@fusaka-devnet-3",
+            "reth": "paradigmxyz/reth@main",
             "nethermind": "NethermindEth/nethermind@master",
             "erigon": "erigontech/erigon@main",
             "nimbusel": "status-im/nimbus-eth1@master"
@@ -48,7 +48,7 @@ on:
             {
               "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:master",
               "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:main",
-              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-3",
+              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:main",
               "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:master",
               "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:main",
               "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
@@ -63,7 +63,7 @@ env:
   S3_PATH: fusaka-devnet-5
   S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka-devnet-5/
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-5%40v1.1.0/fixtures_fusaka-devnet-5.tar.gz
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-5%40v2.0.0/fixtures_fusaka-devnet-5.tar.gz
   EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
