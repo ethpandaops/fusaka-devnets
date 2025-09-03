@@ -2,10 +2,9 @@ xatu-relay-monitor:
   enabled: false
   fullnameOverride: xatu-relay-monitor
   image:
-    repository: docker.ethquokkaops.io/dh/ethpandaops/xatu
-    tag: 1.4.8-debian-amd64
+    repository: ethpandaops/xatu
+    tag: latest
     pullPolicy: Always
-
   resources:
     limits:
       cpu: 1024m
@@ -28,7 +27,7 @@ xatu-relay-monitor:
     name: fusaka-devnet-3-xatu-relay-monitor
     ethereum:
       network: fusaka-devnet-3
-      beaconNodeUrl: https://beacon.fusaka-devnet-3.ethpandaops.io   
+      beaconNodeUrl: https://beacon.fusaka-devnet-3.ethpandaops.io
     schedule:
       atSlotTimes:
         - "1s"
@@ -36,7 +35,7 @@ xatu-relay-monitor:
     relays:
       - name: "mev-relay-1"
         url: http://0xa55c1285d84ba83a5ad26420cd5ad3091e49c55a813eee651cd467db38a8c8e63192f47955e9376f6b42f6d190571cb5@mev-relay-1.fusaka-devnet-3.ethpandaops.io:9062
-    
+
     coordinator:
       address: server.xatu-experimental.ethpandaops.io:443
       tls: true
@@ -64,4 +63,3 @@ xatu-relay-monitor:
         headers:
           authorization: "Basic <path:/secrets/services/services.enc.yaml#xatu | jsonPath {.experimental.event_ingester_auth}>"
         maxExportBatchSize: 32
-
