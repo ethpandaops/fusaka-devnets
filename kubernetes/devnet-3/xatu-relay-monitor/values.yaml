@@ -1,0 +1,56 @@
+xatu-relay-monitor:
+  enabled: false
+  fullnameOverride: xatu-relay-monitor
+  image:
+    repository: docker.ethquokkaops.io/dh/ethpandaops/xatu
+    tag: latest
+    pullPolicy: Always
+
+  resources:
+    limits:
+      cpu: 1024m
+      memory: 1536Mi
+    requests:
+      cpu: 512m
+      memory: 512Mi
+
+  terminationGracePeriodSeconds: 300
+
+  serviceMonitor:
+    enabled: true
+    labels:
+      vmagent: common
+  config:
+    logging: "info"
+    metricsAddr: ":9090"
+    pprofAddr: ":6060"
+    probeAddr: ":8080"
+    name: fusaka-devnet-3-xatu-relay-monitor
+    coordinator:
+      address: server.xatu-experimental.ethpandaops.io:443
+      tls: true
+      headers:
+        authorization: "Bearer <path:/secrets/services/services.enc.yaml#xatu | jsonPath {.experimental.coordinator_secret}>"
+    consistency:
+      enabled: true
+      checkEveryDuration: 1s
+      rateLimitPerRelay: 2
+      backfill:
+        enabled: true
+        toSlot: 0 # Genesis
+      forwardFill:
+        enabled: true # Disabled for now
+
+    validatorRegistrations:
+      enabled: false
+      targetSweepDuration: 6h
+    outputs:
+    - name: grpc
+      type: xatu
+      config:
+        address: server.xatu-experimental.ethpandaops.io:443
+        tls: true
+        headers:
+          authorization: "Basic <path:/secrets/services/services.enc.yaml#xatu | jsonPath {.experimental.event_ingester_auth}>"
+        maxExportBatchSize: 32
+
