@@ -3,7 +3,7 @@ xatu-relay-monitor:
   fullnameOverride: xatu-relay-monitor
   image:
     repository: docker.ethquokkaops.io/dh/ethpandaops/xatu
-    tag: latest
+    tag: 1.4.8-debian-amd64
     pullPolicy: Always
 
   resources:
