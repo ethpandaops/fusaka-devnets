@@ -17,7 +17,7 @@ collections:
   - name: community.sops
     version: 1.7.0
   - name: ethpandaops.general
-    source: https://github.com/ethpandaops/ansible-collection-general.git,metrics-export-config
+    source: https://github.com/ethpandaops/ansible-collection-general.git,master
     type: git
   - name: kubernetes.core
   - name: ansible.utils
