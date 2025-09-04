@@ -30,15 +30,15 @@ nethermind_seq_api_key: ENC[AES256_GCM,data:C6dHJX02l+m0zVYH691GUyKZgRs=,iv:tNCA
 nethermind_seq_server: ENC[AES256_GCM,data:wEIM2pUqK+I3rf42maFTr05r8cOJWjnpPQ==,iv:2Iu5nQAjRmxqkOF2Pueup+Kiwd34sfTxWY8aFv0pea0=,tag:VrfL6pUITsKJPgSue/XXJw==,type:str]
 nethermind_push_gateway: ENC[AES256_GCM,data:ScReyCHKHx2/8Yo3epSAsb3MykmlIrGkUegaV5+21aboPCgU+VbUOBfvqaTWpcQN3OjXH+euQj1bHL1etGk1qvjzm2sp/P9oqbHRU827nbejkk5SKEeC4q79U7QyQTbUJ1Z9paX1sYZysMDUf2LUb9r/wHhB7bknQYKnHBAg0Li7qw5T5o1yatJoDqfahe4R1Q==,iv:WuQDvBvS2zjEB805HYkq5TQ/H8baF23vyMP9JbdqCao=,tag:jTOnfh2+ZmWIXQBzIpIVCQ==,type:str]
 tysm_secret_key: ENC[AES256_GCM,data:MuvclVLaNVZ+7vRumg==,iv:XGBLMISj2wL7MQznXnVggjudiaw6Ff4i3wGt37/EKqA=,tag:ib5t0B5qa1FD6Ff8xYIFwQ==,type:str]
-tempo_grpc_url: ENC[AES256_GCM,data:Jk1VJ2IuHfI8Ua2rrIA4c7ZWAucxi063HXjY2zdgw+5n8iLYveHomBMuqNfYGeOjPZCv8j2HThYSS+b3KdGmoSH86DxCkM3IK9wIDVqA08jJop1ZDxp0kMGt7GviHnwcv0Cho4Is,iv:EoZuV1mXyVJG6wMwfNV98Skn4XDGuA5H4lGuLB1zmLM=,tag:X3VJFPpw2Wzc96P4NRmf1w==,type:str]
+tempo_grpc_url: ENC[AES256_GCM,data:b4D3IBVfujCGQ4ZqQLAVNJo9j3oB/ZtHOd5xpWTam1Y3v5ntIQ7qt/ei4QmORJXZuiLVMnwj+imIE8SxHzCpuzGRch3YqvPSx16MUKRFVFbJH0HPWKG/8xghrlkbgw==,iv:uiS5/j8vSX8wwqtfxmCwGguzF2rdwL6ckgNSmUwSIVU=,tag:8EoVuLPYxTAMDRTp08HIVQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-08-27T20:23:31Z"
-    mac: ENC[AES256_GCM,data:yHcsE7M4y2gY8nGHH8N4wLR6yS2Y3GGBAFNF9Rl9PcRges9gifr1BARYHcQH0Ef9P98gnkwG1zZ9HuBJc6BXXpWjvLFqiT/0xILq3L4qS7hl2oWWA+eV7zZ4uNIs9DXCsbbcgrr0U10kQIMi49AHw4L7GCbHeBbShtP5Ns+wxDA=,iv:phAa42HNbEF/0fZU0qDI+gL6n6BdEboLiMWNPYkY8kc=,tag:BiZUPAwoKsuV51cMkHCMLg==,type:str]
+    lastmodified: "2025-09-04T12:23:34Z"
+    mac: ENC[AES256_GCM,data:TDM33ubPv+Qf7nFLkD+ngF1cI1IqqwkfLAa4CAUBeg7ysfAcElFHykkyWjcjsXBfBQhxB8Njf6rKF3gKW7wXUvZ8HU50E13PmHjx5LQDoKplUqQyCGV6RP+6QBhgb8QmaQtlp+EK6T9oAnq1+/+fSYyfVgTMshlEzTczhKEpb/U=,iv:eRk4lNbtEp8xigY+I1a+slQVxiBeBL7FYoOABtXd0o0=,tag:foho/DxgiwGy2KJOavv01A==,type:str]
     pgp:
         - created_at: "2024-11-21T11:00:22Z"
           enc: |-
