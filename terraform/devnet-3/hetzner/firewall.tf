@@ -26,6 +26,22 @@ resource "hcloud_firewall" "machine_firewall" {
     source_ips  = ["0.0.0.0/0", "::/0"]
   }
 
+  # MEV Relay
+  rule {
+    description = "Allow MEV Relay ports"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = "9060-9062"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+  rule {
+    description = "Allow MEV Relay ports"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = "8645"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+
   # Consensus layer p2p port
   rule {
     description = "Allow consensus p2p port TCP"
