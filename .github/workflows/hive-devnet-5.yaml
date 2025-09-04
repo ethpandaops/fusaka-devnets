@@ -63,12 +63,12 @@ env:
   S3_PATH: fusaka-devnet-5
   S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka-devnet-5/
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-5%40v1.0.0/fixtures_fusaka-devnet-5.tar.gz
-  EEST_BUILD_ARG_BRANCH: hive
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-5%40v2.0.0/fixtures_fusaka-devnet-5.tar.gz
+  EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
-    --sim.parallelism=4
+    --sim.parallelism=8
     --docker.auth
     --docker.buildoutput
   # Flags used for the ethereum/eest/consume-engine simulator
@@ -130,12 +130,12 @@ jobs:
           hive_version: ${{ inputs.hive_version }}
           goproxy: ${{ env.GOPROXY }}
   test:
-    timeout-minutes: 540 # 9 hours
+    timeout-minutes: 2160
     needs: prepare
     runs-on: >-
       ${{
         matrix.simulator == 'ethereum/rpc-compat' && 'ubuntu-latest' ||
-        contains(matrix.simulator, 'ethereum/eest/') && 'self-hosted-ghr-size-m-x64' ||
+        contains(matrix.simulator, 'ethereum/eest/') && 'self-hosted-ghr-size-ccx33-x64' ||
         'ubuntu-latest'
       }}
     concurrency:
@@ -161,7 +161,7 @@ jobs:
             "ethereum/eest/consume-rlp"
           '))}}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
@@ -177,6 +177,8 @@ jobs:
           client_config: ${{ needs.prepare.outputs.client_config }}
           extra_flags: >-
             ${{ env.GLOBAL_EXTRA_FLAGS }}
+            ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-rlp') && '--client.checktimelimit=21600s' || '' }}
+            ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-engine') && '--sim.parallelism=8' || '' }}
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-engine' && env.EEST_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-rlp' && env.EEST_RLP_FLAGS || '' }}

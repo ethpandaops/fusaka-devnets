@@ -31,6 +31,7 @@ nimbus_checkpoint_container_command_extra_args:
   - --trusted-node-url={{ checkpoint_sync_url }}
   - --network=/network-config
   - --backfill=false
+  - --state-id=258656
 
 # role: ethpandaops.general.nimbus
 nimbus_container_name: beacon
