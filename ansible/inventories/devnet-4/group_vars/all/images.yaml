@@ -26,7 +26,7 @@ default_tooling_images:
   xatu_cannon: docker-cache.ethquokkaops.io/ethpandaops/xatu:latest
   xatu_mimicry: docker-cache.ethquokkaops.io/ethpandaops/xatu:latest
   xatu_cl_mimicry: docker-cache.ethquokkaops.io/ethpandaops/xatu:latest
-  ethereum_metrics_exporter: docker-cache.ethquokkaops.io/ethpandaops/ethereum-metrics-exporter:latest
+  ethereum_metrics_exporter: docker-cache.ethquokkaops.io/ethpandaops/ethereum-metrics-exporter:0.28.2
   tx_fuzz: docker-cache.ethquokkaops.io/ethpandaops/tx-fuzz:latest
   forkmon: docker-cache.ethquokkaops.io/skylenet/nodemonitor:darkmode
   forky: docker-cache.ethquokkaops.io/ethpandaops/forky:latest
