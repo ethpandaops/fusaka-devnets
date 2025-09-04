@@ -35,6 +35,8 @@ dora:
       value: "true"
     - name: API_CORS_ORIGINS
       value: "*"
+    - name: FRONTEND_SHOW_VALIDATOR_SUMMARY
+      value: "true"
     - name: FRONTEND_SHOW_PEER_DAS_INFOS
       value: "true"
     - name: FRONTEND_ETH_EXPLORER_LINK
