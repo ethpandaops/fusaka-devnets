@@ -1,8 +1,3 @@
-default_ethereum_client_images:
-  lighthouse: ethpandaops/lighthouse:unstable
-  nethermind: ethpandaops/nethermind:master
-
-
 lighthouse_container_command_extra_args:
   - --testnet-dir=/network-config
   - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}

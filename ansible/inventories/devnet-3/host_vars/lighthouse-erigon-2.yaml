@@ -1,3 +1,0 @@
-default_ethereum_client_images:
-  lighthouse: ethpandaops/lighthouse:pawanjay176-blocks-then-columns
-  erigon: ethpandaops/erigon:main

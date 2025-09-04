@@ -155,6 +155,13 @@ ethereum_node_docker_watchtower_containers_list:
   - external-block-builder
 docker_watchtower_container_additional_args:
   - --interval=900
+docker_watchtower_container_env:
+  WATCHTOWER_LABEL_ENABLE: "true"
+  WATCHTOWER_INCLUDE_STOPPED: "true"
+  WATCHTOWER_CLEANUP: "true"
+docker_watchtower_container_labels:
+    prometheus.io/scrape: "true"
+    watchtower.updates: "0"
 ethereum_node_json_rpc_snooper_engine_enabled: true
 ethereum_node_json_rpc_snooper_engine_name: "snooper-engine"
 ethereum_node_json_rpc_snooper_engine_port: 8561

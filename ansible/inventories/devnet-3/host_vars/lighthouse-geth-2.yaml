@@ -1,7 +1,3 @@
-default_ethereum_client_images:
-  lighthouse: ethpandaops/lighthouse:ethdreamer-unstable-instrument-beacon-api
-  geth: ethpandaops/geth:master
-
 lighthouse_container_command_extra_args:
   - --testnet-dir=/network-config
   - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
