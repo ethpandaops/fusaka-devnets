@@ -3,8 +3,8 @@ default_ethereum_client_images:
   lighthouse: ethpandaops/lighthouse:unstable
   lodestar: ethpandaops/lodestar:fusaka-devnet-3
   nimbus: ethpandaops/nimbus-eth2:fusaka-devnet-3
-  prysm: ethpandaops/prysm-beacon-chain:peerDAS
-  prysm_validator: ethpandaops/prysm-validator:peerDAS
+  prysm: ethpandaops/prysm-beacon-chain:develop
+  prysm_validator: ethpandaops/prysm-validator:develop
   teku: ethpandaops/teku:master
   grandine: ethpandaops/grandine:peerdas-fulu
 ### Execution layer clients

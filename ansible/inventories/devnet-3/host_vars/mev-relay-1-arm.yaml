@@ -13,6 +13,8 @@ mev_relay_docker_network_name: shared
 mev_relay_docker_networks:
   - name: "{{ mev_relay_docker_network_name }}"
 
+mev_relay_pubkey: 0xa38ed9385f273648173105001ff600b9e59bdd3f77f23ec3836c2e7e0bd3f1120acc2f64d36174099d4cc57645b0b1ef
+
 beacon_endpoint: http://beacon:5052
 
 gen_validators_root: "{{ lookup('file', eth_testnet_config_local_dir_src + 'genesis_validators_root.txt') }}"
@@ -90,7 +92,7 @@ mev_relay_website_container_env:
   DB_TABLE_PREFIX=custom
   LOG_LEVEL=debug
   LINK_DATA_API=http://mev-relay-1.{{ network_subdomain }}:9062
-  RELAY_URL=http://0xa55c1285d84ba83a5ad26420cd5ad3091e49c55a813eee651cd467db38a8c8e63192f47955e9376f6b42f6d190571cb5@mev-relay-1-arm.{{ network_subdomain }}:9062
+  RELAY_URL=http://{{ mev_relay_pubkey }}@mev-relay-1-arm.{{ network_subdomain }}:9062
 mev_relay_website_container_ports:
   - "9060:9060"
 mev_relay_website_container_pull: true
@@ -101,7 +103,7 @@ mev_relay_website_container_command_extra_args:
   - --db=postgres://postgres:postgres@mev-relay-database:5432/boostrelay?sslmode=disable
   - --show-config-details
   - --listen-addr=0.0.0.0:9060
-  - https://0xa55c1285d84ba83a5ad26420cd5ad3091e49c55a813eee651cd467db38a8c8e63192f47955e9376f6b42f6d190571cb5@mev-relay-api.{{ network_subdomain }}:9062
+  - https://{{ mev_relay_pubkey }}@mev-relay-api.{{ network_subdomain }}:9062
 
 
 
@@ -229,7 +231,7 @@ reth_rbuilder_config: |
 
   [[relays]]
   name = "flashbots"
-  url = "http://0xa55c1285d84ba83a5ad26420cd5ad3091e49c55a813eee651cd467db38a8c8e63192f47955e9376f6b42f6d190571cb5@mev-relay-1-arm.{{ network_subdomain }}:9062"
+  url = "http://{{ mev_relay_pubkey }}@mev-relay-1-arm.{{ network_subdomain }}:9062"
   priority = 0
   use_ssz_for_submit = false
   use_gzip_for_submit = false
