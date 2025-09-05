@@ -13,7 +13,7 @@ mev_relay_docker_network_name: shared
 mev_relay_docker_networks:
   - name: "{{ mev_relay_docker_network_name }}"
 
-mev_relay_pubkey: 0xa38ed9385f273648173105001ff600b9e59bdd3f77f23ec3836c2e7e0bd3f1120acc2f64d36174099d4cc57645b0b1ef
+mev_relay_pubkey: 0x821d5515fcc82dea790605686ac920a212154cb0b2f55c2bd896c65f9a08f57115b03613899b6a8fcd7686460b5c7bec
 
 beacon_endpoint: http://beacon:5052
 
@@ -72,7 +72,7 @@ mev_relay_api_container_command_extra_args:
   - --debug
   - --redis-uri=mev-relay-redis:6379
   - --db=postgres://postgres:postgres@mev-relay-database:5432/boostrelay?sslmode=disable
-  - --secret-key=0x607a11b45a7219cc61a3d9c5fd08c7eebd602a6a19a977f8d3771d5711a550f2
+  - --secret-key=0x19a65f4cd84d2ff952452abd466420c006788f71aaf3e930bbd3900a8f4679c3
   - --listen-addr=0.0.0.0:9062
   - --blocksim=http://execution:8545
 # ------------------------------------------------------------------
