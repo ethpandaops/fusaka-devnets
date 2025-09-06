@@ -159,10 +159,6 @@ ethereum_node_docker_watchtower_containers_list:
 docker_watchtower_container_additional_args:
   - --interval=900
   - --include-restarting
-docker_watchtower_container_env:
-  WATCHTOWER_LABEL_ENABLE: "true"
-  WATCHTOWER_INCLUDE_STOPPED: "true"
-  WATCHTOWER_CLEANUP: "true"
 docker_watchtower_container_labels:
     prometheus.io/scrape: "true"
     watchtower.updates: "0"
