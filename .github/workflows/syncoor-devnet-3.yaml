@@ -64,7 +64,7 @@ on:
         default: >-
           {
             "lighthouse": "ethpandaops/lighthouse:unstable",
-            "teku": "consensys/teku:latest",
+            "teku": "ethpandaops/teku:master",
             "prysm": "ethpandaops/prysm:unstable",
             "nimbus": "ethpandaops/nimbus-eth2:fusaka-devnet-3",
             "lodestar": "ethpandaops/lodestar:unstable",
