@@ -47,6 +47,8 @@ dora:
       value: "true"
     - name: FRONTEND_SHOW_SUBMIT_EL_REQUESTS
       value: "true"
+    - name: EXECUTIONAPI_GENESIS_CONFIG
+      value: "https://config.fusaka-devnet-3.ethpandaops.io/el/genesis.json"
   postgresql:
     name: "dora-postgresql"
     fullnameOverride: "dora-postgresql"
