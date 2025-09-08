@@ -65,10 +65,10 @@ on:
           {
             "lighthouse": "ethpandaops/lighthouse:unstable",
             "teku": "ethpandaops/teku:master",
-            "prysm": "ethpandaops/prysm:unstable",
+            "prysm": "ethpandaops/prysm:develop",
             "nimbus": "ethpandaops/nimbus-eth2:fusaka-devnet-3",
-            "lodestar": "ethpandaops/lodestar:unstable",
-            "grandine": "ethpandaops/grandine:unstable"
+            "lodestar": "ethpandaops/lodestar:fusaka-devnet-3",
+            "grandine": "ethpandaops/grandine:develop"
           }
         type: string
 
