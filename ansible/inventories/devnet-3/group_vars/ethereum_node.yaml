@@ -100,8 +100,12 @@ xatu_sentry_config:
   attestationData:
     enabled: false
   beaconCommittees:
-    enabled: false
+    enabled: true
+  proposerDuty:
+    enabled: true
   forkChoice:
+    enabled: false
+  execution:
     enabled: false
   outputs:
   - config:
