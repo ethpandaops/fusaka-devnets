@@ -61,7 +61,15 @@ on:
       cl-image:
         description: 'Consensus layer client images as JSON (e.g., {"lighthouse": "sigp/lighthouse:latest", "teku": "consensys/teku:latest"})'
         required: false
-        default: '{}'
+        default: >-
+          {
+            "lighthouse": "ethpandaops/lighthouse:unstable",
+            "teku": "consensys/teku:latest",
+            "prysm": "ethpandaops/prysm:unstable",
+            "nimbus": "ethpandaops/nimbus-eth2:fusaka-devnet-3",
+            "lodestar": "ethpandaops/lodestar:unstable",
+            "grandine": "ethpandaops/grandine:unstable"
+          }
         type: string
 
 env:
