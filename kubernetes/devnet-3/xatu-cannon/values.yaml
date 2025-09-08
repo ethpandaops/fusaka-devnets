@@ -93,7 +93,7 @@ xatu-cannon:
     tracing:
       enabled: false
     ethereum:
-      beaconNodeAddress: https://beacon.fusaka-devnet-3.ethpandaops.io?dugtrio-next-endpoint=lighthouse
+      beaconNodeAddress: https://beacon.fusaka-devnet-3.ethpandaops.io
       overrideNetworkName: fusaka-devnet-3
       beaconNodeHeaders: {}
       blockCacheSize: 300
