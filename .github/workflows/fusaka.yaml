@@ -1,4 +1,4 @@
-name: Hive - Devnet 3
+name: Hive - Devnet 5
 on:
   schedule:
     - cron: '45 12 * * *'
@@ -30,11 +30,6 @@ on:
         options:
           - docker
           - git
-      common_client_tag:
-        type: string
-        description: >-
-          If provided, this tag will be used for all clients, overriding individual tags/branches in client_repos and client_images
-        default: 'fusaka-devnet-3'
       client_repos:
         type: string
         default: |
@@ -51,12 +46,12 @@ on:
           type: string
           default: |
             {
-              "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:fusaka-devnet-3",
-              "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:fusaka-devnet-3",
-              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:fusaka-devnet-3",
-              "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:fusaka-devnet-3",
-              "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:fusaka-devnet-3",
-              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:fusaka-devnet-3"
+              "geth": "docker.ethquokkaops.io/dh/ethpandaops/geth:master",
+              "besu": "docker.ethquokkaops.io/dh/ethpandaops/besu:main",
+              "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:main",
+              "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:master",
+              "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:main",
+              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
             }
           description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
@@ -65,11 +60,11 @@ env:
   GOPROXY: "${{ vars.GOPROXY }}"
   # Hive action environment variables
   S3_BUCKET: hive-results
-  S3_PATH: fusaka-devnet-3
-  S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka-devnet-3/
+  S3_PATH: fusaka
+  S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka/
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/spencer-tb/execution-spec-tests/releases/download/new/fixtures_temp.tar.gz
-  EEST_BUILD_ARG_BRANCH: hive
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-5%40v2.0.0/fixtures_fusaka-devnet-5.tar.gz
+  EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=180s
@@ -120,7 +115,6 @@ jobs:
         name: 'Client config: schedule'
         id: client_config_schedule
         with:
-          common_client_tag: 'fusaka-devnet-3'
           client_source: 'docker'
           hive_version: 'ethereum/hive@master'
           goproxy: ${{ env.GOPROXY }}
@@ -132,12 +126,11 @@ jobs:
         with:
           client_repos: ${{ inputs.client_repos }}
           client_images: ${{ inputs.client_images }}
-          common_client_tag: ${{ inputs.common_client_tag }}
           client_source: ${{ inputs.client_source }}
           hive_version: ${{ inputs.hive_version }}
           goproxy: ${{ env.GOPROXY }}
   test:
-    timeout-minutes: 540 # 9 hours
+    timeout-minutes: 2160
     needs: prepare
     runs-on: >-
       ${{
@@ -184,6 +177,7 @@ jobs:
           client_config: ${{ needs.prepare.outputs.client_config }}
           extra_flags: >-
             ${{ env.GLOBAL_EXTRA_FLAGS }}
+            ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-rlp') && '--client.checktimelimit=21600s' || '' }}
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-engine' && env.EEST_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-rlp' && env.EEST_RLP_FLAGS || '' }}
