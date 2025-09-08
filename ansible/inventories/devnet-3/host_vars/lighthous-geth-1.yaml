@@ -1,0 +1,6 @@
+default_ethereum_client_images:
+### Consensus layer clients
+  lighthouse: ethpandaops/lighthouse:pawanjay176-blocks-then-columns
+
+### Execution layer clients
+  geth: ethpandaops/geth:pk910-fusaka-devnet-3-bad-iszero
