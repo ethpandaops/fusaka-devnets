@@ -1,4 +1,4 @@
-name: Syncoor - Devnet 3
+name: Syncoor
 
 on:
   schedule:
@@ -30,11 +30,11 @@ on:
         required: false
         default: ''
         type: string
-      supernode:
-        description: 'Enable supernode mode'
+      cl-nodetype:
+        description: 'Consensus layer client type ("fullnode", "supernode")'
         required: false
-        default: false
-        type: boolean
+        default: '"fullnode"'
+        type: string
       image:
         description: 'Syncoor Docker image'
         required: false
@@ -95,7 +95,7 @@ jobs:
     runs-on: self-hosted-ghr-size-ccx33-x64
     concurrency:
       group: >-
-        ${{ github.event_name }}-${{ matrix.network }}-${{ matrix.el-client }}-${{ matrix.cl-client }}-${{ matrix.supernode }}
+        ${{ github.event_name }}-${{ matrix.network }}-${{ matrix.el-client }}-${{ matrix.cl-client }}-${{ matrix.cl-nodetype }}
     strategy:
       fail-fast: false
       matrix:
@@ -119,9 +119,9 @@ jobs:
               "lodestar",
               "grandine"
           '))}}
-        supernode: >-
+        cl-nodetype: >-
           ${{
-            inputs.supernode != null && fromJSON(format('["{0}"]', inputs.supernode)) || fromJSON('["true", "false"]')
+            fromJSON(format('[{0}]', inputs.cl-nodetype || '"fullnode","supernode"'))
           }}
 
     steps:
@@ -159,6 +159,7 @@ jobs:
         EL_IMAGES: ${{ github.event_name == 'schedule' && steps.default-images.outputs.el-images || inputs.el-image }}
         CL_IMAGES: ${{ github.event_name == 'schedule' && steps.default-images.outputs.cl-images || inputs.cl-image }}
       run: |
+        set -x
         # Parse EL image for current client
         if [ "$EL_IMAGES" != '{}' ] && [ -n "$EL_IMAGES" ]; then
           EL_IMAGE=$(echo "$EL_IMAGES" | jq -r --arg client "${{ matrix.el-client }}" '.[$client] // ""')
@@ -187,9 +188,9 @@ jobs:
         SERVER_URL="https://syncoor-api.${{ matrix.network }}.ethpandaops.io"
         echo "syncoor-server-url=$SERVER_URL" >> $GITHUB_OUTPUT
 
-        # Generate S3 path based on network, supernode, and checkpoint sync
+        # Generate S3 path based on network, cl-nodetype, and checkpoint sync
         S3_PATH="devnets/${{ matrix.network }}"
-        if [ "${{ matrix.supernode }}" = "true" ]; then
+        if [ "${{ matrix.cl-nodetype }}" = "supernode" ]; then
           S3_PATH="${S3_PATH}-clsupernode"
         fi
         if [ "$CHECKPOINT_SYNC_ENABLED" = "false" ]; then
@@ -231,7 +232,7 @@ jobs:
         rclone-version: ${{ env.INSTALL_RCLONE_VERSION }}
         checkpoint-sync-enabled: ${{ steps.prepare.outputs.checkpoint-sync-enabled }}
         checkpoint-sync-url: ${{ inputs.checkpoint-sync-url || steps.prepare.outputs.checkpoint-sync-url }}
-        supernode: ${{ matrix.supernode }}
+        supernode: ${{ matrix.cl-nodetype == 'supernode' }}
         image: ${{ inputs.image || 'docker.ethquokkaops.io/dh/ethpandaops/syncoor:master' }}
         git-ref: ${{ inputs.git-ref }}
 
