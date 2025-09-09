@@ -13,6 +13,7 @@ on:
         type: string
         default: >-
           "ethereum/eest/consume-engine",
+          "ethereum/eest/consume-sync",
           "ethereum/eest/consume-rlp"
         description: >-
           Comma-separated list of simulators to test
@@ -158,6 +159,7 @@ jobs:
           ${{
             fromJSON(format('[{0}]', inputs.simulator || '
             "ethereum/eest/consume-engine",
+            "ethereum/eest/consume-sync",
             "ethereum/eest/consume-rlp"
           '))}}
     steps:
@@ -180,6 +182,7 @@ jobs:
             ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-rlp') && '--client.checktimelimit=21600s' || '' }}
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-engine' && env.EEST_ENGINE_FLAGS || '' }}
+            ${{ matrix.simulator == 'ethereum/eest/consume-sync' && env.EEST_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-rlp' && env.EEST_RLP_FLAGS || '' }}
           s3_upload: true
           s3_bucket: ${{ env.S3_BUCKET }}
