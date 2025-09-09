@@ -21,7 +21,7 @@ jobs:
   generate-index:
     runs-on: ubuntu-latest
     concurrency:
-      group: "generate-index"
+      group: "generate-index-${{ inputs.s3-path }}"
       cancel-in-progress: true
 
     steps:
