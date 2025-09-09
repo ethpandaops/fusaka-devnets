@@ -61,6 +61,7 @@ mev_relay_api_container_env:
   DISABLE_PAYLOAD_DATABASE_STORAGE=1
   ENABLE_BUILDER_CANCELLATIONS=1
   BLOCKSIM_MAX_CONCURRENT=0
+  API_TIMEOUT_READ_MS=3000
 mev_relay_api_container_pull: true
 mev_relay_api_container_networks: "{{ mev_relay_docker_networks }}"
 mev_relay_api_container_ports:
