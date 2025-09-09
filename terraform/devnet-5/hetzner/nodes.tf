@@ -18,6 +18,7 @@ variable "mev_relay" {
     validator_start = 0
     validator_end   = 0
     size            = "ccx63"
+    supernode       = true
   }
 }
 
