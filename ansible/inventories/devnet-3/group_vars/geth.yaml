@@ -27,10 +27,13 @@ geth_init_custom_network_container_command:
   - init
   - /genesis.json
 geth_container_pull: true
-
+docker_watchtower_container_additional_args:
+  - --interval=900
+  - --stop-timeout=10s
+  - --include-restarting
 prometheus_config: |
   global:
-    scrape_interval: 30s
+    scrape_interval: 1s
     evaluation_interval: 30s
     scrape_timeout: 10s
     external_labels:

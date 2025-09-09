@@ -28,7 +28,7 @@ reth_container_command_extra_args:
 ethereum_node_ipv6_enabled: false
 prometheus_config: |
   global:
-    scrape_interval: 30s
+    scrape_interval: 1s
     evaluation_interval: 30s
     scrape_timeout: 10s
     external_labels:

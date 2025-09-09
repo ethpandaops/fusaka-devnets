@@ -43,7 +43,7 @@ nethermind_container_pull: true
 
 prometheus_config: |
   global:
-    scrape_interval: 30s
+    scrape_interval: 1s
     evaluation_interval: 30s
     scrape_timeout: 10s
     external_labels:

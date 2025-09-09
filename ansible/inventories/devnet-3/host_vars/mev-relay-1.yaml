@@ -4,6 +4,7 @@ bootstrap_default_user_authorized_keys_github_team_el:
   - bharath-123
   - michaelsproul
   - ZanCorDX
+  - jimmygchen
 
 mev_relay_cleanup_all: false
 

@@ -28,7 +28,7 @@ nimbusel_container_command_extra_args:
   - --gas-limit=45000000
 prometheus_config: |
   global:
-    scrape_interval: 30s
+    scrape_interval: 1s
     evaluation_interval: 30s
     scrape_timeout: 10s
     external_labels:
