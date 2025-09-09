@@ -54,7 +54,7 @@ variable "ethereum_network" {
 }
 
 variable "base_cidr_block" {
-  default = "10.210.0.0/16"
+  default = "10.38.0.0/16"
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 //                                        LOCALS
@@ -95,21 +95,21 @@ locals {
     var.grandine_erigon_super,
     var.grandine_reth_super,
     # Fullnodes
-    var.lighthouse_geth_full,
-    var.lighthouse_nethermind_full,
-    var.lighthouse_besu_full,
-    var.lighthouse_erigon_full,
-    var.lighthouse_reth_full,
+    # var.lighthouse_geth_full,
+    # var.lighthouse_nethermind_full,
+    # var.lighthouse_besu_full,
+    # var.lighthouse_erigon_full,
+    # var.lighthouse_reth_full,
     var.prysm_geth_full,
     var.prysm_nethermind_full,
     var.prysm_besu_full,
     var.prysm_erigon_full,
     var.prysm_reth_full,
-    var.teku_geth_full,
-    var.teku_nethermind_full,
-    var.teku_besu_full,
-    var.teku_erigon_full,
-    var.teku_reth_full,
+    # var.teku_geth_full,
+    # var.teku_nethermind_full,
+    # var.teku_besu_full,
+    # var.teku_erigon_full,
+    # var.teku_reth_full,
     var.nimbus_geth_full,
     var.nimbus_nethermind_full,
     var.nimbus_besu_full,

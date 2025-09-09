@@ -517,95 +517,95 @@ variable "grandine_reth_full" {
   }
 }
 
-# Lighthouse Fullnodes (390 fullnodes)
-variable "lighthouse_geth_full" {
-  default = {
-    name            = "lighthouse-geth-full"
-    count           = 117
-    validator_start = 50912
-    validator_end   = 51848
-  }
-}
+# # Lighthouse Fullnodes (390 fullnodes) Handed over keys
+# variable "lighthouse_geth_full" {
+#   default = {
+#     name            = "lighthouse-geth-full"
+#     count           = 117
+#     validator_start = 50912
+#     validator_end   = 51848
+#   }
+# }
 
-variable "lighthouse_nethermind_full" {
-  default = {
-    name            = "lighthouse-nethermind-full"
-    count           = 117
-    validator_start = 51848
-    validator_end   = 52784
-  }
-}
+# variable "lighthouse_nethermind_full" {
+#   default = {
+#     name            = "lighthouse-nethermind-full"
+#     count           = 117
+#     validator_start = 51848
+#     validator_end   = 52784
+#   }
+# }
 
-variable "lighthouse_besu_full" {
-  default = {
-    name            = "lighthouse-besu-full"
-    count           = 78
-    validator_start = 52784
-    validator_end   = 53408
-  }
-}
+# variable "lighthouse_besu_full" {
+#   default = {
+#     name            = "lighthouse-besu-full"
+#     count           = 78
+#     validator_start = 52784
+#     validator_end   = 53408
+#   }
+# }
 
-variable "lighthouse_erigon_full" {
-  default = {
-    name            = "lighthouse-erigon-full"
-    count           = 39
-    validator_start = 53408
-    validator_end   = 53720
-  }
-}
+# variable "lighthouse_erigon_full" {
+#   default = {
+#     name            = "lighthouse-erigon-full"
+#     count           = 39
+#     validator_start = 53408
+#     validator_end   = 53720
+#   }
+# }
 
-variable "lighthouse_reth_full" {
-  default = {
-    name            = "lighthouse-reth-full"
-    count           = 39
-    validator_start = 53720
-    validator_end   = 54032
-  }
-}
+# variable "lighthouse_reth_full" {
+#   default = {
+#     name            = "lighthouse-reth-full"
+#     count           = 39
+#     validator_start = 53720
+#     validator_end   = 54032
+#   }
+# }
 
-# Teku Fullnodes (196 fullnodes)
-variable "teku_geth_full" {
-  default = {
-    name            = "teku-geth-full"
-    count           = 59
-    validator_start = 54032
-    validator_end   = 54504
-  }
-}
+# # Teku Fullnodes (196 fullnodes)
+# variable "teku_geth_full" {
+#   default = {
+#     name            = "teku-geth-full"
+#     count           = 59
+#     validator_start = 54032
+#     validator_end   = 54504
+#   }
+# }
 
-variable "teku_nethermind_full" {
-  default = {
-    name            = "teku-nethermind-full"
-    count           = 59
-    validator_start = 54504
-    validator_end   = 54976
-  }
-}
+# variable "teku_nethermind_full" {
+#   default = {
+#     name            = "teku-nethermind-full"
+#     count           = 59
+#     validator_start = 54504
+#     validator_end   = 54976
+#   }
+# }
 
-variable "teku_besu_full" {
-  default = {
-    name            = "teku-besu-full"
-    count           = 39
-    validator_start = 54976
-    validator_end   = 55288
-  }
-}
+# variable "teku_besu_full" {
+#   default = {
+#     name            = "teku-besu-full"
+#     count           = 39
+#     validator_start = 54976
+#     validator_end   = 55288
+#   }
+# }
 
-variable "teku_erigon_full" {
-  default = {
-    name            = "teku-erigon-full"
-    count           = 20
-    validator_start = 55288
-    validator_end   = 55448
-  }
-}
+# variable "teku_erigon_full" {
+#   default = {
+#     name            = "teku-erigon-full"
+#     count           = 20
+#     validator_start = 55288
+#     validator_end   = 55448
+#   }
+# }
 
-variable "teku_reth_full" {
-  default = {
-    name            = "teku-reth-full"
-    count           = 19
-    validator_start = 55448
-    validator_end   = 55600
-  }
-}
+# variable "teku_reth_full" {
+#   default = {
+#     name            = "teku-reth-full"
+#     count           = 19
+#     validator_start = 55448
+#     validator_end   = 55600
+#   }
+# }
 

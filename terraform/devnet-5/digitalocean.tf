@@ -283,41 +283,41 @@ resource "digitalocean_firewall" "bootnode" {
   depends_on = [digitalocean_project_resources.droplets]
 }
 
-resource "digitalocean_firewall" "mev_relay" {
-  name        = "${var.ethereum_network}-nodes-mev-relay"
-  droplet_ids = [digitalocean_droplet.main["mev-relay-1"].id]
+# resource "digitalocean_firewall" "mev_relay" {
+#   name        = "${var.ethereum_network}-nodes-mev-relay"
+#   droplet_ids = [digitalocean_droplet.main["mev-relay-1"].id]
 
-  // mev-relay ports
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "9060-9062"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
+#   // mev-relay ports
+#   inbound_rule {
+#     protocol         = "tcp"
+#     port_range       = "9060-9062"
+#     source_addresses = ["0.0.0.0/0", "::/0"]
+#   }
 
-  // mev-relay ports
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "8645"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
+#   // mev-relay ports
+#   inbound_rule {
+#     protocol         = "tcp"
+#     port_range       = "8645"
+#     source_addresses = ["0.0.0.0/0", "::/0"]
+#   }
 
-  // Allow all outbound traffic
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-  outbound_rule {
-    protocol              = "udp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-  outbound_rule {
-    protocol              = "icmp"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-  depends_on = [digitalocean_project_resources.droplets]
-}
+#   // Allow all outbound traffic
+#   outbound_rule {
+#     protocol              = "tcp"
+#     port_range            = "1-65535"
+#     destination_addresses = ["0.0.0.0/0", "::/0"]
+#   }
+#   outbound_rule {
+#     protocol              = "udp"
+#     port_range            = "1-65535"
+#     destination_addresses = ["0.0.0.0/0", "::/0"]
+#   }
+#   outbound_rule {
+#     protocol              = "icmp"
+#     destination_addresses = ["0.0.0.0/0", "::/0"]
+#   }
+#   depends_on = [digitalocean_project_resources.droplets]
+# }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //                                   DNS NAMES
