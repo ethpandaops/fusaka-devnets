@@ -1,4 +1,4 @@
-name: Hive - Devnet 5
+name: Hive - Fusaka 
 on:
   schedule:
     - cron: '45 12 * * *'
@@ -13,7 +13,6 @@ on:
         type: string
         default: >-
           "ethereum/eest/consume-engine",
-          "ethereum/eest/consume-sync",
           "ethereum/eest/consume-rlp"
         description: >-
           Comma-separated list of simulators to test
@@ -130,6 +129,7 @@ jobs:
           client_source: ${{ inputs.client_source }}
           hive_version: ${{ inputs.hive_version }}
           goproxy: ${{ env.GOPROXY }}
+
   test:
     timeout-minutes: 2160
     needs: prepare
@@ -159,7 +159,6 @@ jobs:
           ${{
             fromJSON(format('[{0}]', inputs.simulator || '
             "ethereum/eest/consume-engine",
-            "ethereum/eest/consume-sync",
             "ethereum/eest/consume-rlp"
           '))}}
     steps:
@@ -182,8 +181,44 @@ jobs:
             ${{ (matrix.client == 'erigon' && matrix.simulator == 'ethereum/eest/consume-rlp') && '--client.checktimelimit=21600s' || '' }}
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-engine' && env.EEST_ENGINE_FLAGS || '' }}
-            ${{ matrix.simulator == 'ethereum/eest/consume-sync' && env.EEST_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eest/consume-rlp' && env.EEST_RLP_FLAGS || '' }}
+          s3_upload: true
+          s3_bucket: ${{ env.S3_BUCKET }}
+          s3_path: ${{ env.S3_PATH }}
+          s3_public_url: ${{ env.S3_PUBLIC_URL }}
+          rclone_config: ${{ secrets.HIVE_RCLONE_CONFIG }}
+          rclone_version: ${{ env.INSTALL_RCLONE_VERSION }}
+          workflow_artifact_upload: true
+          website_upload: true
+
+  test-consume-sync-matrix:
+    timeout-minutes: 2160
+    needs: prepare
+    runs-on: self-hosted-ghr-size-ccx33-x64
+    concurrency:
+      group: ${{ github.head_ref || inputs }}-sync-matrix
+    if: contains(inputs.simulator || 'ethereum/eest/consume-sync', 'ethereum/eest/consume-sync')
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+        if: runner.environment != 'github-hosted'
+      - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
+        with:
+          username: ethpandaops
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: ethpandaops/hive-github-action@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+        with:
+          hive_repository: ${{ needs.prepare.outputs.hive_repo }}
+          hive_version: ${{ needs.prepare.outputs.hive_tag }}
+          client: >-
+            ${{
+              inputs.client || '"go-ethereum","reth","nethermind","nimbus-el","besu","erigon"'
+            }}
+          simulator: 'ethereum/eest/consume-sync'
+          client_config: ${{ needs.prepare.outputs.client_config }}
+          extra_flags: >-
+            ${{ env.GLOBAL_EXTRA_FLAGS }}
+            ${{ env.EEST_ENGINE_FLAGS }}
           s3_upload: true
           s3_bucket: ${{ env.S3_BUCKET }}
           s3_path: ${{ env.S3_PATH }}
