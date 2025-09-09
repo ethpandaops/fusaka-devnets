@@ -24,7 +24,7 @@ ethereum_node_beacon_hostname: "{{ ethereum_node_beacon_prefix }}{{ server_fqdn 
 
 ### Checkpoint sync specific for Ansible & Kubernetes
 checkpoint_sync_node: bootnode-1
-ethereum_node_cl_checkpoint_sync_enabled: true
+ethereum_node_cl_checkpoint_sync_enabled: false
 
 checkpoint_sync_url: https://checkpoint-sync.{{ ethereum_network_name }}.{{ domain }}
 #checkpoint_sync_url: https://{{ secret_nginx_shared_basic_auth.name }}:{{ secret_nginx_shared_basic_auth.password }}@{{ ethereum_node_beacon_prefix }}{{ checkpoint_sync_node }}.{{ ethereum_network_name }}.{{ domain }}
@@ -68,7 +68,7 @@ ethereum_genesis_generator_config_files:
       wd_prefix: $WITHDRAWAL_TYPE
       balance: 72000000000
     - mnemonic: "${EL_AND_CL_MNEMONIC}"  # Fullnodes
-      start: 45200
+      start: 45600
       count: 5712
       wd_address: $WITHDRAWAL_ADDRESS
       wd_prefix: $WITHDRAWAL_TYPE
