@@ -158,6 +158,7 @@ ethereum_node_docker_watchtower_containers_list:
   - external-block-builder
 docker_watchtower_container_additional_args:
   - --interval=900
+  - --stop-timeout=300s
   - --include-restarting
 docker_watchtower_container_labels:
     prometheus.io/scrape: "true"
