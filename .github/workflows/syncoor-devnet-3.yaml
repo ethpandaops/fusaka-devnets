@@ -138,11 +138,23 @@ jobs:
         EOF
         echo "el-images=$(cat /tmp/default-el-images.json | jq -c .)" >> $GITHUB_OUTPUT
 
+        cat > /tmp/default-cl-images.json <<'EOF'
+        {
+          "lighthouse": "ethpandaops/lighthouse:unstable",
+          "teku": "ethpandaops/teku:master",
+          "prysm": "ethpandaops/prysm:develop",
+          "nimbus": "ethpandaops/nimbus-eth2:fusaka-devnet-3",
+          "lodestar": "ethpandaops/lodestar:fusaka-devnet-3",
+          "grandine": "ethpandaops/grandine:develop"
+        }
+        EOF
+        echo "cl-images=$(cat /tmp/default-cl-images.json | jq -c .)" >> $GITHUB_OUTPUT
+
     - name: Prepare inputs
       id: prepare
       env:
         EL_IMAGES: ${{ github.event_name == 'schedule' && steps.default-images.outputs.el-images || inputs.el-image }}
-        CL_IMAGES: ${{ inputs.cl-image }}
+        CL_IMAGES: ${{ github.event_name == 'schedule' && steps.default-images.outputs.cl-images || inputs.cl-image }}
       run: |
         # Parse EL image for current client
         if [ "$EL_IMAGES" != '{}' ] && [ -n "$EL_IMAGES" ]; then
