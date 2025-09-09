@@ -8,6 +8,23 @@ ethereum_el_bootnodes:
 
 ethereum_node_xatu_sentry_enabled: true
 
+# role: ethpandaops.general.brakebear
+brakebear_download_speed: "{{ ethereum_node_cl_supernode_enabled | ternary('1000Mbps', '100Mbps') }}"
+brakebear_upload_speed: "{{ ethereum_node_cl_supernode_enabled | ternary('1000Mbps', '50Mbps') }}"
+brakebear_config: |
+  log_level: "info"
+  docker_containers:
+    - name: "execution"
+      download_rate: {{ brakebear_download_speed }}
+      upload_rate: {{ brakebear_upload_speed }}
+      exclusions:
+        private-networks: true
+    - name: "beacon"
+      download_rate: {{ brakebear_download_speed }}
+      upload_rate: {{ brakebear_upload_speed }}
+      exclusions:
+        private-networks: true
+
 # role: ethpandaops.general.prometheus
 prometheus_remote_push_url: https://victoriametrics-devnets.analytics.production.platform.ethpandaops.io/insert/1/prometheus
 prometheus_remote_write_username: "{{ secret_prometheus_remote_write.username }}"
@@ -71,9 +88,6 @@ xatu_sentry_config_server_auth_password: "{{ secret_xatu_sentry.password }}"
 xatu_sentry_config_network_name_override: "{{ ethereum_network_name }}"
 xatu_sentry_container_networks: "{{ docker_networks_shared }}"
 xatu_sentry_container_image: "{{ default_tooling_images.xatu_sentry }}"
-
-ethereum_node_xatu_sentry_enabled: true
-
 xatu_sentry_container_command:
   - sentry
   - --config=/config.yaml
