@@ -57,5 +57,5 @@ default_tooling_images:
   vector: timberio/vector:0.46.1-alpine
   spamoor: ethpandaops/spamoor:master-latest
   blobber: ethpandaops/blobber:latest
-  syncoor_web: docker.ethquokkaops.io/gh/ethpandaops/syncoor-web:master
-  syncoor_server: docker.ethquokkaops.io/gh/ethpandaops/syncoor:master
+  syncoor_web: ghcr.io/ethpandaops/syncoor-web:master
+  syncoor_server: ghcr.io/ethpandaops/syncoor:master
