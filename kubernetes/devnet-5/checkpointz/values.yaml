@@ -6,8 +6,8 @@ checkpointz:
 
   image:
     repository: ethpandaops/checkpointz
-    tag: 0.0.6-fulu
-    pullPolicy: IfNotPresent
+    tag: latest
+    pullPolicy: Always
   resources:
     requests:
       cpu: 64m
