@@ -12,7 +12,7 @@ variable "bootnode" {
 variable "mev_relay" {
   default = {
     name            = "mev-relay"
-    count           = 1
+    count           = 0
     validator_start = 0
     validator_end   = 0
     size            = "m3-8vcpu-64gb"
