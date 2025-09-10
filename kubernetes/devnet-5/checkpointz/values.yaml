@@ -2,7 +2,7 @@
 
 checkpointz:
   fullnameOverride: checkpointz
-  replicas: 0
+  replicas: 1
 
   image:
     repository: ethpandaops/checkpointz
