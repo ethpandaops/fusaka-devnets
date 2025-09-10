@@ -7,7 +7,7 @@ syncoor-web:
       containers:
         main:
           image:
-            repository: docker.ethquokkaops.io/gh/ethpandaops/syncoor-web
+            repository: ethpandaops/syncoor-web
             tag: master
             pullPolicy: Always
           resources:
