@@ -52,5 +52,5 @@ dora:
         username: ""
         password: "<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>"
 
-  endpointsUrl: "https://raw.githubusercontent.com/ethpandaops/template-devnets/refs/heads/master/kubernetes/devnet-0/dora/endpoints-cl.yaml"
-  executionEndpointsUrl: "https://raw.githubusercontent.com/ethpandaops/template-devnets/refs/heads/master/kubernetes/devnet-0/dora/endpoints-el.yaml"
+  endpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/devnet-5/dora/endpoints-cl.yaml"
+  executionEndpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/devnet-5/dora/endpoints-el.yaml"
