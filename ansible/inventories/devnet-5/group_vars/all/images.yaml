@@ -15,9 +15,6 @@ default_ethereum_client_images:
   reth: docker.ethquokkaops.io/dh/ethpandaops/reth:main
   nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master
 
-# mev boost
-  mev_boost: docker-cache.ethquokkaops.io/ethpandaops/mev-boost:bharath-123-fusaka-devnet-3
-
 default_tooling_images:
   mev_boost: ethpandaops/mev-boost:develop
   mev_builder: ethpandaops/reth-rbuilder:develop
