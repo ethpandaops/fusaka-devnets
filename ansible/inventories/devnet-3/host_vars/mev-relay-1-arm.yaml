@@ -189,7 +189,6 @@ reth_container_command_extra_args:
   - --builder.gaslimit=45000000
   - --engine.persistence-threshold=0
   - --engine.memory-block-buffer-target=0
-  - --disable-tx-gossip
   - --rpc.eth-proof-window=3
 reth_container_pull: true
 
