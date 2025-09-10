@@ -1,4 +1,4 @@
-name: Hive - Fusaka 
+name: Hive - Fusaka
 on:
   schedule:
     - cron: '45 12 * * *'
