@@ -1,45 +1,45 @@
-# - hosts: localhost
-#   connection: local
-#   roles:
-#     - role: ethpandaops.general.ethereum_genesis
-#       tags: [ethereum_genesis]
+- hosts: localhost
+  connection: local
+  roles:
+    - role: ethpandaops.general.ethereum_genesis
+      tags: [ethereum_genesis]
 
-# - import_playbook: ethpandaops.general.bootstrap_server
-#   vars:
-#     target: "all:!localhost"
-#   tags: [init-server, bootstrap]
+- import_playbook: ethpandaops.general.bootstrap_server
+  vars:
+    target: "all:!localhost"
+  tags: [init-server, bootstrap]
 
-# - hosts: all:!localhost
-#   serial: "{{ batch_count | default('100%') }}"
-#   become: true
-#   roles:
-#     # - role: robertdebock.fail2ban
-#     #   tags: [init-server, fail2ban]
-#     - role: geerlingguy.docker
-#       tags: [init-server, docker]
-#     - role: geerlingguy.pip
-#       pip_install_packages:
-#         - name: docker
-#           extra_args: --break-system-packages
-#       tags: [init-server, pip]
-#     - role: ethpandaops.general.docker_cleanup
-#       tags: [init-server, docker_cleanup]
-#     - role: ethpandaops.general.docker_network
-#       tags: [init-server, docker_network]
-#     - role: ethpandaops.general.node_exporter
-#       tags: [init-server, node_exporter]
-#     - role: ethpandaops.general.prometheus
-#       tags: [init-server, prometheus]
-#     - role: ethpandaops.general.vector
-#       tags: [init-server, vector]
+- hosts: all:!localhost
+  serial: "{{ batch_count | default('100%') }}"
+  become: true
+  roles:
+    - role: robertdebock.fail2ban
+      tags: [init-server, fail2ban]
+    - role: geerlingguy.docker
+      tags: [init-server, docker]
+    - role: geerlingguy.pip
+      pip_install_packages:
+        - name: docker
+          extra_args: --break-system-packages
+      tags: [init-server, pip]
+    - role: ethpandaops.general.docker_cleanup
+      tags: [init-server, docker_cleanup]
+    - role: ethpandaops.general.docker_network
+      tags: [init-server, docker_network]
+    - role: ethpandaops.general.node_exporter
+      tags: [init-server, node_exporter]
+    - role: ethpandaops.general.prometheus
+      tags: [init-server, prometheus]
+    - role: ethpandaops.general.vector
+      tags: [init-server, vector]
 
-# - hosts: dns_server
-#   become: true
-#   roles:
-#     - role: ethpandaops.general.dns_server
-#       tags: [init-server, dns_server]
-#     - role: ethpandaops.general.wildcard_cert_issuer
-#       tags: [init-server, wildcard_cert]
+- hosts: dns_server
+  become: true
+  roles:
+    - role: ethpandaops.general.dns_server
+      tags: [init-server, dns_server]
+    - role: ethpandaops.general.wildcard_cert_issuer
+      tags: [init-server, wildcard_cert]
 
 - hosts: bootnode
   become: true
@@ -60,84 +60,84 @@
     - role: ethpandaops.general.generate_basic_auth_nginx
       tags: [docker_nginx_proxy]
 
-# - hosts: ethereum_node
-#   serial: "{{ batch_count | default('100%') }}"
-#   become: true
-#   roles:
-#     - role: ethpandaops.general.ethereum_testnet_config
-#       tags: [ethereum, eth_testnet_config, ethereum_testnet_config]
-#     - role: ethpandaops.general.validator_keys
-#       when: ethereum_node_cl_validator_enabled == true
-#       tags: [ethereum, validator_keys]
-#     - role: ethpandaops.general.docker_nginx_proxy
-#       tags: [docker_nginx_proxy]
-#     - role: ethpandaops.general.generate_basic_auth_nginx
-#       tags: [docker_nginx_proxy]
+- hosts: ethereum_node
+  serial: "{{ batch_count | default('100%') }}"
+  become: true
+  roles:
+    - role: ethpandaops.general.ethereum_testnet_config
+      tags: [ethereum, eth_testnet_config, ethereum_testnet_config]
+    - role: ethpandaops.general.validator_keys
+      when: ethereum_node_cl_validator_enabled == true
+      tags: [ethereum, validator_keys]
+    - role: ethpandaops.general.docker_nginx_proxy
+      tags: [docker_nginx_proxy]
+    - role: ethpandaops.general.generate_basic_auth_nginx
+      tags: [docker_nginx_proxy]
 
-# - hosts: ethereum_node
-#   become: true
-#   strategy: mitogen_free
-#   roles:
-#     - role: ethpandaops.general.ethereum_node
-#       tags: [ethereum, ethereum_node]
-#     - role: ethpandaops.general.traffic_control
-#       when: ethereum_node_cl_supernode_enabled == False
-#       vars:
-#         traffic_control_rules:
-#           - interface: eth0
-#             rate_download: 100mbit
-#             rate_upload: 50mbit
-#       tags: [traffic_control]
-#     - role: ethpandaops.general.traffic_control
-#       when: ethereum_node_cl_supernode_enabled == True
-#       vars:
-#         traffic_control_rules:
-#           - interface: eth0
-#             rate_download: 1000mbit
-#             rate_upload: 1000mbit
-#       tags: [traffic_control]
+- hosts: ethereum_node
+  become: true
+  strategy: mitogen_free
+  roles:
+    - role: ethpandaops.general.ethereum_node
+      tags: [ethereum, ethereum_node]
+    - role: ethpandaops.general.traffic_control
+      when: ethereum_node_cl_supernode_enabled == False
+      vars:
+        traffic_control_rules:
+          - interface: eth0
+            rate_download: 100mbit
+            rate_upload: 50mbit
+      tags: [traffic_control]
+    - role: ethpandaops.general.traffic_control
+      when: ethereum_node_cl_supernode_enabled == True
+      vars:
+        traffic_control_rules:
+          - interface: eth0
+            rate_download: 1000mbit
+            rate_upload: 1000mbit
+      tags: [traffic_control]
 
-# - hosts: bootnode-1
-#   become: true
-#   tasks:
-#     - name: Refresh inventory web
-#       ansible.builtin.import_role:
-#         name: ethpandaops.general.ethereum_inventory_web
-#       tags: [eth_inventory_web, ethereum_inventory_web]
-#       delegate_to: bootnode-1
-#       run_once: true
-#       vars:
-#         eth_inventory_web_container_networks: "{{ docker_networks_shared }}" # noqa var-naming[no-role-prefix]
-#         eth_inventory_web_container_env: # noqa var-naming[no-role-prefix]
-#           VIRTUAL_HOST: "bootnode-1.{{ network_subdomain }}"
-#           VIRTUAL_PORT: "80"
-#           VIRTUAL_PATH: "/meta/api"
-#           VIRTUAL_DEST: "/"
-#           LETSENCRYPT_HOST: "bootnode-1.{{ network_subdomain }}"
+- hosts: bootnode-1
+  become: true
+  tasks:
+    - name: Refresh inventory web
+      ansible.builtin.import_role:
+        name: ethpandaops.general.ethereum_inventory_web
+      tags: [eth_inventory_web, ethereum_inventory_web]
+      delegate_to: bootnode-1
+      run_once: true
+      vars:
+        eth_inventory_web_container_networks: "{{ docker_networks_shared }}" #noqa var-naming[no-role-prefix]
+        eth_inventory_web_container_env: #noqa var-naming[no-role-prefix]
+          VIRTUAL_HOST: "bootnode-1.{{ network_subdomain }}"
+          VIRTUAL_PORT: "80"
+          VIRTUAL_PATH: "/meta/api"
+          VIRTUAL_DEST: "/"
+          LETSENCRYPT_HOST: "bootnode-1.{{ network_subdomain }}"
 
-# - hosts: mev_relay
-#   become: true
-#   roles:
-#     - role: ethpandaops.general.mev_relay
-#       tags: [mev_relay]
+- hosts: mev_relay
+  become: true
+  roles:
+    - role: ethpandaops.general.mev_relay
+      tags: [mev_relay]
 
-# - hosts: tx_fuzz_txs
-#   become: true
-#   roles:
-#     - role: ethpandaops.general.tx_fuzz
-#       tags: [tx_fuzz, tx_fuzz_txs]
+- hosts: tx_fuzz_txs
+  become: true
+  roles:
+    - role: ethpandaops.general.tx_fuzz
+      tags: [tx_fuzz, tx_fuzz_txs]
 
 
-# - hosts: dora
-#   become: true
-#   roles:
-#     - role: ethpandaops.general.dora
-#       tags: [dora]
+- hosts: dora
+  become: true
+  roles:
+    - role: ethpandaops.general.dora
+      tags: [dora]
 
-# - hosts: localhost
-#   connection: local
-#   roles:
-#     - role: ethpandaops.general.ethereum_post_network_setup
-#       tags: [eth_post_network_setup, ethereum_post_network_setup]
-#     - role: ethpandaops.general.generate_kubernetes_config
-#       tags: [gen_kubernetes_config, generate_kubernetes_config]
+- hosts: localhost
+  connection: local
+  roles:
+    - role: ethpandaops.general.ethereum_post_network_setup
+      tags: [eth_post_network_setup, ethereum_post_network_setup]
+    - role: ethpandaops.general.generate_kubernetes_config
+      tags: [gen_kubernetes_config, generate_kubernetes_config]
