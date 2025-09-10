@@ -25,30 +25,18 @@ dora:
   name: fusaka-devnet-5
   configPath: "https://config.fusaka-devnet-5.ethpandaops.io/cl/config.yaml"
   validatorNamesInventory: "https://config.fusaka-devnet-5.ethpandaops.io/api/v1/nodes/validator-ranges"
+  ethExplorerLink: "https://explorer.fusaka-devnet-5.ethpandaops.io"
+  publicRpcUrl: "https://rpc.fusaka-devnet-5.ethpandaops.io"
+  rainbowkitProjectId: "15fe4ab4d5c0bcb6f0dc7c398301ff0e"
+  executionGenesisConfig: "https://config.fusaka-devnet-5.ethpandaops.io/el/genesis.json"
   proxyCount: 2
   extraEnv:
     - name: FRONTEND_PPROF
       value: "true"
     - name: FRONTEND_SHOW_SENSITIVE_PEER_INFOS
       value: "true"
-    - name: FRONTEND_SHOW_VALIDATOR_SUMMARY
-      value: "true"
-    - name: API_ENABLED
-      value: "true"
     - name: API_CORS_ORIGINS
       value: "*"
-    - name: FRONTEND_SHOW_PEER_DAS_INFOS
-      value: "true"
-    - name: FRONTEND_ETH_EXPLORER_LINK
-      value: "https://explorer.fusaka-devnet-5.ethpandaops.io"
-    - name: FRONTEND_PUBLIC_RPC_URL
-      value: "https://rpc.fusaka-devnet-5.ethpandaops.io"
-    - name: FRONTEND_SHOW_SUBMIT_DEPOSIT
-      value: "true"
-    - name: FRONTEND_SHOW_SUBMIT_EL_REQUESTS
-      value: "true"
-    - name: EXECUTIONAPI_GENESIS_CONFIG
-      value: "https://config.fusaka-devnet-5.ethpandaops.io/el/genesis.json"
   postgresql:
     name: "dora-postgresql"
     fullnameOverride: "dora-postgresql"
@@ -64,7 +52,8 @@ dora:
         username: ""
         password: "<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>"
 
-
+  endpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/devnet-5/dora/endpoints-cl.yaml"
+  executionEndpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/devnet-5/dora/endpoints-el.yaml"
   ranges: | #sunny nodes
     51312-51320: lighthouse-geth-full-1
     51320-51328: lighthouse-geth-full-2
@@ -653,118 +642,3 @@ dora:
     55984-55992: teku-reth-full-18
     55992-56000: teku-reth-full-19
 
-  endpoints:
-  # Rpc
-  - url: http://prysm-geth-001:5052
-    name: rpc-prysm-geth-001
-    authGroup: pandaops
-    archive: true
-    priority: 1
-  - url: https://bn-bootnode-1.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-1
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-10.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-10
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-2.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-2
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-3.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-3
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-4.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-4
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-5.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-5
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-6.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-6
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-7.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-7
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-8.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-8
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-bootnode-9.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-9
-    authGroup: pandaops
-    priority: -1
-
-  executionEndpoints:
-  # Rpc
-  - url: http://geth-prysm-001:8545
-    name: rpc-prysm-geth-001
-    authGroup: pandaops
-    archive: true
-    priority: 1
-  - url: https://rpc-bootnode-1.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-1.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-10.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-10
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-10.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-2.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-2
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-2.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-3.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-3
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-3.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-4.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-4
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-4.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-5.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-5
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-5.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-6.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-6
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-6.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-7.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-7
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-7.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-8.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-8
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-8.srv.fusaka-devnet-5.ethpandaops.io:8961
-  - url: https://rpc-bootnode-9.srv.fusaka-devnet-5.ethpandaops.io
-    name: bootnode-9
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-9.srv.fusaka-devnet-5.ethpandaops.io:8961
