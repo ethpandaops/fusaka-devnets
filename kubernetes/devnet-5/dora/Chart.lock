@@ -1,0 +1,6 @@
+dependencies:
+- name: dora
+  repository: https://ethpandaops.github.io/ethereum-helm-charts
+  version: 1.0.0
+digest: sha256:a921d1fc683a265dff8522100a4f0033ee50d35c93d3a7eb9995bb51a2b23b21
+generated: "2025-09-10T09:06:48.455535+02:00"
