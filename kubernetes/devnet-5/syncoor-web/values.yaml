@@ -7,7 +7,7 @@ syncoor-web:
       containers:
         main:
           image:
-            repository: ethpandaops/syncoor-web
+            repository: docker.ethquokkaops.io/gh/ethpandaops/syncoor-web
             tag: master
             pullPolicy: Always
           resources:
@@ -26,8 +26,12 @@ syncoor-web:
           {
             "directories": [
               {
-                "name": "fusaka-devnet-5",
+                "name": "Checkpoint Sync + CL Fullnode",
                 "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-5"
+              },
+              {
+                "name": "Checkpoint Sync + CL Supernode",
+                "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-5-clsupernode"
               }
             ],
             "syncoorApiEndpoints": [
