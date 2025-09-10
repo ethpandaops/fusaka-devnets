@@ -165,3 +165,52 @@ resource "hcloud_firewall" "bootnode_firewall" {
     destination_ips = ["0.0.0.0/0", "::/0"]
   }
 }
+
+resource "hcloud_firewall" "mev_relay_firewall" {
+  name = "${var.ethereum_network}-mev-relay-firewall"
+
+  apply_to {
+    label_selector = "group_name=mev-relay,EthNetwork=${var.ethereum_network}"
+  }
+
+  # MEV relay ports 9060-9070
+  rule {
+    description = "Allow MEV relay ports TCP"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = "9060-9070"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+
+  rule {
+    description = "Allow MEV relay ports UDP"
+    direction   = "in"
+    protocol    = "udp"
+    port        = "9060-9070"
+    source_ips  = ["0.0.0.0/0", "::/0"]
+  }
+
+  # Allow all outbound traffic
+  rule {
+    description     = "Allow all outbound traffic TCP"
+    direction       = "out"
+    protocol        = "tcp"
+    port            = "1-65535"
+    destination_ips = ["0.0.0.0/0", "::/0"]
+  }
+
+  rule {
+    description     = "Allow all outbound traffic UDP"
+    direction       = "out"
+    protocol        = "udp"
+    port            = "1-65535"
+    destination_ips = ["0.0.0.0/0", "::/0"]
+  }
+
+  rule {
+    description     = "Allow all outbound traffic ICMP"
+    direction       = "out"
+    protocol        = "icmp"
+    destination_ips = ["0.0.0.0/0", "::/0"]
+  }
+}
