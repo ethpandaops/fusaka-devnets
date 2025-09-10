@@ -122,7 +122,7 @@ resource "hcloud_firewall" "bootnode_firewall" {
   name = "${var.ethereum_network}-bootnode-firewall"
 
   apply_to {
-    label_selector = "bootnode=${var.ethereum_network}"
+    label_selector = "group_name=bootnode,EthNetwork=${var.ethereum_network}"
   }
 
   # DNS
