@@ -1,0 +1,5 @@
+default_ethereum_client_images:
+  prysm: ethpandaops/prysm-beacon-chain:develop
+  prysm_validator: ethpandaops/prysm-validator:develop
+
+  geth: ethpandaops/geth:master-d95ca2e

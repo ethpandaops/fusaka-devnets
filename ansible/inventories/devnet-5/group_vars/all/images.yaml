@@ -1,19 +1,19 @@
 default_ethereum_client_images:
 ### Consensus layer clients
-  lighthouse: docker.ethquokkaops.io/dh/ethpandaops/lighthouse:unstable
-  lodestar: docker.ethquokkaops.io/dh/ethpandaops/lodestar:unstable
-  nimbus: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth2:unstable
-  prysm: docker.ethquokkaops.io/dh/ethpandaops/prysm-beacon-chain:develop
-  prysm_validator: docker.ethquokkaops.io/dh/ethpandaops/prysm-validator:develop
-  teku: docker.ethquokkaops.io/dh/ethpandaops/teku:master
-  grandine: docker.ethquokkaops.io/dh/ethpandaops/grandine:develop
+  lighthouse: ethpandaops/lighthouse:unstable
+  lodestar: ethpandaops/lodestar:unstable
+  nimbus: ethpandaops/nimbus-eth2:unstable
+  prysm: ethpandaops/prysm-beacon-chain:develop
+  prysm_validator: ethpandaops/prysm-validator:develop
+  teku: ethpandaops/teku:master
+  grandine: ethpandaops/grandine:develop
 ### Execution layer clients
-  besu: docker.ethquokkaops.io/dh/ethpandaops/besu:main
-  geth: docker.ethquokkaops.io/dh/ethpandaops/geth:master
-  erigon: docker.ethquokkaops.io/dh/ethpandaops/erigon:main
-  nethermind: docker.ethquokkaops.io/dh/ethpandaops/nethermind:master
-  reth: docker.ethquokkaops.io/dh/ethpandaops/reth:main
-  nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master
+  besu: ethpandaops/besu:main
+  geth: ethpandaops/geth:master
+  erigon: ethpandaops/erigon:main
+  nethermind: ethpandaops/nethermind:master
+  reth: ethpandaops/reth:main
+  nimbusel: ethpandaops/nimbus-eth1:master
 
 default_tooling_images:
   mev_boost: ethpandaops/mev-boost:develop
