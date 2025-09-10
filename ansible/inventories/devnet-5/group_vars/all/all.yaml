@@ -158,7 +158,7 @@ json_rpc_snooper_container_image: "{{ default_tooling_images.json_rpc_snooper }}
 ethereum_node_images_always_pull: true
 ethereum_node_metrics_exporter_enabled: true
 ethereum_node_docker_networks: "{{ docker_networks_shared }}"
-ethereum_node_xatu_sentry_enabled: true
+ethereum_node_xatu_sentry_enabled: false
 ethereum_node_cl_validator_enabled: "{{ validator_start is defined and validator_end is defined }}"
 ethereum_node_cl_validator_fee_recipient: "0xf97e180c050e5Ab072211Ad2C213Eb5AEE4DF134"
 ethereum_node_cl_ports_p2p_tcp: 9000
