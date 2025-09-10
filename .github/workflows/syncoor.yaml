@@ -99,7 +99,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: ["fusaka-devnet-3"]
+        network: ["fusaka-devnet-5"]
         el-client: >-
           ${{
             fromJSON(format('[{0}]', inputs.el-client || '
