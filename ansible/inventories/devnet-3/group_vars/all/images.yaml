@@ -9,7 +9,7 @@ default_ethereum_client_images:
   grandine: ethpandaops/grandine:develop
 ### Execution layer clients
   besu: ethpandaops/besu:main
-  geth: ethpandaops/geth:master
+  geth: ethpandaops/geth:lightclient-eth-catalyst-fix-newpayloadv4
   erigon: ethpandaops/erigon:main
   nethermind: ethpandaops/nethermind:master
   reth: ethpandaops/reth:main
