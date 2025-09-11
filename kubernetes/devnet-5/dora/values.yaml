@@ -44,7 +44,7 @@ dora:
   mevRelays:
     - index: 0
       name: "Flashbots"
-      url: "http://mev-relay-1.fusaka-devnet-5.ethpandaops.io:9062/"
+      url: "http://mev-relay-1-arm.srv.fusaka-devnet-5.ethpandaops.io:9062/"
 
   authGroups:
     pandaops:
