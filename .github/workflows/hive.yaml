@@ -63,7 +63,7 @@ env:
   S3_PATH: fusaka
   S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka/
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/fusaka-devnet-5%40v2.1.0/fixtures_fusaka-devnet-5.tar.gz
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/v5.0.0/fixtures_develop.tar.gz
   EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
@@ -76,11 +76,13 @@ env:
     --sim.buildarg fixtures=${EEST_BUILD_ARG_FIXTURES}
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
     --sim.loglevel=3
+    --sim.limit=".*(Osaka|BPO).*"
   # Flags used for the ethereum/eest/consume-rlp simulator
   EEST_RLP_FLAGS: >-
     --sim.buildarg fixtures=${EEST_BUILD_ARG_FIXTURES}
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
     --sim.loglevel=3
+    --sim.limit=".*(Osaka|BPO).*"
   # Flags used for the ethereum/eest/execute simulator
   EEST_EXECUTE_FLAGS: >-
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
