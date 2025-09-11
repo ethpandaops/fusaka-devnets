@@ -81,7 +81,7 @@
     - role: ethpandaops.general.ethereum_node
       tags: [ethereum, ethereum_node]
     - role: ethpandaops.general.traffic_control
-      when: ethereum_node_cl_supernode_enabled == False
+      when: ethereum_node_cl_supernode_enabled == False and ethereum_network_name == "fusaka-devnet-5"
       vars:
         traffic_control_rules:
           - interface: eth0
@@ -89,13 +89,21 @@
             rate_upload: 50mbit
       tags: [traffic_control]
     - role: ethpandaops.general.traffic_control
-      when: ethereum_node_cl_supernode_enabled == True
+      when: ethereum_node_cl_supernode_enabled == True and ethereum_network_name == "fusaka-devnet-5"
       vars:
         traffic_control_rules:
           - interface: eth0
             rate_download: 1000mbit
             rate_upload: 1000mbit
       tags: [traffic_control]
+    - role: ethpandaops.general.traffic_control
+      when: ethereum_network_name != "fusaka-devnet-5"
+      vars:
+        traffic_control_cleanup: true
+      tags: [brakebear]
+    - role: ethpandaops.general.brakebear
+      when: ethereum_network_name != "fusaka-devnet-5" # Temporary condition. We should cleanup traffic control once we use brakebear as default.
+      tags: [brakebear]
 
 - hosts: bootnode-1
   become: true
