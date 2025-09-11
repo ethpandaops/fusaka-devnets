@@ -1,0 +1,7 @@
+
+lighthouse_container_command_extra_args:
+  - --testnet-dir=/network-config
+  - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
+  #- --debug-level=debug
+  - --delay-data-column-publishing=1
+  - --delay-block-publishing=1

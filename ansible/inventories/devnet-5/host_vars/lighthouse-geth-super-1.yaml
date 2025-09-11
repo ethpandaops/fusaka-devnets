@@ -1,0 +1,6 @@
+
+lighthouse_container_command_extra_args:
+  - --testnet-dir=/network-config
+  - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
+  #- --debug-level=debug
+  - --malicious-withhold-count=1
