@@ -19,11 +19,15 @@ brakebear_config: |
       upload_rate: {{ brakebear_upload_speed }}
       exclusions:
         private-networks: true
+        docker-networks:
+          names: ["*"]
     - name: "beacon"
       download_rate: {{ brakebear_download_speed }}
       upload_rate: {{ brakebear_upload_speed }}
       exclusions:
         private-networks: true
+        docker-networks:
+          names: ["*"]
 
 # role: ethpandaops.general.prometheus
 prometheus_remote_push_url: https://victoriametrics-devnets.analytics.production.platform.ethpandaops.io/insert/1/prometheus

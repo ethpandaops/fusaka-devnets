@@ -96,6 +96,11 @@
             rate_download: 1000mbit
             rate_upload: 1000mbit
       tags: [traffic_control]
+    - role: ethpandaops.general.traffic_control
+      when: ethereum_network_name != "fusaka-devnet-5"
+      vars:
+        traffic_control_cleanup: true
+      tags: [brakebear]
     - role: ethpandaops.general.brakebear
       when: ethereum_network_name != "fusaka-devnet-5" # Temporary condition. We should cleanup traffic control once we use brakebear as default.
       tags: [brakebear]
