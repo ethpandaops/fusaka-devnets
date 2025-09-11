@@ -60,6 +60,7 @@ mev_relay_api_container_env:
   DISABLE_PAYLOAD_DATABASE_STORAGE=1
   ENABLE_BUILDER_CANCELLATIONS=1
   BLOCKSIM_MAX_CONCURRENT=0
+  API_TIMEOUT_READ_MS=3000
 mev_relay_api_container_pull: true
 mev_relay_api_container_networks: "{{ mev_relay_docker_networks }}"
 mev_relay_api_container_ports:
@@ -140,18 +141,10 @@ lighthouse_container_pull: true
 
 ethereum_el_bootnodes:
   - "{{ hostvars['bootnode-1']['ethereum_node_fact_el_enode'] }}"
-  - "{{ hostvars['lighthouse-geth-super-1']['ethereum_node_fact_el_enode'] }}"
-  - "{{ hostvars['prysm-reth-super-1']['ethereum_node_fact_el_enode'] }}"
-  - "{{ hostvars['teku-nethermind-super-1']['ethereum_node_fact_el_enode'] }}"
-  - "{{ hostvars['prysm-geth-super-1']['ethereum_node_fact_el_enode'] }}"
 
 ethereum_cl_bootnodes:
   - "{{ hostvars['bootnode-1']['cl_bootnode_fact_enr'] }}"
   - "{{ hostvars['bootnode-1']['ethereum_node_fact_cl_enr'] }}"
-  - "{{ hostvars['lighthouse-geth-super-1']['ethereum_node_fact_cl_enr'] }}"
-  - "{{ hostvars['prysm-reth-super-1']['ethereum_node_fact_cl_enr'] }}"
-  - "{{ hostvars['teku-nethermind-super-1']['ethereum_node_fact_cl_enr'] }}"
-  - "{{ hostvars['prysm-geth-super-1']['ethereum_node_fact_cl_enr'] }}"
 
 # role: ethpandaops.general.ethereum_node
 ethereum_node_el: reth

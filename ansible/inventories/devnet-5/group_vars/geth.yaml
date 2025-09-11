@@ -1,9 +1,8 @@
 # role: ethpandaops.general.bootstrap
 bootstrap_default_user_authorized_keys_github_team_el:
   - mariusVanDerWijden
-  - holiman
-  - karalabe
-  - g11tech
+  - lightclient
+  - rjl493456442
 
 # role: ethpandaops.general.ethereum_node
 ethereum_node_el: geth
@@ -19,7 +18,7 @@ geth_container_command_extra_args:
   - --http.api=eth,net,web3,debug,admin,txpool
   - --http.vhosts=*
   - --networkid={{ ethereum_network_id }}
-#   - --syncmode=full
+  - --syncmode=full
   - --bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --miner.gaslimit=100000000
 geth_init_custom_network: true

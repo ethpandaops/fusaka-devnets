@@ -54,6 +54,7 @@ erigon_container_command_default:
 erigon_container_command_extra_args:
   - --http.api=eth,erigon,engine,web3,net,debug,trace,txpool,admin
   - --log.console.verbosity=debug
+  - --log.dir.verbosity=debug
   - --http.vhosts=*
   - --ws
   - --no-downloader
@@ -68,7 +69,7 @@ prometheus_config: |
   global:
     scrape_interval: 1s
     evaluation_interval: 30s
-    scrape_timeout: 10s
+    scrape_timeout: 1s
     external_labels:
       instance: "{{ ethereum_network_name }}-{{ inventory_hostname }}"
       ip_address: "{{ ansible_host }}"

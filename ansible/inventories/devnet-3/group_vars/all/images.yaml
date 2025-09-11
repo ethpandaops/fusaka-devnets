@@ -2,16 +2,16 @@ default_ethereum_client_images:
 ### Consensus layer clients
   lighthouse: ethpandaops/lighthouse:unstable
   lodestar: ethpandaops/lodestar:fusaka-devnet-3
-  nimbus: ethpandaops/nimbus-eth2:fusaka-devnet-3
+  nimbus: ethpandaops/nimbus-eth2:unstable
   prysm: ethpandaops/prysm-beacon-chain:develop
   prysm_validator: ethpandaops/prysm-validator:develop
   teku: ethpandaops/teku:master
   grandine: ethpandaops/grandine:develop
 ### Execution layer clients
   besu: ethpandaops/besu:main
-  geth: ethpandaops/geth:pk910-fusaka-devnet-3-bad-iszero
+  geth: ethpandaops/geth:master
   erigon: ethpandaops/erigon:main
-  nethermind: ethpandaops/nethermind:pk910-fusaka-devnet-3-bad-iszero
+  nethermind: ethpandaops/nethermind:master
   reth: ethpandaops/reth:main
   nimbusel: ethpandaops/nimbus-eth1:master
 
@@ -57,5 +57,5 @@ default_tooling_images:
   vector: timberio/vector:0.46.1-alpine
   spamoor: ethpandaops/spamoor:master-latest
   blobber: ethpandaops/blobber:latest
-  syncoor_web: docker.ethquokkaops.io/gh/ethpandaops/syncoor-web:master
-  syncoor_server: docker.ethquokkaops.io/gh/ethpandaops/syncoor:master
+  syncoor_web: ghcr.io/ethpandaops/syncoor-web:master
+  syncoor_server: ghcr.io/ethpandaops/syncoor:master

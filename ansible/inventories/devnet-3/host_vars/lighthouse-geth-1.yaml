@@ -1,8 +1,4 @@
-lighthouse_container_command_extra_args:
-  - --testnet-dir=/network-config
-  - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
-  - --disable-get-blobs
-  - --telemetry-collector-url={{ tempo_grpc_url }}
-  - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
-  - --debug-level=debug
-  - --malicious-withhold-count=64
+default_ethereum_client_images:
+### Consensus layer clients
+  lighthouse: ethpandaops/lighthouse:pawanjay176-blocks-then-columns
+  geth: ethpandaops/geth:master
