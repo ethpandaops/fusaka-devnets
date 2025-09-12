@@ -12,7 +12,7 @@ default_ethereum_client_images:
   geth: ethpandaops/geth:master
   erigon: ethpandaops/erigon:main
   nethermind: ethpandaops/nethermind:master
-  reth: ethpandaops/reth:main
+  reth: ethpandaops/reth:main-72c2d1b
   nimbusel: ethpandaops/nimbus-eth1:master
 
 default_tooling_images:
