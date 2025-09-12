@@ -60,7 +60,7 @@ mev_relay_api_container_env:
   DISABLE_PAYLOAD_DATABASE_STORAGE=1
   ENABLE_BUILDER_CANCELLATIONS=1
   BLOCKSIM_MAX_CONCURRENT=0
-  API_TIMEOUT_READ_MS=3000
+  API_TIMEOUT_READ_MS=10000
 mev_relay_api_container_pull: true
 mev_relay_api_container_networks: "{{ mev_relay_docker_networks }}"
 mev_relay_api_container_ports:
@@ -178,7 +178,7 @@ reth_container_command_extra_args:
   - --builder.gaslimit=45000000
   - --engine.persistence-threshold=0
   - --engine.memory-block-buffer-target=0
-  #- --disable-tx-gossip
+  - --disable-tx-gossip
   - --rpc.eth-proof-window=3
 reth_container_pull: true
 
@@ -217,6 +217,8 @@ reth_rbuilder_config: |
 
   root_hash_use_sparse_trie=true
   root_hash_compare_sparse_trie=false
+
+  time_to_keep_mempool_txs_secs=100000
 
   subsidy = "1"
 
