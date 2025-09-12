@@ -14,6 +14,7 @@ mev_relay_docker_networks:
   - name: "{{ mev_relay_docker_network_name }}"
 
 beacon_endpoint: http://beacon:5052
+mev_builder_json_api_port: 8645
 
 gen_validators_root: "{{ lookup('file', eth_testnet_config_local_dir_src + 'genesis_validators_root.txt') }}"
 
@@ -153,12 +154,13 @@ reth_rbuilder_enabled: true
 reth_container_name: execution
 reth_container_env:
   VIRTUAL_HOST: "{{ ethereum_node_rcp_hostname }}"
-  VIRTUAL_PORT: "{{ ethereum_node_el_ports_http_rpc | string }}"
+  VIRTUAL_PORT: "{{ mev_builder_json_api_port | string }}"
   LETSENCRYPT_HOST: "{{ ethereum_node_rcp_hostname }}"
   BUILDER_TX_SIGNING_KEY: "{{ secret_mev_signingkey }}"
   COINBASE_SECRET_KEY: "{{ secret_mev_signingkey }}"
   RELAY_SECRET_KEY: "{{ secret_mev_signingkey }}"
   OPTIMISTIC_RELAY_SECRET_KEY: "{{ secret_mev_signingkey }}"
+
 
 reth_container_ports_ipv4:
   - "127.0.0.1:{{ reth_ports_http_rpc }}:{{ reth_ports_http_rpc }}"
@@ -178,7 +180,6 @@ reth_container_command_extra_args:
   - --builder.gaslimit=45000000
   - --engine.persistence-threshold=0
   - --engine.memory-block-buffer-target=0
-  - --disable-tx-gossip
   - --rpc.eth-proof-window=3
 reth_container_pull: true
 
