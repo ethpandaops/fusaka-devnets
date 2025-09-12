@@ -3,7 +3,7 @@ tracoor-single:
   fullnameOverride: "tracoor"
   image:
     repository: docker.ethquokkaops.io/dh/ethpandaops/tracoor
-    tag: 0.0.26-debian
+    tag: 0.0.32-debian
     pullPolicy: IfNotPresent
   resources:
     requests:
