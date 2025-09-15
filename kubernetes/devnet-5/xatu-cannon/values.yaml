@@ -93,7 +93,7 @@ xatu-cannon:
     tracing:
       enabled: false
     ethereum:
-      beaconNodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lighthouse-geth-super-3.srv.fusaka-devnet-5.ethpandaops.io
+      beaconNodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lighthouse-nethermind-super-1.srv.fusaka-devnet-5.ethpandaops.io
       overrideNetworkName: fusaka-devnet-5
       beaconNodeHeaders: {}
       blockCacheSize: 300
