@@ -4,7 +4,7 @@ dugtrio:
   fullnameOverride: dugtrio
   image:
     repository: ethpandaops/dugtrio
-    tag: latest
+    tag: master
     pullPolicy: Always
   resources:
     requests:
