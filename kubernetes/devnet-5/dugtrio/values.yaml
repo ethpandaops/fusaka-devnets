@@ -8,11 +8,11 @@ dugtrio:
     pullPolicy: Always
   resources:
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 200Mi
     limits:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 3000m
+      memory: 2Gi
   ingress:
     enabled: true
     className: ingress-nginx-public
