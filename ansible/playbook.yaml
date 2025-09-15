@@ -81,7 +81,7 @@
     - role: ethpandaops.general.ethereum_node
       tags: [ethereum, ethereum_node]
     - role: ethpandaops.general.traffic_control
-      when: ethereum_node_cl_supernode_enabled == False and ethereum_network_name == "fusaka-devnet-5"
+      when: ethereum_node_cl_supernode_enabled | bool == false and ethereum_network_name == "fusaka-devnet-5"
       vars:
         traffic_control_rules:
           - interface: eth0
@@ -89,7 +89,7 @@
             rate_upload: 50mbit
       tags: [traffic_control]
     - role: ethpandaops.general.traffic_control
-      when: ethereum_node_cl_supernode_enabled == True and ethereum_network_name == "fusaka-devnet-5"
+      when: ethereum_node_cl_supernode_enabled | bool == true and ethereum_network_name == "fusaka-devnet-5"
       vars:
         traffic_control_rules:
           - interface: eth0

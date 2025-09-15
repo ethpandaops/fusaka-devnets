@@ -5,7 +5,7 @@ default_ethereum_client_images:
   nimbus: ethpandaops/nimbus-eth2:rman-e6645c8
   prysm: ethpandaops/prysm-beacon-chain:develop
   prysm_validator: ethpandaops/prysm-validator:develop
-  teku: ethpandaops/teku:master
+  teku: ethpandaops/teku:master-0f10b58
   grandine: ethpandaops/grandine:develop
 ### Execution layer clients
   besu: ethpandaops/besu:main
