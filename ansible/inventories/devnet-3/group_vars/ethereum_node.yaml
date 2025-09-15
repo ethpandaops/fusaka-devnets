@@ -35,9 +35,9 @@ prometheus_remote_write_username: "{{ secret_prometheus_remote_write.username }}
 prometheus_remote_write_password: "{{ secret_prometheus_remote_write.password }}"
 prometheus_config: |
   global:
-    scrape_interval: 1s
+    scrape_interval: 12s
     evaluation_interval: 30s
-    scrape_timeout: 1s
+    scrape_timeout: 12s
     external_labels:
       instance: "{{ inventory_hostname }}"
       ip_address: "{{ ansible_host }}"

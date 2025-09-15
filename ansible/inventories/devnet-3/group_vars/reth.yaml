@@ -28,9 +28,9 @@ reth_container_command_extra_args:
 ethereum_node_ipv6_enabled: false
 prometheus_config: |
   global:
-    scrape_interval: 1s
+    scrape_interval: 12s
     evaluation_interval: 30s
-    scrape_timeout: 1s
+    scrape_timeout: 12s
     external_labels:
       instance: "{{ ethereum_network_name }}-{{ inventory_hostname }}"
       ip_address: "{{ ansible_host }}"

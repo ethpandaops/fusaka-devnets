@@ -93,9 +93,9 @@ prometheus_remote_write_username: "{{ secret_prometheus_remote_write.username }}
 prometheus_remote_write_password: "{{ secret_prometheus_remote_write.password }}"
 prometheus_config: |
   global:
-    scrape_interval: 30s
+    scrape_interval: 12s
     evaluation_interval: 30s
-    scrape_timeout: 10s
+    scrape_timeout: 12s
     external_labels:
       instance: "{{ inventory_hostname }}"
       ip_address: "{{ ansible_host }}"
@@ -103,6 +103,7 @@ prometheus_config: |
       testnet: "{{ ethereum_network_name }}"
       execution_client: "{{ ethereum_node_el }}"
       consensus_client: "{{ ethereum_node_cl }}"
+      supernode: "{{ ethereum_node_cl_supernode_enabled | bool | default(false) }}"
   remote_write:
     - queue_config:
         batch_send_deadline: 5s
