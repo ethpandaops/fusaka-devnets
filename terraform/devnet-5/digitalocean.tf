@@ -63,7 +63,7 @@ locals {
         id         = "${vm_group.name}-${i + 1}"
         vms = {
           "${i + 1}" = {
-            tags = "group_name:${vm_group.name},val_start:${vm_group.validator_start + (i * (vm_group.validator_end - vm_group.validator_start) / vm_group.count)},val_end:${min(vm_group.validator_start + ((i + 1) * (vm_group.validator_end - vm_group.validator_start) / vm_group.count), vm_group.validator_end)},supernode:${can(regex("(super|bootnode)", vm_group.name)) ? "True" : "False"}${vm_group.name == "bootnode" ? ",bootnode:${var.ethereum_network}" : ""}"
+            tags = "group_name:${vm_group.name},val_start:${vm_group.validator_start + (i * (vm_group.validator_end - vm_group.validator_start) / vm_group.count)},val_end:${min(vm_group.validator_start + ((i + 1) * (vm_group.validator_end - vm_group.validator_start) / vm_group.count), vm_group.validator_end)}, "supernode:${try(vm_group.supernode, can(regex("(super|bootnode|mev)", vm_group.name))) ? "True" : "False"}",${vm_group.name == "bootnode" ? ",bootnode:${var.ethereum_network}" : ""}"
             region = try(vm_group.region,
               try(vm_group.size, can(regex("(super|bootnode)", vm_group.name)) ? "s-8vcpu-32gb-640gb-intel" : "s-8vcpu-16gb") == "s-8vcpu-32gb-640gb-intel" ?
               var.digitalocean_regions_no_sgp1[(i + index(local.vm_groups, vm_group)) % length(var.digitalocean_regions_no_sgp1)] :

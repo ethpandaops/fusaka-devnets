@@ -2,16 +2,16 @@ default_ethereum_client_images:
 ### Consensus layer clients
   lighthouse: ethpandaops/lighthouse:unstable
   lodestar: ethpandaops/lodestar:fusaka-devnet-3
-  nimbus: ethpandaops/nimbus-eth2:rman-e6645c8
+  nimbus: ethpandaops/nimbus-eth2:unstable
   prysm: ethpandaops/prysm-beacon-chain:develop
   prysm_validator: ethpandaops/prysm-validator:develop
   teku: ethpandaops/teku:master-0f10b58
   grandine: ethpandaops/grandine:develop
 ### Execution layer clients
   besu: ethpandaops/besu:main
-  geth: ethpandaops/geth:lightclient-eth-catalyst-fix-newpayloadv4
+  geth: ethpandaops/geth:master
   erigon: ethpandaops/erigon:main
-  nethermind: ethpandaops/nethermind:master
+  nethermind: ethpandaops/nethermind:fix-reorgs-f9b5540
   reth: ethpandaops/reth:main
   nimbusel: ethpandaops/nimbus-eth1:master
 
