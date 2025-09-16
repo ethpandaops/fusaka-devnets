@@ -8,6 +8,4 @@ lighthouse_container_command_extra_args:
   - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
   - --reconstruct-historic-states
   - --delay-data-column-publishing=1
-  - --delay-block-publishing=1
   - --malicious-withhold-count=1
-
