@@ -1,17 +1,17 @@
 default_ethereum_client_images:
 ### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:unstable
+  lighthouse: ethpandaops/lighthouse:unstable-242bdfc
   lodestar: ethpandaops/lodestar:unstable
   nimbus: ethpandaops/nimbus-eth2:unstable-da9305a
   prysm: ethpandaops/prysm-beacon-chain:develop-238d5c0
   prysm_validator: ethpandaops/prysm-validator:develop-238d5c0
-  teku: ethpandaops/teku:master-0f10b58
-  grandine: ethpandaops/grandine:develop
+  teku: ethpandaops/teku:master-c649fd2
+  grandine: ethpandaops/grandine:develop-c196651
 ### Execution layer clients
   besu: ethpandaops/besu:main
-  geth: ethpandaops/geth:fusaka-devnet-5
+  geth: ethpandaops/geth:master-b05fe4a
   erigon: ethpandaops/erigon:main
-  nethermind: ethpandaops/nethermind:master
+  nethermind: ethpandaops/nethermind:fix-reorgs-f9b5540
   reth: ethpandaops/reth:main-72c2d1b
   nimbusel: ethpandaops/nimbus-eth1:master
 

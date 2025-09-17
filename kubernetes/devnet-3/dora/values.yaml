@@ -11,8 +11,8 @@ dora:
       cpu: 500m
       memory: 1Gi
     limits:
-      cpu: 1000m
-      memory: 2Gi
+      cpu: 1500m
+      memory: 3Gi
   ingress:
     enabled: true
     className: ingress-nginx-public
@@ -38,6 +38,8 @@ dora:
     - name: FRONTEND_SHOW_VALIDATOR_SUMMARY
       value: "true"
     - name: FRONTEND_SHOW_PEER_DAS_INFOS
+      value: "true"
+    - name: FRONTEND_ENABLE_DAS_GUARDIAN_MASS_SCAN
       value: "true"
     - name: FRONTEND_ETH_EXPLORER_LINK
       value: "https://explorer.fusaka-devnet-3.ethpandaops.io"

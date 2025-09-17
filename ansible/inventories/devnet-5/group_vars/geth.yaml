@@ -18,7 +18,7 @@ geth_container_command_extra_args:
   - --http.api=eth,net,web3,debug,admin,txpool
   - --http.vhosts=*
   - --networkid={{ ethereum_network_id }}
-  - --syncmode=full
+  - --syncmode=snap
   - --bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --miner.gaslimit=100000000
   - --log.vmodule="eth/catalyst=5,core=5"

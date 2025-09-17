@@ -7,3 +7,4 @@ lighthouse_container_command_extra_args:
   - --telemetry-collector-url={{ tempo_grpc_url }}
   - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
   - --reconstruct-historic-states
+ethereum_node_mev_boost_enabled: false
