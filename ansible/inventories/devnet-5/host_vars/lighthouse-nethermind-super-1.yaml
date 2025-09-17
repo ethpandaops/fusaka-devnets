@@ -3,7 +3,7 @@
 lighthouse_container_command_extra_args:
   - --testnet-dir=/network-config
   - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
-  #- --debug-level=debug
+  - --debug-level=debug
   - --telemetry-collector-url={{ tempo_grpc_url }}
   - --telemetry-service-name={{ ethereum_network_name }}-{{ inventory_hostname }}
   - --reconstruct-historic-states
