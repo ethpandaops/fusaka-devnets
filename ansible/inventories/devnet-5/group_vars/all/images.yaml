@@ -3,8 +3,8 @@ default_ethereum_client_images:
   lighthouse: ethpandaops/lighthouse:unstable-4111bcb
   lodestar: ethpandaops/lodestar:fusaka-devnet-5-56313c7
   nimbus: ethpandaops/nimbus-eth2:unstable-da9305a
-  prysm: ethpandaops/prysm-beacon-chain:develop-c941e47
-  prysm_validator: ethpandaops/prysm-validator:develop-c941e47
+  prysm: ethpandaops/prysm-beacon-chain:block-proposal-optimisation-9b55195
+  prysm_validator: ethpandaops/prysm-validator:block-proposal-optimisation-9b55195
   teku: ethpandaops/teku:master-c649fd2
   grandine: ethpandaops/grandine:develop-6997dfc
 ### Execution layer clients
@@ -12,7 +12,7 @@ default_ethereum_client_images:
   geth: ethpandaops/geth:master-6492751
   erigon: ethpandaops/erigon:main
   nethermind: ethpandaops/nethermind:release-1.34.0-rc
-  reth: ethpandaops/reth:main-72c2d1b
+  reth: ethpandaops/reth:main-e8d32a5
   nimbusel: ethpandaops/nimbus-eth1:master
 
 default_tooling_images:
