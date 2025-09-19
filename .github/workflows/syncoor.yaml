@@ -1,9 +1,9 @@
 name: Syncoor
 
 on:
-  schedule:
+  #schedule:
     #- cron: '30 2 * * *'  # At 2:30am daily
-    - cron: '30 */3 * * *'  # Every 3 hours
+    #- cron: '30 */3 * * *'  # Every 3 hours
   workflow_dispatch:
     inputs:
       el-client:
