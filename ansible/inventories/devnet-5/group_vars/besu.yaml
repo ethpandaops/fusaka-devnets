@@ -36,7 +36,7 @@ besu_container_command_extra_args:
   - --target-gas-limit=100000000
   - --tx-pool-layer-max-capacity=10000000
   - --tx-pool-max-prioritized=1000
-  - --tx-pool-max-prioritized-by-type=BLOB=6
+  - --tx-pool-max-prioritized-by-type=BLOB=72
   - --block-txs-selection-max-time=150
 besu_container_pull: true
 prometheus_config: |
