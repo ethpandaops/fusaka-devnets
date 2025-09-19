@@ -1,0 +1,113 @@
+---
+# Generic CL client image update task - pull images first, check results later
+- name: Set image variables early
+  ansible.builtin.set_fact:
+    new_beacon_image: "{{ beacon_image | default('') }}"
+    new_validator_image: "{{ validator_image | default('') }}"
+
+# Kick off image pulls immediately (these can be slow)
+- name: Pull beacon image (async)
+  community.docker.docker_image:
+    name: "{{ new_beacon_image }}"
+    source: pull
+    force_source: true
+  register: beacon_pull_result
+  when: new_beacon_image != ''
+
+- name: Pull validator image (async)
+  community.docker.docker_image:
+    name: "{{ new_validator_image }}"
+    source: pull
+    force_source: true
+  register: validator_pull_result
+  when: new_validator_image != '' and new_validator_image != omit
+
+# While images pull, do the fast operations
+- name: Get current beacon image
+  ansible.builtin.shell: docker inspect beacon --format='{% raw %}{{.Config.Image}}{% endraw %}'
+  register: current_beacon_image
+  failed_when: false
+
+- name: Get current validator image
+  ansible.builtin.shell: docker inspect validator --format='{% raw %}{{.Config.Image}}{% endraw %}'
+  register: current_validator_image
+  failed_when: false
+
+- name: Update beacon image fact if not set
+  ansible.builtin.set_fact:
+    new_beacon_image: "{{ current_beacon_image.stdout.split(':')[0] + ':latest' }}"
+  when: new_beacon_image == '' and current_beacon_image.rc == 0
+
+- name: Check if beacon image name changed
+  ansible.builtin.set_fact:
+    beacon_needs_restart: "{{ current_beacon_image.stdout != new_beacon_image }}"
+  when: current_beacon_image.rc == 0 and new_beacon_image != ''
+
+- name: Check if validator image name changed
+  ansible.builtin.set_fact:
+    validator_needs_restart: "{{ current_validator_image.stdout != new_validator_image }}"
+  when: current_validator_image.rc == 0 and new_validator_image != '' and new_validator_image != omit
+
+- name: Show image status
+  ansible.builtin.debug:
+    msg: |
+      Current beacon: {{ current_beacon_image.stdout | default('N/A') }}
+      New beacon: {{ new_beacon_image | default('N/A') }}
+      Current validator: {{ current_validator_image.stdout | default('N/A') }}
+      New validator: {{ new_validator_image | default('N/A') }}
+
+      Beacon image pulled: {{ beacon_pull_result.changed | default(false) }}
+      Beacon needs restart: {{ beacon_needs_restart | default(false) }}
+      Validator image pulled: {{ validator_pull_result.changed | default(false) }}
+      Validator needs restart: {{ validator_needs_restart | default(false) }}
+
+# Now restart if image name changed (regardless of whether it's new content)
+- name: Get beacon runlike command
+  ansible.builtin.shell: |
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+    assaflavie/runlike beacon
+  register: beacon_runlike
+  when: current_beacon_image.rc == 0 and beacon_needs_restart | default(false)
+
+- name: Get validator runlike command
+  ansible.builtin.shell: |
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+    assaflavie/runlike validator
+  register: validator_runlike
+  when: current_validator_image.rc == 0 and validator_needs_restart | default(false)
+
+- name: Stop and remove beacon container
+  ansible.builtin.shell: docker stop beacon && docker rm beacon
+  when: current_beacon_image.rc == 0 and beacon_needs_restart | default(false)
+
+- name: Stop and remove validator container
+  ansible.builtin.shell: docker stop validator && docker rm validator
+  when: current_validator_image.rc == 0 and validator_needs_restart | default(false)
+
+- name: Debug beacon restart command
+  ansible.builtin.debug:
+    msg: "{{ beacon_runlike.stdout | regex_replace(current_beacon_image.stdout, new_beacon_image) | regex_replace('docker run --name', 'docker run -d --name') }}"
+  when: current_beacon_image.rc == 0 and beacon_needs_restart | default(false) and beacon_runlike is defined
+
+- name: Restart beacon with new image
+  ansible.builtin.shell: |
+    {{ beacon_runlike.stdout | regex_replace(current_beacon_image.stdout, new_beacon_image) | regex_replace('docker run --name', 'docker run -d --name') }}
+  when: current_beacon_image.rc == 0 and beacon_needs_restart | default(false) and beacon_runlike is defined
+  async: 30
+  poll: 2
+
+- name: Restart validator with new image
+  ansible.builtin.shell: |
+    {{ validator_runlike.stdout | regex_replace(current_validator_image.stdout, new_validator_image) | regex_replace('docker run --name', 'docker run -d --name') }}
+  when: current_validator_image.rc == 0 and validator_needs_restart | default(false) and validator_runlike is defined
+
+# Containers started in detached mode - no need to wait
+
+- name: Show completion status
+  ansible.builtin.debug:
+    msg: |
+      Beacon restarted: {{ beacon_needs_restart | default(false) }}
+      Validator restarted: {{ validator_needs_restart | default(false) }}
+      {% if not (beacon_needs_restart | default(false)) and not (validator_needs_restart | default(false)) %}
+      No image name changes detected - containers left running
+      {% endif %}
