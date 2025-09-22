@@ -1,6 +1,0 @@
-default_ethereum_client_images:
-### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:pawanjay176-blocks-then-columns
-
-### Execution layer clients
-  besu: ethpandaops/besu:main
