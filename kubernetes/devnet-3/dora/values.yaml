@@ -58,7 +58,7 @@ dora:
   mevRelays:
     - index: 0
       name: "Flashbots"
-      url: "http://mev-relay-1.fusaka-devnet-3.ethpandaops.io:9062/"
+      url: "http://mev-relay-1-arm.fusaka-devnet-3.ethpandaops.io:9062/"
 
   ranges: |
     816-817: caplin
