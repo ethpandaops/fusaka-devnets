@@ -1,4 +1,0 @@
-default_ethereum_client_images:
-### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:pawanjay176-blocks-then-columns-04398ad
-  nimbusel: ethpandaops/nimbus-eth1:master

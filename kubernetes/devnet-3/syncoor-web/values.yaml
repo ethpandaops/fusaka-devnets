@@ -25,10 +25,26 @@ syncoor-web:
         config.json: |
           {
             "directories": [
-              {
-                "name": "fusaka-devnet-3",
-                "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-3"
-              }
+                {
+                  "name": "cl-full-checkpoint-sync",
+                  "displayName": "CL Fullnode + CL Checkpoint Sync",
+                  "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-3"
+                },
+                {
+                  "name": "cl-super-checkpoint-sync",
+                  "displayName": "CL Supernode + CL Checkpoint Sync",
+                  "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-3-clsupernode"
+                },
+                {
+                  "name": "cl-full-genesis-sync",
+                  "displayName": "CL Fullnode + CL Genesis Sync",
+                  "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-3-clcheckpointsyncdisabled"
+                },
+                {
+                  "name": "cl-super-genesis-sync",
+                  "displayName": "CL Supernode + CL Genesis Sync",
+                  "url": "https://syncoor-data.ethpandaops.io/devnets/fusaka-devnet-3-clsupernode-clcheckpointsyncdisabled"
+                }
             ],
             "syncoorApiEndpoints": [
               {

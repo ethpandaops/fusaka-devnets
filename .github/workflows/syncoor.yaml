@@ -2,8 +2,8 @@ name: Syncoor
 
 on:
   schedule:
-    #- cron: '30 2 * * *'  # At 2:30am daily
-    - cron: '30 */3 * * *'  # Every 3 hours
+    - cron: '30 10 1-31/2 * *' # Every odd day at 10h 30m
+    - cron: '30 10 2-30/2 * *' # Every even day at 10h 30m
   workflow_dispatch:
     inputs:
       el-client:
@@ -87,7 +87,7 @@ jobs:
     # - 24h -> 1440m
     # - 48h -> 2880m
     # - 72h -> 4320m
-    timeout-minutes: ${{ github.event_name == 'schedule' && 160 || fromJSON(inputs.run-timeout || '1800') }}
+    timeout-minutes: ${{ github.event_name == 'schedule' && 250 || fromJSON(inputs.run-timeout || '1800') }}
     # Self-hosted runner sizes:
     # - ccx13: 2 cores, 8GB, 80GB disk
     # - ccx23: 4 cores, 16GB, 160GB disk
@@ -100,7 +100,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: ["fusaka-devnet-5"]
+        network: ["fusaka-devnet-3"]
         el-client: >-
           ${{
             fromJSON(format('[{0}]', inputs.el-client || '
@@ -122,6 +122,10 @@ jobs:
           '))}}
         cl-nodetype: >-
           ${{
+            github.event_name == 'schedule' &&
+            (github.event.schedule == '30 10 1-31/2 * *' && fromJSON('["fullnode"]') ||
+             github.event.schedule == '30 10 2-30/2 * *' && fromJSON('["supernode"]') ||
+             fromJSON('["fullnode","supernode"]')) ||
             fromJSON(format('[{0}]', inputs.cl-nodetype || '"fullnode","supernode"'))
           }}
 
@@ -200,7 +204,7 @@ jobs:
         echo "s3-path=$S3_PATH" >> $GITHUB_OUTPUT
 
         # Calculate timeout (subtract 10 minutes)
-        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 160 || fromJSON(inputs.run-timeout || '1800') }} - 10 ))
+        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 250 || fromJSON(inputs.run-timeout || '1800') }} - 10 ))
         echo "run-timeout=$TIMEOUT" >> $GITHUB_OUTPUT
 
     - name: Run Syncoor Test

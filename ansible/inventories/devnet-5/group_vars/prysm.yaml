@@ -51,7 +51,6 @@ prysm_container_command_extra_simple_args:
   - --genesis-state=/network-config/genesis.ssz
   - --contract-deployment-block={{ ethereum_network_deposit_contract_block }}
   - --min-sync-peers=1
-  - --pprof
   - --enable-debug-rpc-endpoints
   - --verbosity=debug
 prysm_container_command_extra_bootnode_args: >-
@@ -66,4 +65,5 @@ prysm_validator_container_entrypoint:
 prysm_validator_container_command_extra_args:
   - --chain-config-file=/network-config/config.yaml
   - --graffiti={{ ansible_hostname }}
+  - --verbosity=debug
 prysm_validator_datadir: /data/prysm-validator
