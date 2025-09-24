@@ -21,11 +21,11 @@ on:
         required: false
         default: '1800'
         type: string
-      checkpoint-sync-enabled:
-        description: 'Enable checkpoint sync'
+      cl-synctype:
+        description: 'Consensus layer sync type ("checkpoint", "genesis")'
         required: false
-        default: true
-        type: boolean
+        default: '"checkpoint"'
+        type: string
       checkpoint-sync-url:
         description: 'Checkpoint sync URL. Will be auto generated if not provided. (Example: https://checkpoint-sync.$NETWORK.ethpandaops.io)'
         required: false
@@ -96,7 +96,7 @@ jobs:
     runs-on: self-hosted-ghr-size-ccx33-x64
     concurrency:
       group: >-
-        ${{ github.event_name }}-${{ matrix.network }}-${{ matrix.el-client }}-${{ matrix.cl-client }}-${{ matrix.cl-nodetype }}
+        ${{ github.event_name }}-${{ matrix.network }}-${{ matrix.el-client }}-${{ matrix.cl-client }}-${{ matrix.cl-nodetype }}-${{ matrix.cl-synctype }}
     strategy:
       fail-fast: false
       matrix:
@@ -126,7 +126,14 @@ jobs:
             (github.event.schedule == '30 10 1-31/2 * *' && fromJSON('["fullnode"]') ||
              github.event.schedule == '30 10 2-30/2 * *' && fromJSON('["supernode"]') ||
              fromJSON('["fullnode","supernode"]')) ||
-            fromJSON(format('[{0}]', inputs.cl-nodetype || '"fullnode","supernode"'))
+            fromJSON(format('[{0}]', inputs.cl-nodetype ||
+            '"fullnode","supernode"'))
+          }}
+        cl-synctype: >-
+          ${{
+            github.event_name == 'schedule' && fromJSON('["checkpoint"]') ||
+            fromJSON(format('[{0}]', inputs.cl-synctype ||
+            '"checkpoint","genesis"'))
           }}
 
     steps:
@@ -185,8 +192,12 @@ jobs:
         CHECKPOINT_SYNC_URL="https://checkpoint-sync.${{ matrix.network }}.ethpandaops.io"
         echo "checkpoint-sync-url=$CHECKPOINT_SYNC_URL" >> $GITHUB_OUTPUT
 
-        # Set checkpoint sync enabled (true for scheduled runs, otherwise use input)
-        CHECKPOINT_SYNC_ENABLED="${{ github.event_name == 'schedule' && 'true' || inputs.checkpoint-sync-enabled }}"
+        # Set checkpoint sync enabled based on cl-synctype
+        if [ "${{ matrix.cl-synctype }}" = "checkpoint" ]; then
+          CHECKPOINT_SYNC_ENABLED="true"
+        else
+          CHECKPOINT_SYNC_ENABLED="false"
+        fi
         echo "checkpoint-sync-enabled=$CHECKPOINT_SYNC_ENABLED" >> $GITHUB_OUTPUT
 
         # Generate syncoor server address based on network
