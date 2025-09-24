@@ -126,14 +126,12 @@ jobs:
             (github.event.schedule == '30 10 1-31/2 * *' && fromJSON('["fullnode"]') ||
              github.event.schedule == '30 10 2-30/2 * *' && fromJSON('["supernode"]') ||
              fromJSON('["fullnode","supernode"]')) ||
-            fromJSON(format('[{0}]', inputs.cl-nodetype ||
-            '"fullnode","supernode"'))
+            fromJSON(format('[{0}]', inputs.cl-nodetype || '"fullnode","supernode"'))
           }}
         cl-synctype: >-
           ${{
             github.event_name == 'schedule' && fromJSON('["checkpoint"]') ||
-            fromJSON(format('[{0}]', inputs.cl-synctype ||
-            '"checkpoint","genesis"'))
+            fromJSON(format('[{0}]', inputs.cl-synctype || '"checkpoint","genesis"'))
           }}
 
     steps:
