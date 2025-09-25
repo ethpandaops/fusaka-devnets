@@ -1,12 +1,12 @@
 default_ethereum_client_images:
   ### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:unstable
-  lodestar: ethpandaops/lodestar:fusaka-devnet-3
+  lighthouse: ethpandaops/lighthouse:v8-testnet-release-testing-593bd98
+  lodestar: chainsafe/lodestar:v1.35.0-rc.0
   nimbus: ethpandaops/nimbus-eth2:unstable
   prysm: ethpandaops/prysm-beacon-chain:develop
   prysm_validator: ethpandaops/prysm-validator:develop
   teku: consensys/teku:25.9.3
-  grandine: ethpandaops/grandine:develop
+  grandine: sifrai/grandine:2.0.0.rc0
 ### Execution layer clients
   besu: hyperledger/besu:25.9.0
   geth: ethpandaops/geth:master
