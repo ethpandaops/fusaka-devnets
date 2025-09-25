@@ -30,7 +30,7 @@ powfaucet:
 
   faucetTitle: "fusaka-devnet-3 PoW Faucet"
   faucetPrivkey: "<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.faucet_private_key}>"
-  faucetRpcUrl: "http://geth-prysm-001:8545"
+  faucetRpcUrl: "https://rpc.fusaka-devnet-3.ethpandaops.io"
   faucetExplorerLink: "https://explorer.fusaka-devnet-3.ethpandaops.io/tx/{txid}"
   faucetTxGasLimit: 100000
 
