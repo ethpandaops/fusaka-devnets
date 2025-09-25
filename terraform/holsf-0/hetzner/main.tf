@@ -31,7 +31,7 @@ terraform {
     skip_s3_checksum            = true
     region                      = "us-east-1"
     bucket                      = "merge-testnets"
-    key                         = "infrastructure/fusaka-holsf-1/hetzner-terraform.tfstate"
+    key                         = "infrastructure/fusaka-holsf-0/hetzner-terraform.tfstate"
   }
 }
 
@@ -54,7 +54,7 @@ variable "cloudflare_api_token" {
 
 variable "ethereum_network" {
   type    = string
-  default = "fusaka-holsf-1"
+  default = "fusaka-holsf-0"
 }
 
 variable "base_cidr_block" {

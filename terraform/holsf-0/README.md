@@ -1,7 +1,7 @@
-# holsf-1 Configuration
+# holsf-0 Configuration
 
 ## Overview
-holsf-1 consists of 1500 nodes distributed across DigitalOcean and Hetzner cloud providers with a specific client distribution to test network diversity.
+holsf-0 consists of 1500 nodes distributed across DigitalOcean and Hetzner cloud providers with a specific client distribution to test network diversity.
 
 ## Node Distribution
 
@@ -45,7 +45,7 @@ holsf-1 consists of 1500 nodes distributed across DigitalOcean and Hetzner cloud
 | Reth | 10% | 149 |
 | **Total** | **100%** | **1490** |
 
-*Note: NimbusEL has been removed from holsf-1.*
+*Note: NimbusEL has been removed from holsf-0.*
 
 ## CL-EL Combination Matrix
 
@@ -154,7 +154,7 @@ holsf-1 consists of 1500 nodes distributed across DigitalOcean and Hetzner cloud
 ## Terraform Structure
 
 ```
-terraform/holsf-1/
+terraform/holsf-0/
 ├── README.md              # This file
 ├── main.tf               # Main terraform configuration
 ├── nodes.tf              # DigitalOcean node definitions
@@ -173,7 +173,7 @@ To deploy this devnet:
 
 1. Initialize terraform:
    ```bash
-   cd terraform/holsf-1
+   cd terraform/holsf-0
    terraform init
    ```
 
