@@ -27,7 +27,7 @@ dora:
   validatorNamesInventory: "https://config.fusaka-holsf-0.ethpandaops.io/api/v1/nodes/validator-ranges"
   ethExplorerLink: "https://explorer.fusaka-holsf-0.ethpandaops.io"
   publicRpcUrl: "https://rpc.fusaka-holsf-0.ethpandaops.io"
-  rainbowkitProjectId: ""
+  rainbowkitProjectId: "15fe4ab4d5c0bcb6f0dc7c398301ff0e"
   executionGenesisConfig: "https://config.fusaka-holsf-0.ethpandaops.io/el/genesis.json"
   apiRequireAuth: False
   apiAuthSecret: "8WCg4I2kWrDXCJtZAcSnxNYWKFdU2UHmQuvFTfssQnY="
@@ -59,88 +59,5 @@ dora:
         username: ""
         password: "<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>"
 
-  endpoints:
-  # Rpc
-  - url: http://prysm-geth-001:5052
-    name: rpc-prysm-geth-001
-    authGroup: pandaops
-    archive: true
-    priority: 1
-  - url: https://bn-bootnode-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: bootnode-1
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: grandine-geth-super-1
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: lighthouse-geth-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: true
-  - url: https://bn-lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: lodestar-reth-super-1
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: nimbus-erigon-super-1
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: prysm-nethermind-super-1
-    authGroup: pandaops
-    priority: -1
-  - url: https://bn-teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: teku-besu-super-1
-    authGroup: pandaops
-    priority: -1
-  executionEndpoints:
-  # Rpc
-  - url: http://geth-prysm-001:8545
-    name: rpc-prysm-geth-001
-    authGroup: pandaops
-    archive: true
-    priority: 1
-  - url: https://rpc-bootnode-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: bootnode-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-bootnode-1.srv.fusaka-holsf-0.ethpandaops.io:8961
-  - url: https://rpc-grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: grandine-geth-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io:8961
-  - url: https://rpc-lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: lighthouse-geth-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io:8961
-  - url: https://rpc-lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: lodestar-reth-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io:8961
-  - url: https://rpc-nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: nimbus-erigon-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io:8961
-  - url: https://rpc-prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: prysm-nethermind-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io:8961
-  - url: https://rpc-teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io
-    name: teku-besu-super-1
-    authGroup: pandaops
-    priority: -1
-    archive: false
-    engineSnooperUrl: http://rpc-teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io:8961
+  endpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/holsf-0/dora/endpoints-cl.yaml"
+  executionEndpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/holsf-0/dora/endpoints-el.yaml"
