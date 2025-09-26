@@ -74,12 +74,12 @@ ethereum_genesis_generator_config_files:
     export FULU_FORK_VERSION="0x70{{ ethereum_genesis_fork_version_suffix }}"
     export FULU_FORK_EPOCH="300"
     export BPO_1_EPOCH="320"
-    export BPO_1_MAX_BLOBS="10"
-    export BPO_1_TARGET_BLOBS="15"
+    export BPO_1_MAX_BLOBS="15"
+    export BPO_1_TARGET_BLOBS="10"
     export BPO_1_BASE_FEE_UPDATE_FRACTION="8346193"
     export BPO_2_EPOCH="330"
-    export BPO_2_MAX_BLOBS="14"
-    export BPO_2_TARGET_BLOBS="21"
+    export BPO_2_MAX_BLOBS="21"
+    export BPO_2_TARGET_BLOBS="10"
     export BPO_2_BASE_FEE_UPDATE_FRACTION="11684671"
     export GENESIS_TIMESTAMP={{ ethereum_genesis_timestamp }}
     export GENESIS_DELAY={{ ethereum_genesis_timedelay }}

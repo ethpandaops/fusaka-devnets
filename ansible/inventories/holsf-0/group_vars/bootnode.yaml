@@ -75,11 +75,10 @@ geth_container_command_extra_args:
   - --networkid={{ ethereum_network_id }}
   - --syncmode=full
   - --gcmode=archive
-  - --state.scheme=hash
   - --miner.gaslimit=60000000
   - --override.osaka={{ override_osaka_timestamp }}
   - --override.bpo1={{ override_bpo1_timestamp }}
-  - -- override.bpo2={{ override_bpo2_timestamp }}
+  - --override.bpo2={{ override_bpo2_timestamp }}
 geth_init_custom_network: false
 geth_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"
 geth_container_pull: true
