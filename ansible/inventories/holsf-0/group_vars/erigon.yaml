@@ -60,13 +60,14 @@ erigon_container_command_extra_args:
   - --log.dir.verbosity=debug
   - --http.vhosts=*
   - --ws
-  - --no-downloader
   - --networkid={{ ethereum_network_id }}
   - --db.size.limit=500GB
-  - --bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --miner.gaslimit=60000000
   - --keep.stored.chain.config=true
   - --externalcl
+  - --trustedpeers={{ ethereum_el_bootnodes | join(',') }}
+  - --el.block.downloader.v2
+  - --p2p.protocol=68
 erigon_init_custom_network: true
 erigon_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"
 
