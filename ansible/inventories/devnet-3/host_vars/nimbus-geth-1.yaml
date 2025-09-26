@@ -1,6 +1,0 @@
-
-default_ethereum_client_images:
-### Consensus layer clients
-  nimbus: ethpandaops/nimbus-eth2:hm-79898eb
-### Execution layer clients
-  geth: ethpandaops/geth:master
