@@ -32,10 +32,10 @@ spamoor:
   rpcEndpoints:
   # Rpc
   - "http://geth-prysm-001:8545"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.bootnode-1.srv.fusaka-holsf-0.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-bootnode-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io"
