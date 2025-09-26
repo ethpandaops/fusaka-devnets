@@ -32,16 +32,12 @@ nethermind_container_volumes:
 nethermind_container_command_extra_args:
   - --Init.ChainSpecPath=/network-config/chainspec.json
   - --config=holesky.cfg
+  - --Init.BaseDbPath=nethermind_db/holesky
   - --JsonRpc.EnabledModules=Eth,Subscribe,Trace,TxPool,Web3,Personal,Proof,Net,Parity,Health,Rpc,Debug,Admin
   - --Discovery.Bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --Init.IsMining=false
   - --Pruning.Mode=None
-  - --config=none
   - --log=DEBUG
-  - --Seq.MinLevel=Info
-  - --Seq.ServerUrl={{ nethermind_seq_server }}
-  - --Seq.ApiKey={{ nethermind_seq_api_key }}
-  - --Metrics.PushGatewayUrl={{ nethermind_push_gateway }}
   - --Blocks.TargetBlockGasLimit=60000000
 nethermind_container_pull: true
 

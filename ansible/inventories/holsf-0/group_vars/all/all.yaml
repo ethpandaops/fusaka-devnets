@@ -47,8 +47,12 @@ ethereum_genesis_network_seed: "fusaka-holsf-0"
 ethereum_genesis_chain_id: "70{{ 99999999 | random(start=10000000, seed=ethereum_genesis_network_seed) }}"
 ethereum_genesis_fork_version_suffix: "{{ 999999 | random(start=100000, seed=ethereum_genesis_network_seed) }}"
 ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('fusaka-', '') }}"
-ethereum_genesis_timestamp: "xxxxx"
+ethereum_genesis_timestamp: "1758883500"
 ethereum_genesis_timedelay: 60
+override_osaka_timestamp: "1758998760"
+override_bpo1_timestamp: "1759006440"
+override_bpo2_timestamp: "1759010280"
+
 ethereum_genesis_timestamp_relative_cmd:
   Linux: "date +%s -d '+45 minutes'"
   Darwin: "date -v +45M +%s"
@@ -60,7 +64,7 @@ ethereum_genesis_generator_config_files:
   values.env: |-
     export CHAIN_ID="{{ ethereum_genesis_chain_id }}"
     export EL_AND_CL_MNEMONIC="{{ ethereum_genesis_mnemonic }}"
-    export NUMBER_OF_VALIDATORS=816
+    export NUMBER_OF_VALIDATORS=6000
     export GENESIS_FORK_VERSION="0x10{{ ethereum_genesis_fork_version_suffix }}"
     export ALTAIR_FORK_VERSION="0x20{{ ethereum_genesis_fork_version_suffix }}"
     export BELLATRIX_FORK_VERSION="0x30{{ ethereum_genesis_fork_version_suffix }}"
@@ -68,19 +72,19 @@ ethereum_genesis_generator_config_files:
     export DENEB_FORK_VERSION="0x50{{ ethereum_genesis_fork_version_suffix }}"
     export ELECTRA_FORK_VERSION="0x60{{ ethereum_genesis_fork_version_suffix }}"
     export FULU_FORK_VERSION="0x70{{ ethereum_genesis_fork_version_suffix }}"
-    export FULU_FORK_EPOCH="32"
+    export FULU_FORK_EPOCH="300"
+    export BPO_1_EPOCH="320"
+    export BPO_1_MAX_BLOBS="10"
+    export BPO_1_TARGET_BLOBS="15"
+    export BPO_1_BASE_FEE_UPDATE_FRACTION="8346193"
+    export BPO_2_EPOCH="330"
+    export BPO_2_MAX_BLOBS="14"
+    export BPO_2_TARGET_BLOBS="21"
+    export BPO_2_BASE_FEE_UPDATE_FRACTION="11684671"
     export GENESIS_TIMESTAMP={{ ethereum_genesis_timestamp }}
     export GENESIS_DELAY={{ ethereum_genesis_timedelay }}
     export GENESIS_GAS_LIMIT=60000000
     export WITHDRAWAL_TYPE=0x02
-    export BPO_1_EPOCH=64
-    export BPO_1_MAX_BLOBS=15
-    export BPO_1_TARGET_BLOBS=10
-    export BPO_1_BASE_FEE_UPDATE_FRACTION="8346193"
-    export BPO_2_EPOCH=128
-    export BPO_2_MAX_BLOBS=21
-    export BPO_2_TARGET_BLOBS=14
-    export BPO_2_BASE_FEE_UPDATE_FRACTION="11684671"
     export SHADOW_FORK_FILE="https://snapshots.ethpandaops.io/holesky/geth/4570000/_snapshot_eth_getBlockByNumber.json"
 
 

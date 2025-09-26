@@ -24,7 +24,11 @@ geth_container_command_extra_args:
   - --bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --miner.gaslimit=60000000
   - --log.vmodule="eth/catalyst=5,core=5"
-geth_init_custom_network: true
+  - --override.osaka={{ override_osaka_timestamp }}
+  - --override.bpo1={{ override_bpo1_timestamp }}
+  - -- override.bpo2={{ override_bpo2_timestamp }}
+
+geth_init_custom_network: false
 geth_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"
 geth_init_custom_network_container_command:
   - --datadir=/data

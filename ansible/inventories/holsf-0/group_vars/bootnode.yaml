@@ -57,8 +57,6 @@ teku_container_command_extra_args:
   - --Xlog-include-p2p-warnings-enabled
   - --metrics-block-timing-tracking-enabled
   - --ignore-weak-subjectivity-period-enabled
-  - --Xp2p-sync-batch-size=10
-  - --Xp2p-sync-max-pending-batches=2
   - --p2p-discovery-bootnodes=enr:-O24QG6VEz8ygcpLuf5fuJl6LLqQArIPO8HjVaYNUCfJGpt3PuFclIccu6yKmk66q0zs0UuIMuJy8Hdun7l8kbcSsuWBmIdhdHRuZXRziAAAAAAAYAAAg2NnY4GAhmNsaWVudNGKTGlnaHRob3VzZYU3LjEuMIRldGgykLYvKw5wk3VE__________-CaWSCdjSCaXCEGJBl4INuZmSEti8rDoRxdWljgiMpiXNlY3AyNTZrMaEDfr-2_YzcYmkKyLrWj6eqXFAi-0h9CPOu5iK4jkAzCDSIc3luY25ldHMLg3RjcIIjKIN1ZHCCIyg
 
 # role: ethpandaops.general.snapshot_fetcher
@@ -79,7 +77,10 @@ geth_container_command_extra_args:
   - --gcmode=archive
   - --state.scheme=hash
   - --miner.gaslimit=60000000
-geth_init_custom_network: true
+  - --override.osaka={{ override_osaka_timestamp }}
+  - --override.bpo1={{ override_bpo1_timestamp }}
+  - -- override.bpo2={{ override_bpo2_timestamp }}
+geth_init_custom_network: false
 geth_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"
 geth_container_pull: true
 
