@@ -6,7 +6,7 @@ default_ethereum_client_images:
   prysm: gcr.io/offchainlabs/prysm/beacon-chain:v6.1.0
   prysm_validator: gcr.io/offchainlabs/prysm/validator:v6.1.0
   teku: consensys/teku:25.9.3
-  grandine: ethpandaops/grandine:develop
+  grandine: sifrai/grandine:2.0.0.rc0
 ### Execution layer clients
   besu: hyperledger/besu:25.9.0
   geth: ethereum/client-go:v1.16.4

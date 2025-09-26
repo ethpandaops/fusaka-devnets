@@ -17,9 +17,9 @@
     "shanghaiTime": 1696000704,
     "cancunTime": 1707305664,
     "pragueTime": 1740434112,
-    "osakaTime": 1759001460,
-    "bpo1Time": 1759009140,
-    "bpo2Time": 1759012980,
+    "osakaTime": 1758896640,
+    "bpo1Time": 1758900480,
+    "bpo2Time": 1758904320,
     "blobSchedule": {
       "cancun": {
         "target": 3,
