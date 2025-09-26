@@ -73,26 +73,14 @@ ethereum_genesis_generator_config_files:
     export GENESIS_DELAY={{ ethereum_genesis_timedelay }}
     export GENESIS_GAS_LIMIT=60000000
     export WITHDRAWAL_TYPE=0x02
-    export BPO_1_EPOCH=512
-    export BPO_1_MAX_BLOBS=12
-    export BPO_1_TARGET_BLOBS=9
-    export BPO_1_BASE_FEE_UPDATE_FRACTION="5007716"
-    export BPO_2_EPOCH=768
-    export BPO_2_MAX_BLOBS=15
-    export BPO_2_TARGET_BLOBS=12
-    export BPO_2_BASE_FEE_UPDATE_FRACTION="5007716"
-    export BPO_3_EPOCH=1024
-    export BPO_3_MAX_BLOBS=18
-    export BPO_3_TARGET_BLOBS=15
-    export BPO_3_BASE_FEE_UPDATE_FRACTION="5007716"
-    export BPO_4_EPOCH=1280
-    export BPO_4_MAX_BLOBS=9
-    export BPO_4_TARGET_BLOBS=6
-    export BPO_4_BASE_FEE_UPDATE_FRACTION="5007716"
-    export BPO_5_EPOCH=1584
-    export BPO_5_MAX_BLOBS=20
-    export BPO_5_TARGET_BLOBS=15
-    export BPO_5_BASE_FEE_UPDATE_FRACTION="5007716"
+    export BPO_1_EPOCH=64
+    export BPO_1_MAX_BLOBS=15
+    export BPO_1_TARGET_BLOBS=10
+    export BPO_1_BASE_FEE_UPDATE_FRACTION="8346193"
+    export BPO_2_EPOCH=128
+    export BPO_2_MAX_BLOBS=21
+    export BPO_2_TARGET_BLOBS=14
+    export BPO_2_BASE_FEE_UPDATE_FRACTION="11684671"
     export SHADOW_FORK_FILE="https://snapshots.ethpandaops.io/holesky/geth/4570000/_snapshot_eth_getBlockByNumber.json"
 
 
