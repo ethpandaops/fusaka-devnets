@@ -19,19 +19,19 @@ forkmon:
   # Rpc
   - addr: http://geth-prysm-001:8545
     name: rpc-prysm-geth-001
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.bootnode-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.bootnode-1.srv.fusaka-holsf-0.ethpandaops.io
     name: bootnode-1
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-geth-super-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
     name: grandine-geth-super-1
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-geth-super-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
     name: lighthouse-geth-super-1
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-super-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io
     name: lodestar-reth-super-1
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-super-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io
     name: nimbus-erigon-super-1
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-nethermind-super-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io
     name: prysm-nethermind-super-1
-  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-besu-super-1.fusaka-holsf-0.ethpandaops.io
+  - addr: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io
     name: teku-besu-super-1
 
   config: |
