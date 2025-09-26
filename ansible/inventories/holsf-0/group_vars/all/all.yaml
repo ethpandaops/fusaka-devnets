@@ -251,6 +251,7 @@ docker_nginx_proxy_default_email: "certs@{{ domain }}"
 docker_nginx_proxy_docker_gen_container_name: nginx-proxy-gen
 docker_nginx_proxy_docker_gen_container_env:
   RESOLVERS: "1.1.1.1"
+docker_nginx_proxy_acme_companion_enabled: false
 docker_nginx_proxy_acme_companion_container_name: nginx-proxy-acme
 docker_nginx_proxy_acme_companion_container_env:
   DEFAULT_EMAIL: "{{ docker_nginx_proxy_default_email }}"
@@ -263,7 +264,7 @@ docker_nginx_proxy_container_networks: "{{ docker_networks_shared }}"
 docker_nginx_proxy_docker_gen_container_networks: "{{ docker_networks_shared }}"
 docker_nginx_proxy_acme_companion_container_networks: "{{ docker_networks_shared }}"
 docker_nginx_proxy_acme_monitor_container_networks: "{{ docker_networks_shared }}"
-docker_nginx_proxy_acme_monitor_enabled: true
+docker_nginx_proxy_acme_monitor_enabled: false
 docker_nginx_proxy_datadir: /opt/nginx-proxy
 docker_nginx_proxy_container_volumes:
   - "{{ docker_nginx_proxy_datadir }}/conf:/etc/nginx/conf.d"
@@ -271,6 +272,13 @@ docker_nginx_proxy_container_volumes:
   - "{{ docker_nginx_proxy_datadir }}/certs:/etc/nginx/certs:ro"
   - html:/usr/share/nginx/html
   - "{{ docker_nginx_proxy_datadir }}/htpasswd:/etc/nginx/htpasswd:ro"
+docker_nginx_proxy_cert_loader_container_image: "{{ default_tooling_images.nginx_proxy_cert_loader }}"
+docker_nginx_proxy_cert_linker_container_image: "{{ default_tooling_images.nginx_proxy_cert_linker }}"
+docker_nginx_proxy_cert_loader_container_networks: "{{ docker_networks_shared }}"
+docker_nginx_proxy_cert_linker_container_networks: "{{ docker_networks_shared }}"
+docker_nginx_proxy_wildcard_cert: "{{ network_server_subdomain }}"
+docker_nginx_proxy_wildcard_cert_url: "http://cert.{{ network_server_subdomain }}/{{ network_server_subdomain }}-latest.tar.enc"
+docker_nginx_proxy_wildcard_cert_psk: "{{ secret_cert_encryption_psk }}"
 
 # role: ethpandaops.general.vector
 vector_config: |
