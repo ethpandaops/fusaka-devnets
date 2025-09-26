@@ -44,14 +44,14 @@ checkpoint_sync_url_kube: https://<path:/secrets/services/services.enc.yaml#ethe
 ethereum_genesis_generator_container_image: "{{ default_tooling_images.ethereum_genesis_generator }}"
 ethereum_genesis_generator_version: "{{ ethereum_genesis_generator_container_image.split(':')[-1] }}"
 ethereum_genesis_network_seed: "fusaka-holsf-0"
-ethereum_genesis_chain_id: "70{{ 99999999 | random(start=10000000, seed=ethereum_genesis_network_seed) }}"
+ethereum_genesis_chain_id: "17000"
 ethereum_genesis_fork_version_suffix: "{{ 999999 | random(start=100000, seed=ethereum_genesis_network_seed) }}"
 ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('fusaka-', '') }}"
-ethereum_genesis_timestamp: "1758883500"
+ethereum_genesis_timestamp: "1758886200"
 ethereum_genesis_timedelay: 60
-override_osaka_timestamp: "1758998760"
-override_bpo1_timestamp: "1759006440"
-override_bpo2_timestamp: "1759010280"
+override_osaka_timestamp: "1759001460"
+override_bpo1_timestamp: "1759009140"
+override_bpo2_timestamp: "1759012980"
 
 ethereum_genesis_timestamp_relative_cmd:
   Linux: "date +%s -d '+45 minutes'"
