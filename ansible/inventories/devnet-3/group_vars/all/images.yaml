@@ -9,7 +9,7 @@ default_ethereum_client_images:
   grandine: sifrai/grandine:2.0.0.rc0
 ### Execution layer clients
   besu: hyperledger/besu:25.9.0
-  geth: ethpandaops/geth:master
+  geth: ethereum/client-go:v1.16.4
   erigon: erigontech/erigon:v3.2.0-rc1
   nethermind: nethermindeth/nethermind:release-1.34.0
   reth: ghcr.io/paradigmxyz/reth:v1.8.1
