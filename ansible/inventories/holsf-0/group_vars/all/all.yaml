@@ -80,7 +80,7 @@ ethereum_genesis_generator_config_files:
     export BPO_1_BASE_FEE_UPDATE_FRACTION="8346193"
     export BPO_2_EPOCH="40"
     export BPO_2_MAX_BLOBS="21"
-    export BPO_2_TARGET_BLOBS="10"
+    export BPO_2_TARGET_BLOBS="14"
     export BPO_2_BASE_FEE_UPDATE_FRACTION="11684671"
     export GENESIS_TIMESTAMP={{ ethereum_genesis_timestamp }}
     export GENESIS_DELAY={{ ethereum_genesis_timedelay }}
