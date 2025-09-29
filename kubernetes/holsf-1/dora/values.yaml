@@ -30,7 +30,7 @@ dora:
   rainbowkitProjectId: "15fe4ab4d5c0bcb6f0dc7c398301ff0e"
   executionGenesisConfig: "https://config.fusaka-holsf-1.ethpandaops.io/el/genesis.json"
   apiRequireAuth: False
-  apiAuthSecret: "8WCg4I2kWrDXCJtZAcSnxNYWKFdU2UHmQuvFTfssQnY="
+  apiAuthSecret: "<path:/secrets/services/services.enc.yaml#dora | jsonPath {.api_secret}>"
   apiWhitelistedIPs: []
   apiDefaultRateLimit: 60
   apiDisableDefaultRateLimit: false

@@ -25,6 +25,10 @@ dora:
   name: fusaka-devnet-3
   configPath: "https://config.fusaka-devnet-3.ethpandaops.io/cl/config.yaml"
   validatorNamesInventory: "https://config.fusaka-devnet-3.ethpandaops.io/api/v1/nodes/validator-ranges"
+  rainbowkitProjectId: "15fe4ab4d5c0bcb6f0dc7c398301ff0e"
+  executionGenesisConfig: "https://config.fusaka-devnet-3.ethpandaops.io/el/genesis.json"
+  apiRequireAuth: False
+  apiAuthSecret: "<path:/secrets/services/services.enc.yaml#dora | jsonPath {.api_secret}>"
   proxyCount: 2
   extraEnv:
     - name: FRONTEND_PPROF
