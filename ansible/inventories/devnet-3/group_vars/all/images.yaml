@@ -1,6 +1,6 @@
 default_ethereum_client_images:
   ### Consensus layer clients
-  lighthouse: ethpandaops/lighthouse:v8-testnet-release-testing-593bd98
+  lighthouse: sigp/lighthouse:v8.0.0-rc.0
   lodestar: chainsafe/lodestar:v1.35.0-rc.0
   nimbus: statusim/nimbus-eth2:multiarch-v25.9.1
   prysm: gcr.io/offchainlabs/prysm/beacon-chain:v6.1.0
