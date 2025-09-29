@@ -1,11 +1,6 @@
 # Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/dora-endpoints-el.yaml.j2
 # Execution layer endpoints
 
-- url: http://geth-prysm-001:8545
-  name: rpc-prysm-geth-001
-  authGroup: pandaops
-  archive: true
-  priority: 1
 - url: https://rpc-bootnode-1.srv.fusaka-holsf-1.ethpandaops.io
   name: bootnode-1
   authGroup: pandaops
