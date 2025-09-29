@@ -1,6 +1,6 @@
 #!/bin/zsh
-node="prysm-nethermind-super-1"
-network="devnet-5"
+node="bootnode-1"
+network="holsf-1"
 domain="ethpandaops.io"
 srv="srv"
 prefix="fusaka"
