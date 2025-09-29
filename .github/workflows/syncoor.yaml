@@ -2,8 +2,8 @@ name: Syncoor
 
 on:
   schedule:
-    - cron: '30 10 1-31/2 * *' # Every odd day at 10h 30m
-    - cron: '30 10 2-30/2 * *' # Every even day at 10h 30m
+    - cron: '30 10 1-31/2 * *' # Every odd day at 10h 30m (Fullnode runs)
+    - cron: '30 10 2-30/2 * *' # Every even day at 10h 30m (Supernode runs)
   workflow_dispatch:
     inputs:
       el-client:
@@ -87,7 +87,7 @@ jobs:
     # - 24h -> 1440m
     # - 48h -> 2880m
     # - 72h -> 4320m
-    timeout-minutes: ${{ github.event_name == 'schedule' && 250 || fromJSON(inputs.run-timeout || '1800') }}
+    timeout-minutes: ${{ github.event_name == 'schedule' && 500 || fromJSON(inputs.run-timeout || '1800') }}
     # Self-hosted runner sizes:
     # - ccx13: 2 cores, 8GB, 80GB disk
     # - ccx23: 4 cores, 16GB, 160GB disk
@@ -213,7 +213,7 @@ jobs:
         echo "s3-path=$S3_PATH" >> $GITHUB_OUTPUT
 
         # Calculate timeout (subtract 10 minutes)
-        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 250 || fromJSON(inputs.run-timeout || '1800') }} - 10 ))
+        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 500 || fromJSON(inputs.run-timeout || '1800') }} - 10 ))
         echo "run-timeout=$TIMEOUT" >> $GITHUB_OUTPUT
 
     - name: Run Syncoor Test
