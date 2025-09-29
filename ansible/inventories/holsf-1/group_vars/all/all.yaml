@@ -90,6 +90,7 @@ ethereum_genesis_generator_config_files:
     export SHARD_COMMITTEE_PERIOD=1
     export CHURN_LIMIT_QUOTIENT=1
     export VALIDATOR_BALANCE=10000000000000
+    export DEPOSIT_CONTRACT_ADDRESS=0x4242424242424242424242424242424242424242
     export SHADOW_FORK_FILE="https://snapshots.ethpandaops.io/holesky/geth/4590000/_snapshot_eth_getBlockByNumber.json"
 
 
