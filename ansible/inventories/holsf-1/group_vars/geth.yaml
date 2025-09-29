@@ -27,6 +27,7 @@ geth_container_command_extra_args:
   - --override.osaka={{ override_osaka_timestamp }}
   - --override.bpo1={{ override_bpo1_timestamp }}
   - --override.bpo2={{ override_bpo2_timestamp }}
+  -  --eth.requiredblocks=4590451=0x5a89644add2db5d3e35708ac8f7fa8ccfefea6116323a66ccee1412527acf204
 
 geth_init_custom_network: false
 geth_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"

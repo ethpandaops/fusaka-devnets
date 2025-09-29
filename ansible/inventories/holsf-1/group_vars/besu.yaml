@@ -39,7 +39,7 @@ besu_container_command_extra_args:
   - --bonsai-limit-trie-logs-enabled=false
   - --target-gas-limit=60000000
   - --version-compatibility-protection=false
-
+  -  --required-block=4590451=0x5a89644add2db5d3e35708ac8f7fa8ccfefea6116323a66ccee1412527acf204
 besu_container_pull: true
 prometheus_config: |
   global:
