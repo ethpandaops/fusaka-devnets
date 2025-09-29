@@ -48,11 +48,11 @@ ethereum_genesis_network_seed: "fusaka-holsf-1"
 ethereum_genesis_chain_id: "17000"
 ethereum_genesis_fork_version_suffix: "{{ 999999 | random(start=100000, seed=ethereum_genesis_network_seed) }}"
 ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('fusaka-', '') }}"
-ethereum_genesis_timestamp:
+ethereum_genesis_timestamp: 1759151700
 ethereum_genesis_timedelay: 60
-override_osaka_timestamp:
-override_bpo1_timestamp:
-override_bpo2_timestamp:
+override_osaka_timestamp: 1759159440
+override_bpo1_timestamp: 1759163280
+override_bpo2_timestamp: 1759167120
 
 ethereum_genesis_timestamp_relative_cmd:
   Linux: "date +%s -d '+45 minutes'"
@@ -90,7 +90,7 @@ ethereum_genesis_generator_config_files:
     export SHARD_COMMITTEE_PERIOD=1
     export CHURN_LIMIT_QUOTIENT=1
     export VALIDATOR_BALANCE=10000000000000
-    export SHADOW_FORK_FILE="https://snapshots.ethpandaops.io/holesky/geth/4570000/_snapshot_eth_getBlockByNumber.json"
+    export SHADOW_FORK_FILE="https://snapshots.ethpandaops.io/holesky/geth/4590000/_snapshot_eth_getBlockByNumber.json"
 
 
 ethereum_genesis_validator_keys_output_dir: "{{ ansible_inventory_sources[0] | dirname }}/files/validator_keys"
