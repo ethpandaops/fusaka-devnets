@@ -1,0 +1,104 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/forky.yaml.j2
+
+forky:
+  fullnameOverride: forky
+  replicas: 1
+  image:
+    repository: ethpandaops/forky
+    tag: latest
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 256m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+  ingress:
+    enabled: true
+    className: ingress-nginx-public
+    hosts:
+      - host: forky.fusaka-holsf-1.ethpandaops.io
+        paths:
+          - path: /
+            pathType: Prefix
+
+  postgresql:
+    enabled: true
+    fullnameOverride: "forky-postgresql"
+    auth:
+      username: <path:/secrets/services/services.enc.yaml#forky | jsonPath {.postgres.devnets.username}>
+      password: <path:/secrets/services/services.enc.yaml#forky | jsonPath {.postgres.devnets.password}>
+    primary:
+      persistence:
+        enabled: true
+        size: 20Gi
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+        limits:
+          cpu: 2000m
+          memory: 4Gi
+
+  config:
+    listen_addr: ":5555"
+    pprof_addr: ":6060"
+    log_level: "debug"
+    metrics:
+      addr: ":9090"
+      enabled: true
+    forky:
+      retention_period: "24h"
+      store:
+        type: s3
+        config:
+          region: us-east-1
+          bucket_name: fusaka-holsf-1/forky
+          endpoint: https://<path:/secrets/services/services.enc.yaml#cloudflare | jsonPath {.account_ids.ethdevops}>.r2.cloudflarestorage.com/ethpandaops-devnet-dumpster
+          access_key: <path:/secrets/services/services.enc.yaml#cloudflare | jsonPath {.r2.devnets.access_key_id}>
+          access_secret: <path:/secrets/services/services.enc.yaml#cloudflare | jsonPath {.r2.devnets.secret_access_key}>
+      indexer: {}
+      ethereum:
+        network:
+          name: "fusaka-holsf-1"
+          spec:
+            seconds_per_slot: 12
+            slots_per_epoch: 32
+            genesis_time: 1759151760
+      sources:
+        - name: bootnode-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-bootnode-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"
+        - name: grandine-geth-super-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-grandine-geth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"
+        - name: lighthouse-geth-super-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lighthouse-geth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"
+        - name: lodestar-reth-super-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lodestar-reth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"
+        - name: nimbus-erigon-super-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-nimbus-erigon-super-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"
+        - name: prysm-nethermind-super-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-prysm-nethermind-super-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"
+        - name: teku-besu-super-1
+          type: "beacon_node"
+          config:
+            address: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-teku-besu-super-1.srv.fusaka-holsf-1.ethpandaops.io
+            polling_interval: "12s"

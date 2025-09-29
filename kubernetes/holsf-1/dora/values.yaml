@@ -1,0 +1,63 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/dora.yaml.j2
+
+dora:
+  fullnameOverride: dora
+  image:
+    repository: ethpandaops/dora
+    tag: master-latest
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1500m
+      memory: 3Gi
+  ingress:
+    enabled: true
+    className: ingress-nginx-public
+    hosts:
+      - host: dora.fusaka-holsf-1.ethpandaops.io
+        paths:
+          - path: /
+            pathType: Prefix
+
+  name: fusaka-holsf-1
+  configPath: "https://config.fusaka-holsf-1.ethpandaops.io/cl/config.yaml"
+  validatorNamesInventory: "https://config.fusaka-holsf-1.ethpandaops.io/api/v1/nodes/validator-ranges"
+  ethExplorerLink: "https://explorer.fusaka-holsf-1.ethpandaops.io"
+  publicRpcUrl: "https://rpc.fusaka-holsf-1.ethpandaops.io"
+  rainbowkitProjectId: "15fe4ab4d5c0bcb6f0dc7c398301ff0e"
+  executionGenesisConfig: "https://config.fusaka-holsf-1.ethpandaops.io/el/genesis.json"
+  apiRequireAuth: False
+  apiAuthSecret: "8WCg4I2kWrDXCJtZAcSnxNYWKFdU2UHmQuvFTfssQnY="
+  apiWhitelistedIPs: []
+  apiDefaultRateLimit: 60
+  apiDisableDefaultRateLimit: false
+  proxyCount: 2
+  extraEnv:
+    - name: FRONTEND_PPROF
+      value: "true"
+    - name: FRONTEND_SHOW_SENSITIVE_PEER_INFOS
+      value: "true"
+    - name: API_CORS_ORIGINS
+      value: "*"
+    - name: FRONTEND_ENABLE_DAS_GUARDIAN_MASS_SCAN
+      value: "true"
+  postgresql:
+    name: "dora-postgresql"
+    fullnameOverride: "dora-postgresql"
+
+  mevRelays:
+    - index: 0
+      name: "Flashbots"
+      url: "http://mev-relay-1.fusaka-holsf-1.ethpandaops.io:9062/"
+
+  authGroups:
+    pandaops:
+      credentials:
+        username: ""
+        password: "<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>"
+
+  endpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/holsf-1/dora/endpoints-cl.yaml"
+  executionEndpointsUrl: "https://raw.githubusercontent.com/ethpandaops/fusaka-devnets/refs/heads/master/kubernetes/holsf-1/dora/endpoints-el.yaml"
