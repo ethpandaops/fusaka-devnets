@@ -6,7 +6,7 @@ checkpointz:
 
   image:
     repository: docker.ethquokkaops.io/dh/ethpandaops/checkpointz
-    tag: 0.0.6-fulu
+    tag: 0.0.7-fulu
     pullPolicy: IfNotPresent
   resources:
     requests:
