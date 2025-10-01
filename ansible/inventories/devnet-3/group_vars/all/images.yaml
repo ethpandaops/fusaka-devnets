@@ -9,9 +9,9 @@ default_ethereum_client_images:
   grandine: sifrai/grandine:2.0.0.rc0
 ### Execution layer clients
   besu: hyperledger/besu:25.9.0
-  geth: ethpandaops/geth:pk910-fusaka-devnet-3-bad-iszero
+  geth: ethereum/client-go:v1.16.4
   erigon: erigontech/erigon:v3.2.0-rc1
-  nethermind: ethpandaops/nethermind:pk910-fusaka-devnet-3-bad-iszero
+  nethermind: nethermind/nethermind:1.34.0
   reth: ghcr.io/paradigmxyz/reth:v1.8.1
   nimbusel: ethpandaops/nimbus-eth1:master
 
