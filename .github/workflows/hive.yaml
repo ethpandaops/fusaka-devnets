@@ -67,8 +67,8 @@ env:
   EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
-    --client.checktimelimit=180s
-    --sim.parallelism=7
+    --client.checktimelimit=300s
+    --sim.parallelism=6
     --docker.auth
     --docker.buildoutput
   # Flags used for the ethereum/eest/consume-engine simulator
