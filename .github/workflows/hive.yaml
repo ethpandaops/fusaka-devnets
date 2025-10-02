@@ -13,7 +13,8 @@ on:
         type: string
         default: >-
           "ethereum/eest/consume-engine",
-          "ethereum/eest/consume-rlp"
+          "ethereum/eest/consume-rlp",
+          "ethereum/eest/consume-sync"
         description: >-
           Comma-separated list of simulators to test
           .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
@@ -164,6 +165,8 @@ jobs:
             "ethereum/eest/consume-engine",
             "ethereum/eest/consume-rlp"
           '))}}
+        exclude:
+          - simulator: 'ethereum/eest/consume-sync'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
