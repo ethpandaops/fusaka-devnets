@@ -68,17 +68,18 @@ env:
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=300s
-    --sim.parallelism=6
     --docker.auth
     --docker.buildoutput
   # Flags used for the ethereum/eest/consume-engine simulator
   EEST_ENGINE_FLAGS: >-
+    --sim.parallelism=6
     --sim.buildarg fixtures=${EEST_BUILD_ARG_FIXTURES}
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
     --sim.loglevel=3
     --sim.limit=".*(Osaka|BPO).*"
   # Flags used for the ethereum/eest/consume-rlp simulator
   EEST_RLP_FLAGS: >-
+    --sim.parallelism=6
     --sim.buildarg fixtures=${EEST_BUILD_ARG_FIXTURES}
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
     --sim.loglevel=3
