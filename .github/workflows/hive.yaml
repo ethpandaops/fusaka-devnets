@@ -137,6 +137,10 @@ jobs:
   test:
     timeout-minutes: 2160
     needs: prepare
+    if: >-
+      github.event_name == 'schedule' ||
+      !contains(inputs.simulator, 'consume-sync') ||
+      (contains(inputs.simulator, 'consume-engine') || contains(inputs.simulator, 'consume-rlp') || contains(inputs.simulator, 'rpc-compat'))
     runs-on: >-
       ${{
         matrix.simulator == 'ethereum/rpc-compat' && 'ubuntu-latest' ||
