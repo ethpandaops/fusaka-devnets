@@ -13,7 +13,8 @@ on:
         type: string
         default: >-
           "ethereum/eest/consume-engine",
-          "ethereum/eest/consume-rlp"
+          "ethereum/eest/consume-rlp",
+          "ethereum/eest/consume-sync"
         description: >-
           Comma-separated list of simulators to test
           .e.g ethereum/rpc-compat, ethereum/eest/consume-engine, ethereum/eest/consume-rlp, ethereum/eest/execute-blobs
@@ -67,18 +68,19 @@ env:
   EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
-    --client.checktimelimit=180s
-    --sim.parallelism=7
+    --client.checktimelimit=300s
     --docker.auth
     --docker.buildoutput
   # Flags used for the ethereum/eest/consume-engine simulator
   EEST_ENGINE_FLAGS: >-
+    --sim.parallelism=6
     --sim.buildarg fixtures=${EEST_BUILD_ARG_FIXTURES}
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
     --sim.loglevel=3
     --sim.limit=".*(Osaka|BPO).*"
   # Flags used for the ethereum/eest/consume-rlp simulator
   EEST_RLP_FLAGS: >-
+    --sim.parallelism=6
     --sim.buildarg fixtures=${EEST_BUILD_ARG_FIXTURES}
     --sim.buildarg branch=${EEST_BUILD_ARG_BRANCH}
     --sim.loglevel=3
@@ -135,6 +137,10 @@ jobs:
   test:
     timeout-minutes: 2160
     needs: prepare
+    if: >-
+      github.event_name == 'schedule' ||
+      !contains(inputs.simulator, 'consume-sync') ||
+      (contains(inputs.simulator, 'consume-engine') || contains(inputs.simulator, 'consume-rlp') || contains(inputs.simulator, 'rpc-compat'))
     runs-on: >-
       ${{
         matrix.simulator == 'ethereum/rpc-compat' && 'ubuntu-latest' ||
@@ -163,6 +169,8 @@ jobs:
             "ethereum/eest/consume-engine",
             "ethereum/eest/consume-rlp"
           '))}}
+        exclude:
+          - simulator: 'ethereum/eest/consume-sync'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
