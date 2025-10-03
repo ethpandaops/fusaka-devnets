@@ -66,7 +66,7 @@ spamoor:
   - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-nimbusel-1.fusaka-devnet-3.ethpandaops.io"
   - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-1.fusaka-devnet-3.ethpandaops.io"
   - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-2.fusaka-devnet-3.ethpandaops.io"
-  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.mev-relay-1.fusaka-devnet-3.ethpandaops.io"
+  - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.mev-relay-1-arm.fusaka-devnet-3.ethpandaops.io"
   - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-besu-1.fusaka-devnet-3.ethpandaops.io"
   - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-besu-2.fusaka-devnet-3.ethpandaops.io"
   - "https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-1.fusaka-devnet-3.ethpandaops.io"

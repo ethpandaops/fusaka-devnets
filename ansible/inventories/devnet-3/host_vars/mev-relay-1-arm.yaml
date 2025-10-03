@@ -132,7 +132,7 @@ lighthouse_container_command_extra_args:
   - --always-prepare-payload
   - --prepare-payload-lookahead=8000
   - --suggested-fee-recipient={{ ethereum_node_cl_validator_fee_recipient }}
-  #- --allow-insecure-genesis-sync
+  - --malicious-withhold-count=64
 lighthouse_validator_container_volumes:
   - "{{ lighthouse_validator_datadir }}:/validator-data"
   - "{{ eth_testnet_config_dir }}:/network-config:ro"
