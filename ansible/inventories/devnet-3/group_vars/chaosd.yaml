@@ -1,0 +1,17 @@
+chaosd_version: "v1.4.0"
+chaosd_install_dir: /opt/chaosd
+chaosd_port: 31767
+
+chaosd_service_enabled: true
+chaosd_service_restart_sec: 5
+
+chaosd_iface: eth0  # or ens3, enp0s3, etc.
+  
+chaosd_nginx_proxy_enabled: true
+chaosd_nginx_proxy_hostname: "rpc.{{ server_fqdn }}"
+chaosd_nginx_proxy_container_name: chaosd-nginx-proxy
+chaosd_nginx_proxy_container_image: nginx:alpine
+chaosd_nginx_proxy_container_env:
+  VIRTUAL_HOST: "{{ chaosd_nginx_proxy_hostname }}"
+  VIRTUAL_PORT: "{{ chaosd_port }}"
+  LETSENCRYPT_HOST: "{{ chaosd_nginx_proxy_hostname }}"
