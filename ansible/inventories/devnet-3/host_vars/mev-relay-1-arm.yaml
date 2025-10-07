@@ -190,6 +190,7 @@ reth_container_command_extra_args:
   - --engine.persistence-threshold=0
   - --engine.memory-block-buffer-target=0
   - --rpc.eth-proof-window=3
+  - --txpool.no-local-transactions-propagation
 reth_container_pull: true
 
 reth_container_image: "{{ default_tooling_images.mev_builder }}"
