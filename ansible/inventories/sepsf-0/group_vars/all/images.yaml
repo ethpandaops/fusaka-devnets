@@ -8,7 +8,7 @@ default_ethereum_client_images:
   teku: consensys/teku:25.9.3
   grandine: sifrai/grandine:2.0.0.rc0
 ### Execution layer clients
-  besu: hyperledger/besu:25.9.0
+  besu: hyperledger/besu:25.10.0-RC2
   geth: ethereum/client-go:v1.16.4
   erigon: erigontech/erigon:v3.2.0
   nethermind: nethermindeth/nethermind:release-1.34.1
