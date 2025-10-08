@@ -10,7 +10,7 @@ ethereum_network_name=${ethereum_network_name}
 ${host.hostname} ansible_host=${host.ip} ipv6=${host.ipv6} cloud=${host.cloud} cloud_region=${host.region} ethereum_node_cl_supernode_enabled=${title(host.supernode)} %{ if tonumber(host.validator_end) > 0 }validator_start=${host.validator_start} validator_end=${host.validator_end}%{ endif }
 %{ endif ~}
 %{ endfor ~}
-%{ if gid == "prysm-reth" ~}
+%{ if gid == "lighthouse-reth" ~}
 %{ for key, host in hosts ~}
 %{ if host.group == "mev-relay" ~}
 ${host.hostname}
