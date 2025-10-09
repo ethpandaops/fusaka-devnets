@@ -1,0 +1,157 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/tracoor.yaml.j2
+tracoor-single:
+  fullnameOverride: "tracoor"
+  image:
+    repository: ethpandaops/tracoor
+    tag: debian-latest
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 2Gi
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+  ingress:
+    http:
+      enabled: true
+      className: ingress-nginx-public
+      hosts:
+        - host: tracoor.fusaka-sepsf-0.ethpandaops.io
+          paths:
+            - path: /
+              pathType: Prefix
+
+  postgresql:
+    enabled: true
+    fullnameOverride: "tracoor-postgresql"
+    auth:
+      username: <path:/secrets/services/services.enc.yaml#tracoor | jsonPath {.postgres.devnets.username}>
+      password: <path:/secrets/services/services.enc.yaml#tracoor | jsonPath {.postgres.devnets.password}>
+    primary:
+      persistence:
+        enabled: true
+        size: 20Gi
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+        limits:
+          cpu: 2000m
+          memory: 4Gi
+
+  config:
+    shared:
+      metricsAddr: ":9091"
+      logging: "debug"
+      indexer:
+        address: localhost:8081
+      store:
+        type: s3
+        config:
+          region: us-east-1
+          bucket_name: fusaka-sepsf-0/tracoor
+          endpoint: https://<path:/secrets/services/services.enc.yaml#cloudflare | jsonPath {.account_ids.ethdevops}>.r2.cloudflarestorage.com/ethpandaops-devnet-dumpster
+          prefer_urls: true
+          access_key: <path:/secrets/services/services.enc.yaml#cloudflare | jsonPath {.r2.devnets.access_key_id}>
+          access_secret: <path:/secrets/services/services.enc.yaml#cloudflare | jsonPath {.r2.devnets.secret_access_key}>
+
+    server:
+      addr: ":8081"
+      gatewayAddr: ":8080"
+      pprofAddr: ":6060"
+      preStopSleepSeconds: 1
+      ntpServer: time.google.com
+      persistence: {}
+      services:
+        indexer:
+          retention:
+            beaconStates: 100h
+            executionBlockTraces: 100h
+            beaconBlocks: 100h
+      ethereum:
+        config:
+          repository: ethpandaops/fusaka-devnets
+          branch: master
+          path: network-configs/sepsf-0/metadata
+        tools:
+          ncli:
+            repository: status-im/nimbus-eth2
+            branch: unstable
+          lcli:
+            repository: ethpandaops/lighthouse
+            branch: fusaka-devnet-3
+          zcli:
+            fork: electra
+
+    agents:
+      - name: bootnode-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-bootnode-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-bootnode-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
+      - name: grandine-geth-super-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-grandine-geth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-grandine-geth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
+      - name: lighthouse-geth-super-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lighthouse-geth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-lighthouse-geth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
+      - name: lodestar-reth-super-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lodestar-reth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-lodestar-reth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
+      - name: nimbus-erigon-super-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-nimbus-erigon-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-nimbus-erigon-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
+      - name: prysm-nethermind-super-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-prysm-nethermind-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-prysm-nethermind-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
+      - name: teku-besu-super-1
+        ethereum:
+          overrideNetworkName: fusaka-sepsf-0
+          beacon:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-teku-besu-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+          execution:
+            nodeAddress: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-teku-besu-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+            traceDisableMemory: true
+            traceDisableStack: true
+            traceDisableStorage: true
