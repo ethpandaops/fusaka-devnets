@@ -48,11 +48,11 @@ ethereum_genesis_network_seed: "fusaka-sepsf-0"
 ethereum_genesis_chain_id: "11155111"
 ethereum_genesis_fork_version_suffix: "{{ 999999 | random(start=100000, seed=ethereum_genesis_network_seed) }}"
 ethereum_genesis_generator_output_dir: "../network-configs/{{ ethereum_network_name | replace('fusaka-', '') }}"
-ethereum_genesis_timestamp:
+ethereum_genesis_timestamp: 1760004913
 ethereum_genesis_timedelay: 60
-override_osaka_timestamp:
-override_bpo1_timestamp:
-override_bpo2_timestamp:
+override_osaka_timestamp: 1760012653
+override_bpo1_timestamp: 1760016493
+override_bpo2_timestamp: 1760020333
 shadowfork_height: 9230001
 
 ethereum_genesis_timestamp_relative_cmd:
