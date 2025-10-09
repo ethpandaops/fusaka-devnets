@@ -1,6 +1,6 @@
 #!/bin/zsh
 node="bootnode-1"
-network="holsf-1"
+network="sepsf-0"
 domain="ethpandaops.io"
 srv="srv"
 prefix="fusaka"

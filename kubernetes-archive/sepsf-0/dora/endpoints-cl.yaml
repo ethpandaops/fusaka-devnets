@@ -1,11 +1,7 @@
 # Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/dora-endpoints-cl.yaml.j2
 # Consensus layer endpoints
 
-- url: http://prysm-geth-001:5052
-  name: rpc-prysm-geth-001
-  authGroup: pandaops
-  archive: true
-  priority: 1
+
 - url: https://bn-bootnode-1.srv.fusaka-sepsf-0.ethpandaops.io
   name: bootnode-1
   authGroup: pandaops
