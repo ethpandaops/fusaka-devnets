@@ -1,6 +1,6 @@
 dependencies:
 - name: chaos-mesh
   repository: https://ethpandaops.github.io/ethereum-helm-charts
-  version: 0.0.1
-digest: sha256:d9781d5e58f3de5cb6f339263b8401bcfc93275788ff250679f8f2e40fe6c232
-generated: "2025-10-10T10:50:29.171194+02:00"
+  version: 0.0.3
+digest: sha256:8e2fbd87ec0b97d60c738c32c3be28ac6b4df67dfbe77113cafd9bb15440d9f3
+generated: "2025-10-10T11:15:40.512783+02:00"
