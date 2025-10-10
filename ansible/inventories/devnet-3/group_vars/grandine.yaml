@@ -43,7 +43,8 @@ grandine_container_command_extra_args:
   - --configuration-directory=/network-config/
   - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
   - --graffiti={{ ansible_hostname }}
-  - --features=LogHttpRequests
+  - --features=LogHttpRequests,WarnOnStateCacheSlotProcessing
+
 
 grandine_validator_container_volumes:
   - "{{ grandine_validator_datadir }}:/validator-data"
