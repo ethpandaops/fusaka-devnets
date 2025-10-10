@@ -132,7 +132,7 @@ lighthouse_container_command_extra_args:
   - --always-prepare-payload
   - --prepare-payload-lookahead=8000
   - --suggested-fee-recipient={{ ethereum_node_cl_validator_fee_recipient }}
-  #- --allow-insecure-genesis-sync
+  - --malicious-withhold-count=64
 lighthouse_validator_container_volumes:
   - "{{ lighthouse_validator_datadir }}:/validator-data"
   - "{{ eth_testnet_config_dir }}:/network-config:ro"
@@ -166,10 +166,10 @@ reth_container_env:
   VIRTUAL_HOST: "{{ ethereum_node_rcp_hostname }}"
   VIRTUAL_PORT: "{{ ethereum_node_el_ports_http_rpc | string }}"
   LETSENCRYPT_HOST: "{{ ethereum_node_rcp_hostname }}"
-  BUILDER_TX_SIGNING_KEY: "{{ secret_mev_signingkey }}"
-  COINBASE_SECRET_KEY: "{{ secret_mev_signingkey }}"
-  RELAY_SECRET_KEY: "{{ secret_mev_signingkey }}"
-  OPTIMISTIC_RELAY_SECRET_KEY: "{{ secret_mev_signingkey }}"
+  BUILDER_TX_SIGNING_KEY: "{{ secret_mev_builder_tx_signing_key }}"
+  COINBASE_SECRET_KEY: "{{ secret_mev_coinbase_secret_key }}"
+  RELAY_SECRET_KEY: "{{ secret_mev_relay_secret_key }}"
+  OPTIMISTIC_RELAY_SECRET_KEY: "{{ secret_mev_optimistic_relay_secret_key }}"
 
 reth_container_ports_ipv4:
   - "127.0.0.1:{{ reth_ports_http_rpc }}:{{ reth_ports_http_rpc }}"
@@ -190,6 +190,7 @@ reth_container_command_extra_args:
   - --engine.persistence-threshold=0
   - --engine.memory-block-buffer-target=0
   - --rpc.eth-proof-window=3
+  - --txpool.no-local-transactions-propagation
 reth_container_pull: true
 
 reth_container_image: "{{ default_tooling_images.mev_builder }}"

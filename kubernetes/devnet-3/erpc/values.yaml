@@ -4,7 +4,7 @@ erpc:
   fullnameOverride: erpc
   image:
     repository: docker.ethquokkaops.io/gh/erpc/erpc
-    tag: 0.0.49
+    tag: 0.0.50
     pullPolicy: IfNotPresent
   resources:
     limits:
@@ -96,8 +96,10 @@ erpc:
             - "eth_blockNumber"
             - "eth_call"
             - "eth_chainId"
+            - "eth_config"
             - "eth_estimateGas"
             - "eth_feeHistory"
+            - "eth_blobBaseFee"
             - "eth_gasPrice"
             - "eth_getBalance"
             - "eth_getBlockByHash"
@@ -165,7 +167,7 @@ erpc:
           - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-nimbusel-1.fusaka-devnet-3.ethpandaops.io
           - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-1.fusaka-devnet-3.ethpandaops.io
           - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.lodestar-reth-2.fusaka-devnet-3.ethpandaops.io
-          - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.mev-relay-1.fusaka-devnet-3.ethpandaops.io
+          - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.mev-relay-1-arm.fusaka-devnet-3.ethpandaops.io
           - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-besu-1.fusaka-devnet-3.ethpandaops.io
           - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-besu-2.fusaka-devnet-3.ethpandaops.io
           - endpoint: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc.nimbus-erigon-1.fusaka-devnet-3.ethpandaops.io

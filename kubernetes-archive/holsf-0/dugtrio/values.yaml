@@ -1,0 +1,47 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/dugtrio.yaml.j2
+
+dugtrio:
+  fullnameOverride: dugtrio
+  image:
+    repository: ethpandaops/dugtrio
+    tag: latest
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 100m
+      memory: 200Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  ingress:
+    enabled: true
+    className: ingress-nginx-public
+    hosts:
+      - host: beacon.fusaka-holsf-0.ethpandaops.io
+        paths:
+          - path: /
+            pathType: Prefix
+
+  dugtrioFrontendTitle: "Dugtrio: fusaka-holsf-0"
+  dugtrioProxyCount: 2
+  dugtrioProxyBlockedPaths:
+    - "^/teku/v[0-9]+/admin/.*"
+
+  endpoints:
+  # Rpc
+  - url: http://prysm-geth-001:5052
+    name: rpc-prysm-geth-001
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-bootnode-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: bootnode-1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-grandine-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: grandine-geth-super-1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lighthouse-geth-super-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: lighthouse-geth-super-1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lodestar-reth-super-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: lodestar-reth-super-1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-nimbus-erigon-super-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: nimbus-erigon-super-1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-prysm-nethermind-super-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: prysm-nethermind-super-1
+  - url: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-teku-besu-super-1.srv.fusaka-holsf-0.ethpandaops.io
+    name: teku-besu-super-1

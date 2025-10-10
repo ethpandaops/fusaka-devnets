@@ -8,11 +8,11 @@ dora:
     pullPolicy: Always
   resources:
     requests:
-      cpu: 500m
-      memory: 1Gi
+      cpu: 5000m
+      memory: 4Gi
     limits:
-      cpu: 1000m
-      memory: 2Gi
+      cpu: 6500m
+      memory: 12Gi
   ingress:
     enabled: true
     className: ingress-nginx-public
@@ -25,6 +25,10 @@ dora:
   name: fusaka-devnet-3
   configPath: "https://config.fusaka-devnet-3.ethpandaops.io/cl/config.yaml"
   validatorNamesInventory: "https://config.fusaka-devnet-3.ethpandaops.io/api/v1/nodes/validator-ranges"
+  rainbowkitProjectId: "15fe4ab4d5c0bcb6f0dc7c398301ff0e"
+  executionGenesisConfig: "https://config.fusaka-devnet-3.ethpandaops.io/el/genesis.json"
+  apiRequireAuth: False
+  apiAuthSecret: "<path:/secrets/services/services.enc.yaml#dora | jsonPath {.api_secret}>"
   proxyCount: 2
   extraEnv:
     - name: FRONTEND_PPROF
@@ -38,6 +42,8 @@ dora:
     - name: FRONTEND_SHOW_VALIDATOR_SUMMARY
       value: "true"
     - name: FRONTEND_SHOW_PEER_DAS_INFOS
+      value: "true"
+    - name: FRONTEND_ENABLE_DAS_GUARDIAN_MASS_SCAN
       value: "true"
     - name: FRONTEND_ETH_EXPLORER_LINK
       value: "https://explorer.fusaka-devnet-3.ethpandaops.io"
@@ -56,7 +62,7 @@ dora:
   mevRelays:
     - index: 0
       name: "Flashbots"
-      url: "http://mev-relay-1.fusaka-devnet-3.ethpandaops.io:9062/"
+      url: "http://mev-relay-1-arm.fusaka-devnet-3.ethpandaops.io:9062/"
 
   ranges: |
     816-817: caplin

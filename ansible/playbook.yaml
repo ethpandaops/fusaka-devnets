@@ -80,29 +80,7 @@
   roles:
     - role: ethpandaops.general.ethereum_node
       tags: [ethereum, ethereum_node]
-    - role: ethpandaops.general.traffic_control
-      when: ethereum_node_cl_supernode_enabled | bool == false and ethereum_network_name == "fusaka-devnet-5"
-      vars:
-        traffic_control_rules:
-          - interface: eth0
-            rate_download: 100mbit
-            rate_upload: 50mbit
-      tags: [traffic_control]
-    - role: ethpandaops.general.traffic_control
-      when: ethereum_node_cl_supernode_enabled | bool == true and ethereum_network_name == "fusaka-devnet-5"
-      vars:
-        traffic_control_rules:
-          - interface: eth0
-            rate_download: 1000mbit
-            rate_upload: 1000mbit
-      tags: [traffic_control]
-    - role: ethpandaops.general.traffic_control
-      when: ethereum_network_name != "fusaka-devnet-5"
-      vars:
-        traffic_control_cleanup: true
-      tags: [brakebear]
     - role: ethpandaops.general.brakebear
-      when: ethereum_network_name != "fusaka-devnet-5" # Temporary condition. We should cleanup traffic control once we use brakebear as default.
       tags: [brakebear]
 
 - hosts: bootnode-1
@@ -117,11 +95,11 @@
       vars:
         eth_inventory_web_container_networks: "{{ docker_networks_shared }}" #noqa var-naming[no-role-prefix]
         eth_inventory_web_container_env: #noqa var-naming[no-role-prefix]
-          VIRTUAL_HOST: "bootnode-1.{{ network_subdomain }}"
+          VIRTUAL_HOST: "bootnode-1.{{ network_server_subdomain }}"
           VIRTUAL_PORT: "80"
           VIRTUAL_PATH: "/meta/api"
           VIRTUAL_DEST: "/"
-          LETSENCRYPT_HOST: "bootnode-1.{{ network_subdomain }}"
+          LETSENCRYPT_HOST: "bootnode-1.{{ network_server_subdomain }}"
 
 - hosts: mev_relay
   become: true
@@ -149,3 +127,9 @@
       tags: [eth_post_network_setup, ethereum_post_network_setup]
     - role: ethpandaops.general.generate_kubernetes_config
       tags: [gen_kubernetes_config, generate_kubernetes_config]
+
+- hosts: ethereum_node
+  become: true
+  roles:
+    - role: ethpandaops.general.chaosd
+      tags: [chaosd]

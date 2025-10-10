@@ -1,0 +1,25 @@
+---
+# Playbook to roll/restart only Lighthouse consensus layer nodes
+# Targets hosts that have "lighthouse" in their hostname
+
+- hosts: "all:&*lighthouse*"
+  serial: "{{ batch_count | default('25%') }}"
+  become: true
+  gather_facts: true
+  strategy: mitogen_free
+  pre_tasks:
+    - name: Validate that this is a Lighthouse node
+      ansible.builtin.fail:
+        msg: "This host does not appear to be configured for Lighthouse (ethereum_node_cl != 'lighthouse')"
+      when: ethereum_node_cl is defined and ethereum_node_cl != "lighthouse"
+
+  tasks:
+    - name: Update CL client images
+      ansible.builtin.import_tasks: tasks/cl_image_update.yaml
+      vars:
+        beacon_image: "{{ default_ethereum_client_images.lighthouse }}"
+        validator_image: "{{ default_ethereum_client_images.lighthouse }}"
+  post_tasks:
+    - name: Show completion status
+      ansible.builtin.debug:
+        msg: "Successfully rolled Lighthouse on {{ inventory_hostname }}"

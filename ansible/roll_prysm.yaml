@@ -1,0 +1,21 @@
+---
+# Playbook to roll/restart only Prysm consensus layer nodes
+# Targets hosts that have "prysm" in their hostname
+
+- hosts: "all:&*prysm*"
+  serial: "{{ batch_count | default('25%') }}"
+  become: true
+  gather_facts: true
+  strategy: mitogen_free
+  pre_tasks:
+    - name: Validate that this is a Prysm node
+      ansible.builtin.fail:
+        msg: "This host does not appear to be configured for Prysm (ethereum_node_cl != 'prysm')"
+      when: ethereum_node_cl is defined and ethereum_node_cl != "prysm"
+
+  tasks:
+    - name: Update CL client images
+      ansible.builtin.import_tasks: tasks/cl_image_update.yaml
+      vars:
+        beacon_image: "{{ default_ethereum_client_images.prysm}}"
+        validator_image: "{{ default_ethereum_client_images.prysm_validator }}"

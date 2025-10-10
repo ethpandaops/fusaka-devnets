@@ -4,3 +4,4 @@ lighthouse_container_command_extra_args:
   - --boot-nodes={{ ethereum_cl_bootnodes | join(',') }}
   #- --debug-level=debug
   - --malicious-withhold-count=1
+ethereum_node_mev_boost_enabled: false

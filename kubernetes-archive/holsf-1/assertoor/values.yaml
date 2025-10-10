@@ -1,0 +1,84 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/assertoor.yaml.j2
+
+assertoor:
+  fullnameOverride: assertoor
+
+  image:
+    repository: ethpandaops/assertoor
+    tag: master-latest
+    pullPolicy: Always
+  resources:
+    requests:
+      cpu: 500m
+      memory: 500Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+
+  ingress:
+    enabled: true
+    className: ingress-nginx-public
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: assertoor.fusaka-holsf-1.ethpandaops.io
+        paths:
+          - path: /
+            pathType: Prefix
+
+  ingressAdmin:
+    enabled: true
+    className: ingress-nginx-public
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+    hosts:
+      - host: assertoor-admin.fusaka-holsf-1.ethpandaops.io
+        paths:
+          - path: /
+            pathType: Prefix
+
+  persistence:
+    enabled: true
+
+  endpoints:
+    - name:  bootnode-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-bootnode-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-bootnode-1.srv.fusaka-holsf-1.ethpandaops.io
+    - name:  grandine-geth-super-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-grandine-geth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-grandine-geth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+    - name:  lighthouse-geth-super-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-lighthouse-geth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lighthouse-geth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+    - name:  lodestar-reth-super-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-lodestar-reth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-lodestar-reth-super-1.srv.fusaka-holsf-1.ethpandaops.io
+    - name:  nimbus-erigon-super-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-nimbus-erigon-super-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-nimbus-erigon-super-1.srv.fusaka-holsf-1.ethpandaops.io
+    - name:  prysm-nethermind-super-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-prysm-nethermind-super-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-prysm-nethermind-super-1.srv.fusaka-holsf-1.ethpandaops.io
+    - name:  teku-besu-super-1
+      executionUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@rpc-teku-besu-super-1.srv.fusaka-holsf-1.ethpandaops.io
+      consensusUrl: https://<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.node_ingress.combined}>@bn-teku-besu-super-1.srv.fusaka-holsf-1.ethpandaops.io
+
+  validatorNamesInventory: https://config.fusaka-holsf-1.ethpandaops.io/api/v1/nodes/validator-ranges
+  globalVariables:
+    walletPrivkey: "<path:/secrets/services/services.enc.yaml#ethereum | jsonPath {.testnets.fusaka-devnets.assertoor_private_key}>"
+    clientPairNames:
+      - bootnode-1
+      - grandine-geth-super-1
+      - lighthouse-geth-super-1
+      - lodestar-reth-super-1
+      - nimbus-erigon-super-1
+      - prysm-nethermind-super-1
+      - teku-besu-super-1
+    validatorPairNames:
+      - grandine-geth-super-1
+      - lodestar-reth-super-1
+      - nimbus-erigon-super-1
+      - prysm-nethermind-super-1
+      - teku-besu-super-1
+
+  assertoorTests: []

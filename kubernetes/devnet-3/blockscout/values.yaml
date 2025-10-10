@@ -26,6 +26,7 @@ blockscout-stack:
     podAnnotations:
       "promtail.io/ignore_pod": "true"
 
+    replicaCount: 0
     image:
       repository: docker.ethquokkaops.io/dh/blockscout/blockscout
       tag: latest
