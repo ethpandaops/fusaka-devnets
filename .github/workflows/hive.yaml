@@ -64,7 +64,7 @@ env:
   S3_PATH: fusaka
   S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka/
   INSTALL_RCLONE_VERSION: v1.68.2
-  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/v5.2.0/fixtures_develop.tar.gz
+  EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/v5.3.0/fixtures_develop.tar.gz
   EEST_BUILD_ARG_BRANCH: main
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
@@ -114,7 +114,7 @@ jobs:
           steps.client_config_dispatch.outputs.client_config
         }}
     steps:
-      - uses: ethpandaops/hive-github-action/helpers/client-config@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+      - uses: ethpandaops/hive-github-action/helpers/client-config@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
         if: github.event_name == 'schedule'
         name: 'Client config: schedule'
         id: client_config_schedule
@@ -123,7 +123,7 @@ jobs:
           hive_version: 'ethereum/hive@master'
           goproxy: ${{ env.GOPROXY }}
 
-      - uses: ethpandaops/hive-github-action/helpers/client-config@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+      - uses: ethpandaops/hive-github-action/helpers/client-config@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
         if: github.event_name == 'workflow_dispatch'
         name: 'Client config: workflow_dispatch'
         id: client_config_dispatch
@@ -173,13 +173,13 @@ jobs:
           - simulator: 'ethereum/eest/consume-sync'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
         with:
           username: ethpandaops
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: ethpandaops/hive-github-action@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+      - uses: ethpandaops/hive-github-action@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
         with:
           hive_repository: ${{ needs.prepare.outputs.hive_repo }}
           hive_version: ${{ needs.prepare.outputs.hive_tag }}
@@ -209,13 +209,13 @@ jobs:
     if: contains(inputs.simulator || 'ethereum/eest/consume-sync', 'ethereum/eest/consume-sync')
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
         with:
           username: ethpandaops
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: ethpandaops/hive-github-action@a9ec89442df18ee579d3179b76c47f5f93954307 # v0.4.0
+      - uses: ethpandaops/hive-github-action@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
         with:
           hive_repository: ${{ needs.prepare.outputs.hive_repo }}
           hive_version: ${{ needs.prepare.outputs.hive_tag }}

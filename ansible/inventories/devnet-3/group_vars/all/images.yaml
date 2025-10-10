@@ -18,7 +18,7 @@ default_ethereum_client_images:
 default_tooling_images:
   mev_boost: ethpandaops/mev-boost:develop
   mev_builder: ethpandaops/reth-rbuilder:develop
-  mev_relay: ethpandaops/mev-boost-relay:main
+  mev_relay: ethpandaops/mev-boost-relay:bharath-123-disable-v2-api-testing
   xatu_sentry: ethpandaops/xatu:latest
   xatu_cannon: ethpandaops/xatu:latest
   xatu_mimicry: ethpandaops/xatu:latest

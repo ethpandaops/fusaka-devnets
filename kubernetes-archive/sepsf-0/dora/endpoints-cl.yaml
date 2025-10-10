@@ -1,0 +1,34 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/dora-endpoints-cl.yaml.j2
+# Consensus layer endpoints
+
+
+- url: https://bn-bootnode-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: bootnode-1
+  authGroup: pandaops
+  priority: -1
+- url: https://bn-grandine-geth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: grandine-geth-super-1
+  authGroup: pandaops
+  priority: -1
+- url: https://bn-lighthouse-geth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: lighthouse-geth-super-1
+  authGroup: pandaops
+  priority: -1
+  archive: true
+- url: https://bn-lodestar-reth-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: lodestar-reth-super-1
+  authGroup: pandaops
+  priority: -1
+- url: https://bn-nimbus-erigon-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: nimbus-erigon-super-1
+  authGroup: pandaops
+  priority: -1
+- url: https://bn-prysm-nethermind-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: prysm-nethermind-super-1
+  authGroup: pandaops
+  priority: -1
+- url: https://bn-teku-besu-super-1.srv.fusaka-sepsf-0.ethpandaops.io
+  name: teku-besu-super-1
+  authGroup: pandaops
+  priority: -1
+

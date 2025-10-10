@@ -1,0 +1,62 @@
+default_ethereum_client_images:
+### Consensus layer clients
+  lighthouse: sigp/lighthouse:v8.0.0-rc.0
+  lodestar: chainsafe/lodestar:v1.35.0
+  nimbus: statusim/nimbus-eth2:multiarch-v25.9.2
+  prysm: gcr.io/offchainlabs/prysm/beacon-chain:v6.1.2-rc.0
+  prysm_validator: gcr.io/offchainlabs/prysm/validator:v6.1.2-rc.0
+  teku: consensys/teku:25.9.3
+  grandine: sifrai/grandine:2.0.0.rc0
+### Execution layer clients
+  besu: hyperledger/besu:25.10.0-RC2
+  geth: ethereum/client-go:v1.16.4
+  erigon: erigontech/erigon:v3.2.0
+  nethermind: nethermindeth/nethermind:release-1.34.1
+  reth: ghcr.io/paradigmxyz/reth:v1.8.2
+
+default_tooling_images:
+  mev_boost: ethpandaops/mev-boost:develop
+  mev_builder: ethpandaops/reth-rbuilder:bharath-123-bharath-fix-fusaka-blob-filter
+  mev_relay: ethpandaops/mev-boost-relay:main
+  xatu_sentry: ethpandaops/xatu:latest
+  xatu_cannon: ethpandaops/xatu:latest
+  xatu_mimicry: ethpandaops/xatu:latest
+  xatu_cl_mimicry: ethpandaops/xatu:latest
+  xatu_relay_monitor: ethpandaops/xatu:latest
+  ethereum_metrics_exporter: ethpandaops/ethereum-metrics-exporter:latest
+  tx_fuzz: ethpandaops/tx-fuzz:latest
+  forkmon: skylenet/nodemonitor:darkmode
+  forky: ethpandaops/forky:latest
+  fauceth: skylenet/fauceth:fix_fee_estimation
+  powfaucet: pk910/powfaucet:v2-stable
+  homepage: ethpandaops/ethereum-testnet-homepage:latest
+  checkpointz: ethpandaops/checkpointz:0.0.6-fulu
+  blockscout: blockscout/blockscout:latest
+  blockscout_frontend: docker.ethquokkaops.io/gh/blockscout/frontend:latest
+  beacon_metrics_gazer: dapplion/beacon-metrics-gazer:latest
+  eth_fauceth: chainflag/eth-faucet:latest
+  blobscan: blossomlabs/blobscan:latest
+  blobscan_indexer: blossomlabs/blobscan-indexer:latest
+  dora: ethpandaops/dora:master-latest
+  dugtrio: ethpandaops/dugtrio:latest
+  ethereum_genesis_generator: ethpandaops/ethereum-genesis-generator:5.0.7
+  tracoor: ethpandaops/tracoor:debian-latest
+  ncli: status-im/nimbus-eth2:unstable
+  lcli: ethpandaops/lighthouse:fusaka-devnet-3
+  zcli: electra
+  assertoor: ethpandaops/assertoor:master-latest
+  erpc: docker.ethquokkaops.io/gh/erpc/erpc:0.0.49
+  prometheus: prom/prometheus:v2.40.7
+  node_exporter: prom/node-exporter:v1.5.0
+  cl_bootnode: protolambda/eth2-bootnode:cleanup
+  json_rpc_snooper: ethpandaops/rpc-snooper:latest
+  nginx_proxy: nginx:alpine
+  nginx_proxy_gen: nginxproxy/docker-gen
+  nginx_proxy_acme: nginxproxy/acme-companion
+  nginx_proxy_cert_loader: ethpandaops/debian-docker:latest
+  nginx_proxy_cert_linker: nginxproxy/docker-gen
+  vector: timberio/vector:0.46.1-alpine
+  spamoor: ethpandaops/spamoor:master-latest
+  blobber: ethpandaops/blobber:latest
+  syncoor_web: ghcr.io/ethpandaops/syncoor-web:master
+  syncoor_server: ghcr.io/ethpandaops/syncoor:master
