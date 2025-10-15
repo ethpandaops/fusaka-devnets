@@ -7,7 +7,7 @@ on:
     inputs:
       client:
         type: string
-        default: '"go-ethereum","reth","nethermind","nimbus-el","besu","erigon"'
+        default: '"go-ethereum","reth","nethermind","nimbus-el","besu","erigon","ethrex"'
         description: Comma-separated list of clients to test .e.g go-ethereum, besu, reth, nethermind, erigon, nimbus-el
       simulator:
         type: string
@@ -40,7 +40,8 @@ on:
             "reth": "paradigmxyz/reth@main",
             "nethermind": "NethermindEth/nethermind@master",
             "erigon": "erigontech/erigon@main",
-            "nimbusel": "status-im/nimbus-eth1@master"
+            "nimbusel": "status-im/nimbus-eth1@master",
+            "ethrex": "lambdaclass/ethrex@main"
           }
         description: 'JSON object containing client versions in format {"client": "repo@tag", ...}'
       client_images:
@@ -52,7 +53,8 @@ on:
               "reth": "docker.ethquokkaops.io/dh/ethpandaops/reth:main",
               "nethermind": "docker.ethquokkaops.io/dh/ethpandaops/nethermind:master",
               "erigon": "docker.ethquokkaops.io/dh/ethpandaops/erigon:main",
-              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master"
+              "nimbusel": "docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master",
+              "ethrex": "ghcr.io/lambdaclass/ethrex:main"
             }
           description: 'JSON object containing client docker images in format {"client": "registry:tag", ...}'
 
@@ -154,18 +156,17 @@ jobs:
       fail-fast: false
       matrix:
         client: >-
-          ${{
-            fromJSON(format('[{0}]', inputs.client || '
-              "besu",
-              "erigon",
-              "go-ethereum",
-              "nethermind",
-              "nimbus-el",
-              "reth"
+          ${{ fromJSON(format('[{0}]', inputs.client || '
+            "besu",
+            "erigon",
+            "go-ethereum",
+            "nethermind",
+            "nimbus-el",
+            "reth",
+            "ethrex"
           '))}}
         simulator: >-
-          ${{
-            fromJSON(format('[{0}]', inputs.simulator || '
+          ${{ fromJSON(format('[{0}]', inputs.simulator || '
             "ethereum/eest/consume-engine",
             "ethereum/eest/consume-rlp"
           '))}}
@@ -221,7 +222,7 @@ jobs:
           hive_version: ${{ needs.prepare.outputs.hive_tag }}
           client: >-
             ${{
-              inputs.client || '"go-ethereum","reth","nethermind","nimbus-el","besu","erigon"'
+              inputs.client || '"go-ethereum","reth","nethermind","nimbus-el","besu","erigon","ethrex"'
             }}
           simulator: 'ethereum/eest/consume-sync'
           client_config: ${{ needs.prepare.outputs.client_config }}
