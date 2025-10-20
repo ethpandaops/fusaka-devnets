@@ -67,7 +67,7 @@ env:
   S3_PUBLIC_URL: https://hive.ethpandaops.io/#/test/fusaka/
   INSTALL_RCLONE_VERSION: v1.68.2
   EEST_BUILD_ARG_FIXTURES: https://github.com/ethereum/execution-spec-tests/releases/download/v5.3.0/fixtures_develop.tar.gz
-  EEST_BUILD_ARG_BRANCH: main
+  EEST_BUILD_ARG_BRANCH: lambdaclass # Temp branch for ethrex during weld
   # Flags used for all simulators
   GLOBAL_EXTRA_FLAGS: >-
     --client.checktimelimit=300s
