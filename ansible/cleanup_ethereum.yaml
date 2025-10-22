@@ -70,14 +70,14 @@
             state: absent
             path: "{{ item }}"
           loop:
-#             # Execution layer data
-#             - /data/besu
-#             - /data/erigon
-#             - /data/ethereumjs
-#             - /data/geth
-#             - /data/nethermind
-#             - /data/reth
-#             - /data/nimbusel
+            # Execution layer data
+            - /data/besu
+            - /data/erigon
+            - /data/ethereumjs
+            - /data/geth
+            - /data/nethermind
+            - /data/reth
+            - /data/nimbusel
             # Consensus layer data
             - /data/lighthouse
             - /data/lighthouse-validator
