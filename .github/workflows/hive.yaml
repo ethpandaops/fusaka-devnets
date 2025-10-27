@@ -14,7 +14,8 @@ on:
         default: >-
           "ethereum/eels/consume-engine",
           "ethereum/eels/consume-rlp",
-          "ethereum/eels/consume-sync"
+          "ethereum/eels/consume-sync",
+          "ethereum/eels/execute-blobs"
         description: >-
           Comma-separated list of simulators to test
           .e.g ethereum/rpc-compat, ethereum/eels/consume-engine, ethereum/eels/consume-rlp, ethereum/eels/execute-blobs
@@ -87,9 +88,10 @@ env:
     --sim.buildarg branch=${EELS_BUILD_ARG_BRANCH}
     --sim.loglevel=3
     --sim.limit=".*(Osaka|BPO).*"
-  # Flags used for the ethereum/eels/execute simulator
-  EELS_EXECUTE_FLAGS: >-
+  # Flags used for the ethereum/eels/execute-blobs simulator
+  EELS_EXECUTE_BLOBS_FLAGS: >-
     --sim.buildarg branch=${EELS_BUILD_ARG_BRANCH}
+    --sim.buildarg fork=Osaka
   # Flags used for the ethereum/rpc-compat simulator
   RPC_COMPAT_FLAGS: >-
     --sim.loglevel=3
@@ -142,7 +144,7 @@ jobs:
     if: >-
       github.event_name == 'schedule' ||
       !contains(inputs.simulator, 'consume-sync') ||
-      (contains(inputs.simulator, 'consume-engine') || contains(inputs.simulator, 'consume-rlp') || contains(inputs.simulator, 'rpc-compat'))
+      (contains(inputs.simulator, 'consume-engine') || contains(inputs.simulator, 'consume-rlp') || contains(inputs.simulator, 'rpc-compat') || contains(inputs.simulator, 'execute-blobs'))
     runs-on: >-
       ${{
         matrix.simulator == 'ethereum/rpc-compat' && 'ubuntu-latest' ||
@@ -168,7 +170,8 @@ jobs:
         simulator: >-
           ${{ fromJSON(format('[{0}]', inputs.simulator || '
             "ethereum/eels/consume-engine",
-            "ethereum/eels/consume-rlp"
+            "ethereum/eels/consume-rlp",
+            "ethereum/eels/execute-blobs"
           '))}}
         exclude:
           - simulator: 'ethereum/eels/consume-sync'
@@ -192,6 +195,7 @@ jobs:
             ${{ matrix.simulator == 'ethereum/rpc-compat' && env.RPC_COMPAT_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eels/consume-engine' && env.EELS_ENGINE_FLAGS || '' }}
             ${{ matrix.simulator == 'ethereum/eels/consume-rlp' && env.EELS_RLP_FLAGS || '' }}
+            ${{ matrix.simulator == 'ethereum/eels/execute-blobs' && env.EELS_EXECUTE_BLOBS_FLAGS || '' }}
           s3_upload: true
           s3_bucket: ${{ env.S3_BUCKET }}
           s3_path: ${{ env.S3_PATH }}
