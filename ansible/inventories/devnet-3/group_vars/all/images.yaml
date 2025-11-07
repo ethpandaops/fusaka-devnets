@@ -1,22 +1,22 @@
 default_ethereum_client_images:
   ### Consensus layer clients
-  lighthouse: sigp/lighthouse:v8.0.0-rc.2
-  lodestar: chainsafe/lodestar:v1.35.0
-  nimbus: statusim/nimbus-eth2:multiarch-v25.9.2
-  prysm: gcr.io/offchainlabs/prysm/beacon-chain:v6.1.3
-  prysm_validator: gcr.io/offchainlabs/prysm/validator:v6.1.3
-  teku: consensys/teku:25.9.3
-  grandine: ethpandaops/grandine:develop
-### Execution layer clients
-  besu: hyperledger/besu:25.10.0
-  geth: ethereum/client-go:v1.16.5
-  erigon: erigontech/erigon:v3.2.0
-  nethermind: nethermind/nethermind:1.34.1
-  reth: ghcr.io/paradigmxyz/reth:v1.8.2
-  nimbusel: ethpandaops/nimbus-eth1:testing
+  lighthouse: sigp/lighthouse:v8.0.0
+  lodestar: chainsafe/lodestar:v1.36.0
+  nimbus: statusim/nimbus-eth2:multiarch-v25.11.0
+  prysm: gcr.io/offchainlabs/prysm/beacon-chain:v7.0.0-rc.0
+  prysm_validator: gcr.io/offchainlabs/prysm/validator:v7.0.0-rc.0
+  teku: consensys/teku:25.11.0
+  grandine: sifrai/grandine:2.0.0
+  ### Execution layer clients
+  besu: hyperledger/besu:25.11.0
+  geth: ethereum/client-go:v1.16.7
+  erigon: erigontech/erigon:v3.2.2
+  nethermind: nethermind/nethermind:1.35.2
+  reth: ghcr.io/paradigmxyz/reth:v1.8.4
+  nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master
 
 default_tooling_images:
-  mev_boost: ethpandaops/mev-boost:develop
+  mev_boost: flashbots/mev-boost:1.10
   mev_builder: ethpandaops/reth-rbuilder:develop
   mev_relay: ethpandaops/mev-boost-relay:bharath-123-disable-v2-api-testing
   xatu_sentry: ethpandaops/xatu:latest
