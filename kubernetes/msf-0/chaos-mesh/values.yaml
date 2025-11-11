@@ -1,0 +1,33 @@
+# Ansible managed. Don't change this file manually. Template info: /vendor/collections/ansible_collections/ethpandaops/general/roles/generate_kubernetes_config/templates/chaos-mesh.yaml.j2
+
+# Configuration for the official chaos-mesh chart
+chaos-mesh:
+  # Dashboard configuration
+  dashboard:
+    create: true
+    securityMode: False
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: ingress-nginx-public
+        external-dns.alpha.kubernetes.io/hostname: chaos-mesh.fusaka-msf-0.ethpandaops.io
+      hosts:
+        - name: chaos-mesh.fusaka-msf-0.ethpandaops.io
+          paths:
+            - path: /
+              pathType: Prefix
+  
+  # Controller Manager configuration
+  controllerManager:
+    replicaCount: 1
+    # Disable mTLS for physical machine connections
+    chaosdSecurityMode: False
+  
+  # Chaos Daemon configuration
+  chaosDaemon:
+    runtime: containerd
+    socketPath: /run/containerd/containerd.sock
+
+# Custom physical machines configuration (not supported by upstream chart)
+# These will be created by our custom template
+physicalMachines:
