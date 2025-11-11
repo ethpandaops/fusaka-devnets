@@ -39,7 +39,6 @@ nethermind_container_command_extra_args:
   - --Pruning.Mode=None
   - --log=INFO
   - --Blocks.TargetBlockGasLimit=60000000
-  - --Init.NetworkId={{ shadowfork_network_id }}
 nethermind_container_pull: true
 
 prometheus_config: |
