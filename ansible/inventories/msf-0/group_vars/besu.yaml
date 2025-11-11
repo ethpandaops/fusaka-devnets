@@ -39,7 +39,8 @@ besu_container_command_extra_args:
   - --bonsai-limit-trie-logs-enabled=false
   - --target-gas-limit=60000000
   - --version-compatibility-protection=false
-
+  - --sync-min-peers=1
+  - --network-id={{ shadowfork_network_id }}
 besu_container_pull: true
 prometheus_config: |
   global:

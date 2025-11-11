@@ -29,6 +29,7 @@ reth_container_command_extra_args:
   - --bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --http.api=trace,rpc,eth,net,debug,web3,admin,txpool
   - --builder.gaslimit=60000000
+  - --network-id={{ shadowfork_network_id }}
 ethereum_node_ipv6_enabled: false
 prometheus_config: |
   global:

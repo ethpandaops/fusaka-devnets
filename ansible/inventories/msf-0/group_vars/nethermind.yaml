@@ -31,14 +31,15 @@ nethermind_container_volumes:
   - "{{ eth_testnet_config_dir }}:/network-config:ro"
 nethermind_container_command_extra_args:
   - --Init.ChainSpecPath=/network-config/chainspec.json
-  - --config=sepolia.cfg
-  - --Init.BaseDbPath=nethermind_db/sepolia
+  - --config=mainnet.cfg
+  - --Init.BaseDbPath=nethermind_db/mainnet
   - --JsonRpc.EnabledModules=Eth,Subscribe,Trace,TxPool,Web3,Personal,Proof,Net,Parity,Health,Rpc,Debug,Admin
   - --Discovery.Bootnodes={{ ethereum_el_bootnodes | join(',') }}
   - --Init.IsMining=false
   - --Pruning.Mode=None
-  - --log=DEBUG
+  - --log=INFO
   - --Blocks.TargetBlockGasLimit=60000000
+  - --Init.NetworkId={{ shadowfork_network_id }}
 nethermind_container_pull: true
 
 prometheus_config: |

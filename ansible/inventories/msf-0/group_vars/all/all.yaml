@@ -54,6 +54,7 @@ override_osaka_timestamp: TODO
 override_bpo1_timestamp: TODO
 override_bpo2_timestamp: TODO
 shadowfork_height: 23760000
+shadowfork_network_id: 23760000
 
 ethereum_genesis_timestamp_relative_cmd:
   Linux: "date +%s -d '+45 minutes'"
