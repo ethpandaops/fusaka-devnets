@@ -52,7 +52,6 @@ prysm_container_command_extra_simple_args:
   - --contract-deployment-block={{ ethereum_network_deposit_contract_block }}
   - --min-sync-peers=1
   - --pprof
-  - --enable-debug-rpc-endpoints
   - --verbosity=debug
   #- --disable-get-blobs
 prysm_container_command_extra_bootnode_args: >-

@@ -65,8 +65,6 @@ erigon_container_command_extra_args:
   - --keep.stored.chain.config=true
   - --externalcl
   - --trustedpeers={{ ethereum_el_bootnodes | join(',') }}
-  - --el.block.downloader.v2
-  - --p2p.protocol=68
   - --networkid={{ shadowfork_network_id }}
 erigon_init_custom_network: true
 erigon_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"
