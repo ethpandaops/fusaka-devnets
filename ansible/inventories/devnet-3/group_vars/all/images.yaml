@@ -12,7 +12,7 @@ default_ethereum_client_images:
   geth: ethereum/client-go:v1.16.7
   erigon: erigontech/erigon:v3.2.2
   nethermind: nethermind/nethermind:1.35.2
-  reth: ghcr.io/paradigmxyz/reth:v1.8.4
+  reth: ghcr.io/paradigmxyz/reth:v1.9.1
   nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master
 
 default_tooling_images:
