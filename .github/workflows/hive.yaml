@@ -116,7 +116,7 @@ jobs:
           steps.client_config_dispatch.outputs.client_config
         }}
     steps:
-      - uses: ethpandaops/hive-github-action/helpers/client-config@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
+      - uses: ethpandaops/hive-github-action/helpers/client-config@ef42b1df92b6984a473db62f5a76c32136eda6ce # v0.6.0
         if: github.event_name == 'schedule'
         name: 'Client config: schedule'
         id: client_config_schedule
@@ -125,7 +125,7 @@ jobs:
           hive_version: 'ethereum/hive@master'
           goproxy: ${{ env.GOPROXY }}
 
-      - uses: ethpandaops/hive-github-action/helpers/client-config@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
+      - uses: ethpandaops/hive-github-action/helpers/client-config@ef42b1df92b6984a473db62f5a76c32136eda6ce # v0.6.0
         if: github.event_name == 'workflow_dispatch'
         name: 'Client config: workflow_dispatch'
         id: client_config_dispatch
@@ -174,13 +174,13 @@ jobs:
           - simulator: 'ethereum/eels/consume-sync'
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@ef42b1df92b6984a473db62f5a76c32136eda6ce # v0.6.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
         with:
           username: ethpandaops
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: ethpandaops/hive-github-action@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
+      - uses: ethpandaops/hive-github-action@ef42b1df92b6984a473db62f5a76c32136eda6ce # v0.6.0
         with:
           hive_repository: ${{ needs.prepare.outputs.hive_repo }}
           hive_version: ${{ needs.prepare.outputs.hive_tag }}
@@ -210,13 +210,13 @@ jobs:
     if: contains(inputs.simulator || 'ethereum/eels/consume-sync', 'ethereum/eels/consume-sync')
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
+      - uses: ethpandaops/hive-github-action/helpers/self-hosted-runner-dependencies@ef42b1df92b6984a473db62f5a76c32136eda6ce # v0.6.0
         if: runner.environment != 'github-hosted'
       - uses: ethpandaops/actions/docker-login@a91b7a8dd6a264f5e845ac2aa52d2d6f24e6d01d
         with:
           username: ethpandaops
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: ethpandaops/hive-github-action@1aa8d73dad34de13afbb3113ab16c1a462d2fbc3 # v0.5.0
+      - uses: ethpandaops/hive-github-action@ef42b1df92b6984a473db62f5a76c32136eda6ce # v0.6.0
         with:
           hive_repository: ${{ needs.prepare.outputs.hive_repo }}
           hive_version: ${{ needs.prepare.outputs.hive_tag }}
