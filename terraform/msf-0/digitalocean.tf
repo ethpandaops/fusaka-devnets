@@ -54,27 +54,27 @@ locals {
   digitalocean_vm_groups = flatten([
     for vm_group in local.vm_groups :
     vm_group.count > 0 ? [
-    for i in range(0, vm_group.count) : {
-      group_name = "${vm_group.name}"
-      id         = "${vm_group.name}-${i + 1}"
-      vms = {
-        "${i + 1}" = {
-          tags = join(",", compact([
-            "group_name:${vm_group.name}",
-            "val_start:${vm_group.validator_start + (i * (vm_group.validator_end - vm_group.validator_start) / vm_group.count)}",
-            "val_end:${min(vm_group.validator_start + ((i + 1) * (vm_group.validator_end - vm_group.validator_start) / vm_group.count), vm_group.validator_end)}",
-            "supernode:${try(vm_group.supernode, can(regex("(super|bootnode|mev)", vm_group.name))) ? "True" : "False"}",
+      for i in range(0, vm_group.count) : {
+        group_name = "${vm_group.name}"
+        id         = "${vm_group.name}-${i + 1}"
+        vms = {
+          "${i + 1}" = {
+            tags = join(",", compact([
+              "group_name:${vm_group.name}",
+              "val_start:${vm_group.validator_start + (i * (vm_group.validator_end - vm_group.validator_start) / vm_group.count)}",
+              "val_end:${min(vm_group.validator_start + ((i + 1) * (vm_group.validator_end - vm_group.validator_start) / vm_group.count), vm_group.validator_end)}",
+              "supernode:${try(vm_group.supernode, can(regex("(super|bootnode|mev)", vm_group.name))) ? "True" : "False"}",
               can(regex("bootnode", vm_group.name)) ? "bootnode:${var.ethereum_network}" : null,
               can(regex("mev-relay", vm_group.name)) ? "mev-relay:${var.ethereum_network}" : null
-          ]))
-          region = try(vm_group.region, var.digitalocean_regions[i % length(var.digitalocean_regions)])
-          size = try(vm_group.size, can(regex("(super|bootnode)", vm_group.name)) ? var.digitalocean_supernode_size : var.digitalocean_fullnode_size)
-          ipv6 = try(vm_group.ipv6, true)
+            ]))
+            region = try(vm_group.region, var.digitalocean_regions[i % length(var.digitalocean_regions)])
+            size   = try(vm_group.size, can(regex("(super|bootnode)", vm_group.name)) ? var.digitalocean_supernode_size : var.digitalocean_fullnode_size)
+            ipv6   = try(vm_group.ipv6, true)
+          }
         }
       }
-    }
-  ] : []
-    ])
+    ] : []
+  ])
 }
 
 locals {
@@ -173,17 +173,17 @@ resource "local_file" "ansible_inventory" {
       hosts = merge(
         {
           for key, server in digitalocean_droplet.main : "do.${key}" => {
-          ip              = "${server.ipv4_address}"
-          ipv6            = try(server.ipv6_address, "none")
-          group           = try([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^group_name:", tag))][0], "unknown")
-          validator_start = try([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^val_start:", tag))][0], 0)
-          validator_end   = try([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^val_end:", tag))][0], 0)
-          supernode       = try(title([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^supernode:", tag))][0]), "undefined")
-          tags            = "${server.tags}"
-          hostname        = "${split(".", key)[0]}"
-          cloud           = "digitalocean"
-          region          = "${server.region}"
-        }
+            ip              = "${server.ipv4_address}"
+            ipv6            = try(server.ipv6_address, "none")
+            group           = try([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^group_name:", tag))][0], "unknown")
+            validator_start = try([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^val_start:", tag))][0], 0)
+            validator_end   = try([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^val_end:", tag))][0], 0)
+            supernode       = try(title([for tag in tolist(server.tags) : split(":", tag)[1] if can(regex("^supernode:", tag))][0]), "undefined")
+            tags            = "${server.tags}"
+            hostname        = "${split(".", key)[0]}"
+            cloud           = "digitalocean"
+            region          = "${server.region}"
+          }
         }
       )
     }
