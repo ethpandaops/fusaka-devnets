@@ -41,6 +41,7 @@ besu_container_command_extra_args:
   - --version-compatibility-protection=false
   - --sync-min-peers=1
   - --network-id={{ shadowfork_network_id }}
+  - --required-block=23870126=0x9925b3ae48e0ad66f57a6a9463badc3f841d1a9f1f35232714bf9b996c2bc87c
 besu_container_pull: true
 prometheus_config: |
   global:
