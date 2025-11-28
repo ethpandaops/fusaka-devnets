@@ -5,14 +5,14 @@ default_ethereum_client_images:
   nimbus: ethpandaops/nimbus-eth2:unstable
   prysm: gcr.io/offchainlabs/prysm/beacon-chain:v7.0.0
   prysm_validator: gcr.io/offchainlabs/prysm/validator:v7.0.0
-  teku: consensys/teku:25.11.0
-  grandine: ethpandaops/grandine:develop-a6d2c1b
+  teku: consensys/teku:25.11.1
+  grandine: sifrai/grandine:2.0.0
   ### Execution layer clients
   besu: hyperledger/besu:25.11.0
   geth: ethereum/client-go:v1.16.7
-  erigon: erigontech/erigon:v3.2.2
-  nethermind: ethpandaops/nethermind:feature-triestore-respect-finalized-block
-  reth: ghcr.io/paradigmxyz/reth:v1.9.1
+  erigon: erigontech/erigon:v3.3.0
+  nethermind: nethermind/nethermind:1.35.3
+  reth: ghcr.io/paradigmxyz/reth:v1.9.3
   nimbusel: docker.ethquokkaops.io/dh/ethpandaops/nimbus-eth1:master
 
 default_tooling_images:

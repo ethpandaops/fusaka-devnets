@@ -27,6 +27,7 @@ variable "lighthouse_geth" {
     validator_start = 0
     validator_end   = 16
     region          = "nyc1"
+    size = "c5-16vcpu-32gb"
   }
 }
 
@@ -37,6 +38,7 @@ variable "lighthouse_besu" {
     validator_start = 16
     validator_end   = 32
     region          = "ams3"
+    size = "c5-16vcpu-32gb"
   }
 }
 
@@ -47,6 +49,7 @@ variable "lighthouse_nethermind" {
     validator_start = 32
     validator_end   = 48
     region          = "sgp1"
+    size = "c5-16vcpu-32gb"
   }
 }
 
@@ -65,6 +68,7 @@ variable "lighthouse_erigon" {
     count           = 2
     validator_start = 64
     validator_end   = 80
+    size = "c5-16vcpu-32gb"
   }
 }
 
@@ -75,6 +79,7 @@ variable "lighthouse_reth" {
     validator_start = 80
     validator_end   = 96
     region          = "lon1"
+    size = "c5-16vcpu-32gb"
   }
 }
 
