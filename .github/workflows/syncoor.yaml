@@ -51,11 +51,11 @@ on:
         required: false
         default: >-
           {
-            "besu": "ethpandaops/besu:main",
-            "geth": "ethpandaops/geth:master",
-            "erigon": "ethpandaops/erigon:main",
-            "nethermind": "ethpandaops/nethermind:master",
-            "reth": "ethpandaops/reth:main",
+            "besu": "hyperledger/besu:latest",
+            "geth": "ethereum/client-go:stable",
+            "erigon": "erigontech/erigon:latest",
+            "nethermind": "nethermind/nethermind:latest",
+            "reth": "ghcr.io/paradigmxyz/reth",
             "nimbusel": "ethpandaops/nimbus-eth1:master"
           }
         type: string
@@ -64,12 +64,12 @@ on:
         required: false
         default: >-
           {
-            "lighthouse": "ethpandaops/lighthouse:unstable",
-            "teku": "ethpandaops/teku:master",
-            "prysm": "ethpandaops/prysm-beacon-chain:develop",
-            "nimbus": "ethpandaops/nimbus-eth2:unstable",
-            "lodestar": "ethpandaops/lodestar:unstable",
-            "grandine": "ethpandaops/grandine:develop"
+            "lighthouse": "sigp/lighthouse:latest",
+            "teku": "consensys/teku:latest",
+            "prysm": "offchainlabs/prysm-beacon-chain:stable",
+            "nimbus": "statusim/nimbus-eth2:amd64-latest",
+            "lodestar": "chainsafe/lodestar:latest",
+            "grandine": "sifrai/grandine:stable"
           }
         type: string
 
@@ -141,11 +141,11 @@ jobs:
       run: |
         cat > /tmp/default-el-images.json <<'EOF'
         {
-          "besu": "ethpandaops/besu:main",
-          "geth": "ethpandaops/geth:master",
-          "erigon": "ethpandaops/erigon:main",
-          "nethermind": "ethpandaops/nethermind:master",
-          "reth": "ethpandaops/reth:main",
+          "besu": "hyperledger/besu:latest",
+          "geth": "ethereum/client-go:stable",
+          "erigon": "erigontech/erigon:latest",
+          "nethermind": "nethermind/nethermind:latest",
+          "reth": "ghcr.io/paradigmxyz/reth",
           "nimbusel": "ethpandaops/nimbus-eth1:master"
         }
         EOF
@@ -153,12 +153,12 @@ jobs:
 
         cat > /tmp/default-cl-images.json <<'EOF'
         {
-          "lighthouse": "ethpandaops/lighthouse:unstable",
-          "teku": "ethpandaops/teku:master",
-          "prysm": "ethpandaops/prysm-beacon-chain:develop",
-          "nimbus": "ethpandaops/nimbus-eth2:unstable",
-          "lodestar": "ethpandaops/lodestar:unstable",
-          "grandine": "ethpandaops/grandine:develop"
+          "lighthouse": "sigp/lighthouse:latest",
+          "teku": "consensys/teku:latest",
+          "prysm": "offchainlabs/prysm-beacon-chain:stable",
+          "nimbus": "statusim/nimbus-eth2:amd64-latest",
+          "lodestar": "chainsafe/lodestar:latest",
+          "grandine": "sifrai/grandine:stable"
         }
         EOF
         echo "cl-images=$(cat /tmp/default-cl-images.json | jq -c .)" >> $GITHUB_OUTPUT
