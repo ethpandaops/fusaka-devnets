@@ -16,25 +16,27 @@ on:
         required: false
         default: '"lighthouse","teku","prysm","nimbus","lodestar","grandine"'
         type: string
-      run-timeout:
-        description: 'Timeout for the sync test (in minutes)'
+      runconfig:
+        description: >
+          Run configuration as JSON.
+          run-timeout: timeout in minutes.
+          cl-synctype: "checkpoint" (sync from checkpoint) or "genesis" (sync from genesis).
+          cl-nodetype: "fullnode" (normal node) or "supernode" (subscribes to all custody groups).
+          runs-on: GitHub runner label (ccx13: 2c/8GB RAM/80GB disk, ccx23: 4c/16GB RAM/160GB disk, ccx33: 8c/32GB RAM/240GB disk, ccx43: 16c/64GB RAM/360GB disk).
+          Example: {"run-timeout": "1800", "cl-synctype": ["checkpoint"], "cl-nodetype": ["fullnode"]}
         required: false
-        default: '1800'
-        type: string
-      cl-synctype:
-        description: 'Consensus layer sync type ("checkpoint", "genesis")'
-        required: false
-        default: '"checkpoint"'
+        default: >-
+          {
+            "run-timeout": "1800",
+            "cl-synctype": ["checkpoint"],
+            "cl-nodetype": ["fullnode"],
+            "runs-on": "self-hosted-ghr-size-ccx33-x64"
+          }
         type: string
       checkpoint-sync-url:
         description: 'Checkpoint sync URL. Will be auto generated if not provided. (Example: https://checkpoint-sync.$NETWORK.ethpandaops.io)'
         required: false
         default: ''
-        type: string
-      cl-nodetype:
-        description: 'Consensus layer client type ("fullnode", "supernode")'
-        required: false
-        default: '"fullnode"'
         type: string
       image:
         description: 'Syncoor Docker image'
@@ -87,13 +89,8 @@ jobs:
     # - 24h -> 1440m
     # - 48h -> 2880m
     # - 72h -> 4320m
-    timeout-minutes: ${{ github.event_name == 'schedule' && 500 || fromJSON(inputs.run-timeout || '1800') }}
-    # Self-hosted runner sizes:
-    # - ccx13: 2 cores, 8GB, 80GB disk
-    # - ccx23: 4 cores, 16GB, 160GB disk
-    # - ccx33: 8 cores, 32GB, 240GB disk
-    # - ccx43: 16 cores, 64GB, 360GB disk
-    runs-on: self-hosted-ghr-size-ccx33-x64
+    timeout-minutes: ${{ github.event_name == 'schedule' && 500 || fromJSON(fromJSON(inputs.runconfig || '{}')['run-timeout'] || '1800') }}
+    runs-on: ${{ fromJSON(inputs.runconfig || '{}')['runs-on'] || 'self-hosted-ghr-size-ccx33-x64' }}
     concurrency:
       group: >-
         ${{ github.event_name }}-${{ matrix.network }}-${{ matrix.el-client }}-${{ matrix.cl-client }}-${{ matrix.cl-nodetype }}-${{ matrix.cl-synctype }}
@@ -126,12 +123,12 @@ jobs:
             (github.event.schedule == '30 10 1-31/2 * *' && fromJSON('["fullnode"]') ||
              github.event.schedule == '30 10 2-30/2 * *' && fromJSON('["supernode"]') ||
              fromJSON('["fullnode","supernode"]')) ||
-            fromJSON(format('[{0}]', inputs.cl-nodetype || '"fullnode","supernode"'))
+            fromJSON(inputs.runconfig || '{}')['cl-nodetype'] || fromJSON('["fullnode","supernode"]')
           }}
         cl-synctype: >-
           ${{
             github.event_name == 'schedule' && fromJSON('["checkpoint"]') ||
-            fromJSON(format('[{0}]', inputs.cl-synctype || '"checkpoint","genesis"'))
+            fromJSON(inputs.runconfig || '{}')['cl-synctype'] || fromJSON('["checkpoint","genesis"]')
           }}
 
     steps:
@@ -213,7 +210,7 @@ jobs:
         echo "s3-path=$S3_PATH" >> $GITHUB_OUTPUT
 
         # Calculate timeout (subtract 10 minutes)
-        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 500 || fromJSON(inputs.run-timeout || '1800') }} - 10 ))
+        TIMEOUT=$(( ${{ github.event_name == 'schedule' && 500 || fromJSON(fromJSON(inputs.runconfig || '{}')['run-timeout'] || '1800') }} - 10 ))
         echo "run-timeout=$TIMEOUT" >> $GITHUB_OUTPUT
 
     - name: Run Syncoor Test
