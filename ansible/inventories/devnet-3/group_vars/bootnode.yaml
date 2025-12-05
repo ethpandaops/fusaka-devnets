@@ -1,4 +1,5 @@
-ethereum_cl_bootnode: "{{ hostvars['bootnode-1']['cl_bootnode_fact_enr'] }}"
+ethereum_cl_bootnode: "{{ hostvars['bootnode-1']['bootnodoor_fact_enr'] }}"
+ethereum_el_bootnode: "{{ hostvars['bootnode-1']['bootnodoor_fact_enode'] }}"
 bootstrap_default_user_authorized_keys_github_team_cl:
   - tbenr
   - ajsutton
@@ -16,6 +17,34 @@ eth_inventory_web_container_env:
   VIRTUAL_PATH: "/meta/api"
   VIRTUAL_DEST: "/"
   LETSENCRYPT_HOST: "{{ server_fqdn }}"
+
+
+# role: ethpandaops.general.bootnodoor
+bootnodoor_privkey: "{{ secret_bootnodoor_privkey }}"
+bootnodoor_set_facts: true
+bootnodoor_el_enabled: true
+bootnodoor_cl_enabled: true
+
+bootnodoor_container_name: "bootnodoor"
+bootnodoor_container_image: "ethpandaops/bootnodoor:master"
+bootnodoor_container_networks: "{{ docker_networks_shared }}"
+bootnodoor_p2p_port: 9002
+bootnodoor_ui_port: 8004
+bootnodoor_enr_ip: "{{ ansible_host }}"
+
+bootnodoor_el_config: /network-config/genesis.json
+bootnodoor_el_genesis_hash: /network-config/deposit_contract_block_hash.txt
+bootnodoor_cl_config: /network-config/config.yaml
+bootnodoor_cl_gvr: /network-config/genesis_validators_root.txt
+bootnodoor_container_volumes_extra:
+  - "{{ eth_testnet_config_dir }}:/network-config:ro"
+
+bootnodoor_container_command_extra_args: []
+bootnodoor_container_env:
+  VIRTUAL_HOST: "bootnodoor.{{ server_fqdn }}"
+  VIRTUAL_PORT: "{{ bootnodoor_ui_port | string }}"
+  LETSENCRYPT_HOST: "bootnodoor.{{ server_fqdn }}"
+
 
 # role: ethpandaops.general.ethereum_node
 ethereum_node_el: geth
@@ -60,7 +89,7 @@ teku_container_command_extra_args:
   - --ignore-weak-subjectivity-period-enabled
   - --Xp2p-sync-batch-size=10
   - --Xp2p-sync-max-pending-batches=2
-  - --p2p-discovery-bootnodes=enr:-O24QG6VEz8ygcpLuf5fuJl6LLqQArIPO8HjVaYNUCfJGpt3PuFclIccu6yKmk66q0zs0UuIMuJy8Hdun7l8kbcSsuWBmIdhdHRuZXRziAAAAAAAYAAAg2NnY4GAhmNsaWVudNGKTGlnaHRob3VzZYU3LjEuMIRldGgykLYvKw5wk3VE__________-CaWSCdjSCaXCEGJBl4INuZmSEti8rDoRxdWljgiMpiXNlY3AyNTZrMaEDfr-2_YzcYmkKyLrWj6eqXFAi-0h9CPOu5iK4jkAzCDSIc3luY25ldHMLg3RjcIIjKIN1ZHCCIyg
+  - --p2p-discovery-bootnodes={{ ethereum_cl_bootnode }}
 
 # role: ethpandaops.general.geth
 geth_container_name: execution
@@ -76,6 +105,7 @@ geth_container_command_extra_args:
   - --gcmode=archive
   - --state.scheme=hash
   - --miner.gaslimit=10000000
+  - --bootnodes={{ ethereum_el_bootnode }}
 geth_init_custom_network: true
 geth_init_custom_network_genesis_file: "{{ eth_testnet_config_dir }}/genesis.json"
 geth_container_pull: true
